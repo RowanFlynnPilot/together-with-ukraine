@@ -167,6 +167,8 @@ select {
 .place { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
 .place-name { font-weight: 700; margin: 0; }
 .place-meta { margin: 0; color: var(--muted); }
+.place-tags { margin: 0.1rem 0 0.15rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag { font-size: 0.8125rem; line-height: 1.4; padding: 0 0.45rem; border: 1px solid var(--line); background: var(--wash); color: var(--ink); }
 .place .src { margin-top: 0.15rem; }
 .place-links { margin: 0.15rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
 .note { background: var(--wash); padding: 1.1rem 1.25rem; margin: 1.75rem 0 0; }
@@ -254,13 +256,13 @@ __STORIES__
   </section>
 
   <section id="places" role="tabpanel" aria-labelledby="tab-places" hidden>
-    <h2>{{Ukrainian restaurants, delis and markets||Українські ресторани, кулінарії та крамниці}}</h2>
+    <h2>{{Ukrainian places to eat and shop||Українські заклади та крамниці}}</h2>
     <p class="intro">__PLACES_SUMMARY__</p>
     <div class="places-grid">
       <div class="map-col">
         <svg id="map" viewBox="0 0 975 610" role="img"></svg>
         <div class="note">
-          <p>{{Every place here calls itself Ukrainian on its own website or is described that way by local press, and each listing shows where. The list is short because it leaves out places that could not be confirmed. Check hours before you go.||Кожен заклад у цьому списку називає себе українським на власному сайті або так його описує місцева преса, і біля кожного вказано, де саме. Список короткий, бо до нього не потрапили заклади, які не вдалося підтвердити. Перед візитом перевірте години роботи.}}</p>
+          <p>{{Every place here serves Ukrainian food, sells Ukrainian goods or is owned by Ukrainians, as its own website or the press says. Each listing shows which, and links to where it says so. Places that could not be confirmed are left out. Check hours before you go.||Кожен заклад у цьому списку пропонує українську їжу, продає українські товари або належить українцям — так зазначено на його власному сайті чи в пресі. Біля кожного вказано, що саме, і є посилання на джерело. Заклади, які не вдалося підтвердити, до списку не потрапили. Перед візитом перевірте години роботи.}}</p>
           <p data-l="en">Nothing near you? <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> lists more than 200 Ukrainian companies that sell online.</p>
           <p data-l="uk" lang="uk">Поблизу нічого немає? На сайті <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> зібрано понад 200 українських компаній, які продають онлайн.</p>
         </div>

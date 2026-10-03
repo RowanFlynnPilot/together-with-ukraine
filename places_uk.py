@@ -9,4 +9,4 @@ STATES = {'Alabama': 'Алабама', 'Alaska': 'Аляска', 'Arizona': 'А�
  'South Dakota': 'Південна Дакота', 'Tennessee': 'Теннессі', 'Texas': 'Техас', 'Utah': 'Юта', 'Vermont': 'Вермонт', 'Virginia': 'Вірджинія',
  'Washington': 'Вашингтон', 'West Virginia': 'Західна Вірджинія', 'Wisconsin': 'Вісконсин', 'Wyoming': 'Вайомінг'}
 KINDS = {'Restaurant': 'Ресторан', 'Café': 'Кафе', 'Bakery': 'Пекарня', 'Grocery': 'Продуктовий магазин', 'Grocery and café': 'Продуктовий магазин і кафе',
- 'Deli': 'Кулінарія', 'Counter service': 'Заклад швидкого обслуговування'}
+ 'Deli': 'Кулінарія', 'Counter service': 'Заклад швидкого обслуговування', 'Gift shop': 'Крамниця подарунків і рукоділля', 'Bookstore': 'Книгарня'}

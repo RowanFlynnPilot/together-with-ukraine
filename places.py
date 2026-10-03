@@ -4,7 +4,7 @@ data/places.json is maintained by hand. Each place names its state, and the buil
 coordinates fall inside that state, so a mistyped coordinate stops the build instead of moving a
 dot. Each place also carries its evidence (rule 2 in CLAUDE.md): a phrase on its own website or in
 local press, which check.py confirms is still on that page every week."""
-import html, json, pathlib
+import html, json, math, pathlib
 from collections import Counter
 from urllib.parse import quote
 
@@ -14,6 +14,8 @@ from i18n import both, slug
 DATA = pathlib.Path(__file__).parent / 'data'
 OWN_SITE = 'own website'
 DC = 'District of Columbia'
+# Why a place counts as Ukrainian (rule 2), shown on each listing. Its evidence must say so.
+UKRAINIAN = {'food': ('Ukrainian food', 'Українська їжа'), 'goods': ('Ukrainian goods', 'Українські товари'), 'owner': ('Ukrainian-owned', 'Власники з України')}
 
 def read(name): return json.loads((DATA / name).read_text(encoding='utf-8'))
 
@@ -46,6 +48,18 @@ def _contains(rings, lon, lat):
                 inside = not inside
     return inside
 
+# The state outlines are simplified (1:10 million), so a place on a shoreline can fall just outside its
+# state and inside none. Within this distance of its own state's outline, that is accepted.
+COAST_KM = 2
+
+def _km_to_outline(rings, lon, lat):
+    k = math.cos(math.radians(lat))  # degrees of longitude shrink toward the poles
+    def segment(x1, y1, x2, y2):
+        dx, dy = (x2 - x1) * k, y2 - y1
+        t = max(0.0, min(1.0, (((lon - x1) * k) * dx + (lat - y1) * dy) / (dx * dx + dy * dy or 1)))
+        return math.hypot((lon - x1) * k - t * dx, lat - y1 - t * dy) * 111.2
+    return min(segment(x1, y1, x2, y2) for ring in rings for (x1, y1), (x2, y2) in zip(ring, ring[1:]))
+
 def _load():
     places = read('places.json')
     rings = _rings_by_state()
@@ -58,7 +72,9 @@ def _load():
         if p['web'] and not p['web'].startswith(('https://', 'http://')): raise ValueError(f"{where}: bad website {p['web']!r}")
         if not _contains(rings[p['state']], p['lon'], p['lat']):
             found = [name for name, r in rings.items() if _contains(r, p['lon'], p['lat'])]
-            raise ValueError(f"{where}: coordinates fall in {found or 'no state'}, not {p['state']}")
+            if found or _km_to_outline(rings[p['state']], p['lon'], p['lat']) > COAST_KM:
+                raise ValueError(f"{where}: coordinates fall in {found or 'no state'}, not {p['state']}")
+        if not p['ukrainian'] or set(p['ukrainian']) - set(UKRAINIAN): raise ValueError(f"{where}: 'ukrainian' must list one or more of {sorted(UKRAINIAN)}")
         if not p['basis']: raise ValueError(f'{where}: no evidence that it is Ukrainian (see rule 2 in CLAUDE.md)')
         for b in p['basis']:
             if not (b['by'] and b['url'].startswith('https://') and b['says'].strip()): raise ValueError(f'{where}: incomplete evidence {b}')
@@ -116,6 +132,7 @@ def render(story_links):
                 links.append(f'<a href="#{story_id}">{both("Story: " + en, "Історія: " + uk)}</a>')
             out.append(f'''  <div class="place" id="{p['id']}" tabindex="-1">
     <p class="place-name">{e(p['name'])}</p>
+    <p class="place-tags">{''.join(both(*UKRAINIAN[t], cls='tag') for t in p['ukrainian'])}</p>
     <p class="place-meta">{both(p['kind'], places_uk.KINDS[p['kind']])}, {meta}</p>
     <p class="src">{both('Why it’s listed', 'Чому в списку')}: {'; '.join(_evidence(b) for b in p['basis'])}.</p>
     <p class="place-links">{''.join(links)}</p>

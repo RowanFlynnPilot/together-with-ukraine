@@ -22,6 +22,7 @@ python -m http.server 8765 --directory site    # view it at http://localhost:876
 python -m pip install -r requirements.txt      # only check.py and refresh.py need it
 python check.py                                # re-verify records, links, phrases, dates; exits 1 on any problem
 python refresh.py; git diff data/              # pull fresh records after check.py reports a change
+python scout.py                                # leads for new places from OpenStreetMap (slow; needs the public Overpass server)
 ```
 
 ## Layout
@@ -39,7 +40,8 @@ python refresh.py; git diff data/              # pull fresh records after check.
 | `records.py` | Pulls IRS records (ProPublica Nonprofit Explorer API) and Charity Navigator ratings. Uses `curl_cffi` with Chrome impersonation because several sites reject plain clients. Raises if a Charity Navigator page shows neither stars nor "Not Rated", so a layout change is never read as a lost rating. |
 | `refresh.py` | Writes fresh records to `data/` and stamps `data/checked.json` (`records`). Does not touch the review dates. |
 | `check.py` | Compares live records to `data/`, loads every link, confirms every recorded phrase is still on its page, checks the CDN integrity hashes, and fails on stale review dates. Run weekly by `.github/workflows/check.yml`. |
-| `data/places.json` | The listed businesses, maintained by hand. Each has `state` (full name) and `basis`: a list of `{by, url, says}`, where `by` is `own website` or an outlet name and `says` is an exact phrase on that page. |
+| `data/places.json` | The listed businesses, maintained by hand. Each has `state` (full name), `ukrainian` (one or more of `food`, `goods`, `owner`) and `basis`: a list of `{by, url, says}`, where `by` is `own website` or an outlet name and `says` is an exact phrase on that page. |
+| `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
 | `images/` | Photos for the stories, openly licensed (rule 7). Copied to `site/images/` by the build. |
@@ -55,10 +57,15 @@ works without the script; the map is drawn last, so a CDN failure takes out only
 1. **History.** Every sentence must be supported by that entry's sources. The text was rewritten
    to match the sources, so do not "improve" a claim beyond what its source says. A new or changed
    entry needs its Ukrainian text in `history_uk.py`.
-2. **Places.** List a business only if it calls itself Ukrainian on its own website or local press
-   describes it that way. Serving Ukrainian food is not enough: one OpenStreetMap entry turned out
-   to call itself a Russian restaurant. Yelp and other listings are not press. Record the evidence
-   in the place's `basis` with an exact phrase; the page shows it and `check.py` re-reads it weekly.
+2. **Places.** List a business if its own website or the press says it serves Ukrainian food,
+   sells Ukrainian goods, or is owned by Ukrainians or Ukrainian Americans (Rowan widened the rule
+   to owners on October 3, 2026). Record which in `ukrainian` (`food`, `goods`, `owner`); the page
+   shows it. "Eastern European", "Slavic" or "Russian" wording alone does not count, and a business
+   that calls itself Russian is out even with a Ukrainian owner: one OpenStreetMap entry turned out
+   to be a Russian restaurant. Restaurants, cafés, bakeries, delis, groceries, gift and craft shops
+   and bookstores count; food trucks, market stalls, frozen-food shops (Multicook), event halls,
+   home bakers and chain franchises do not. Yelp, Google and social media are not evidence. Record
+   the evidence in `basis` with an exact phrase; the page shows it and `check.py` re-reads it weekly.
 3. **Give.** A US charity must be in IRS records (add its EIN with `us_org`, then run `refresh.py`).
    A Ukrainian group must publish reports or audits, or be confirmed by an independent source.
    Every entry gets a "Checked" line that says exactly what was verified, including what was not
@@ -134,10 +141,13 @@ Windows defaults to another encoding.
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко). When that is done, delete the footer paragraph in `template.html` that says the
   Ukrainian is a machine translation.
-- The places list has 31 places in 17 states and DC; Massachusetts still has none that qualify.
-  Undecided: whether Multicook's frozen-food shops (now "a Ukrainian family business" on the brand
-  site) belong; see `held`. Unverified leads: SLAVA Cafe (Asheville, NC), Nubo Café (Clearwater,
-  FL), Sunflower Tastes (Port Angeles, WA), Banderyky (Vancouver, WA), Shchedryk grocery (Berlin, CT).
-  New places must pass rule 2.
+- The places list has 100 places in 28 states and DC (researched October 3, 2026 in two passes,
+  state by state, from local press and the businesses' own sites). Not reached because the research
+  ran out of web searches: Oregon, Tennessee beyond Nashville and Knoxville,
+  Louisiana, Alabama, Mississippi, Arkansas, Oklahoma, Kansas (Wichita), Nebraska (Omaha, Lincoln),
+  the Dakotas, Iowa beyond Ames, Kansas City, Reno, Tucson, Anchorage and Indiana. Undecided:
+  Multicook-style prepared and frozen-food shops (held, see `held`). Just Right Cake in Wausau
+  reopened under a new Ukrainian owner in 2025; list it once it is confirmed open. `python scout.py`
+  gives OpenStreetMap leads. New places must pass rule 2.
 - Most pre-2022 history rests on one encyclopedia. A second independent source on the contested
   entries (Pereiaslav, the Holodomor, Crimea) would strengthen it.
