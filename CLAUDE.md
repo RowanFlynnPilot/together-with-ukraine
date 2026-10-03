@@ -145,8 +145,7 @@ Windows defaults to another encoding.
   (October 3, 2026) in local press and the businesses' own sites. Every state was searched at least
   once; the 21 without a listing turned up nothing that passes rule 2 (the near-misses are in `held`).
   Worth rechecking: Hatta Ukrainian Cuisine (Wood Village, OR), whose own site failed to load; Just
-  Right Cake (Wausau, WI), reopened under a new Ukrainian owner in 2025, to list once confirmed open;
-  Mriya Bakery (Vancouver, WA). Undecided: Multicook-style prepared and frozen-food shops (held).
+  Right Cake (Wausau, WI), Ukrainian-owned but closed as of October 2026; Mriya Bakery (Vancouver, WA). Undecided: Multicook-style prepared and frozen-food shops (held).
   `python scout.py` gives OpenStreetMap leads. New places must pass rule 2.
 - Most pre-2022 history rests on one encyclopedia. A second independent source on the contested
   entries (Pereiaslav, the Holodomor, Crimea) would strengthen it.
