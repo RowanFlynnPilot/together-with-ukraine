@@ -4,215 +4,581 @@
   "kind": "Restaurant",
   "street": "207 East Hennepin Avenue",
   "city": "Minneapolis",
+  "state": "Minnesota",
   "web": "https://kramarczuks.com/",
   "lat": 44.98779,
-  "lon": -93.25743
+  "lon": -93.25743,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://kramarczuks.com/about/",
+    "says": "from their beloved Ukraine"
+   },
+   {
+    "by": "MPR News",
+    "url": "https://www.mprnews.org/story/2025/04/25/ukrainian-workers-minneapolis-restaurant-trump-halts-work-permit-renewals",
+    "says": "after leaving Ukraine during World War II"
+   }
+  ]
  },
  {
   "name": "Soup & Sausage Bistro",
   "kind": "Restaurant",
   "street": "13240 North 7th Street",
   "city": "Phoenix",
+  "state": "Arizona",
   "web": "https://soupnsausagebistro.com",
   "lat": 33.60679,
-  "lon": -112.06571
+  "lon": -112.06571,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://soupnsausagebistro.com",
+    "says": "Ukrainian Restaurant in Phoenix"
+   }
+  ]
  },
  {
   "name": "Leleka",
   "kind": "Restaurant",
   "street": "40 Belden Place",
   "city": "San Francisco",
+  "state": "California",
   "web": "https://www.lelekasf.com/",
   "lat": 37.79129,
-  "lon": -122.40369
+  "lon": -122.40369,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.lelekasf.com/",
+    "says": "Authentic Ukrainian Cuisine"
+   }
+  ]
  },
  {
   "name": "Mom, Please",
   "kind": "Restaurant",
   "street": "13151 Fountain Park Drive",
   "city": "Playa Vista",
+  "state": "California",
   "web": "https://cafe.mom-please.com/",
   "lat": 33.97462,
-  "lon": -118.42988
+  "lon": -118.42988,
+  "basis": [
+   {
+    "by": "LA Weekly",
+    "url": "https://www.laweekly.com/las-only-ukrainian-restaurant-mom-please-is-a-peaceful-retreat/",
+    "says": "the only Ukrainian restaurant in L.A."
+   },
+   {
+    "by": "CBS Los Angeles",
+    "url": "https://www.cbsnews.com/losangeles/news/ukrainian-family-brings-strength-to-playa-vista-through-restaurant-mom-please/",
+    "says": "opening a Ukrainian restaurant"
+   }
+  ]
  },
  {
   "name": "Misto",
   "kind": "Café",
   "street": "7466 South Broadway",
   "city": "Red Hook",
+  "state": "New York",
   "web": "https://www.misto-eats.com/",
   "lat": 41.99409,
-  "lon": -73.87627
+  "lon": -73.87627,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.misto-eats.com/",
+    "says": "Brazilian husband and Ukrainian wife team"
+   }
+  ]
  },
  {
   "name": "Streecha Ukrainian Kitchen",
   "kind": "Restaurant",
   "street": "33 East 7th Street",
   "city": "New York",
+  "state": "New York",
   "web": "",
   "lat": 40.72845,
-  "lon": -73.98896
+  "lon": -73.98896,
+  "basis": [
+   {
+    "by": "EV Grieve",
+    "url": "https://evgrieve.com/2025/11/new-menu-alert-outside-streecha.html",
+    "says": "fundraising arm for St. George Ukrainian Catholic Church"
+   },
+   {
+    "by": "Washington Square News",
+    "url": "https://nyunews.com/culture/dining/2023/11/13/streecha-affordable-pierogi/",
+    "says": "a hidden hub for Ukrainian comfort food"
+   }
+  ]
  },
  {
   "name": "Old Lviv",
-  "kind": "Café",
+  "kind": "Restaurant",
   "street": "2228 West Chicago Avenue",
   "city": "Chicago",
+  "state": "Illinois",
   "web": "",
   "lat": 41.89593,
-  "lon": -87.68317
+  "lon": -87.68317,
+  "basis": [
+   {
+    "by": "Chicago Reader",
+    "url": "https://chicagoreader.com/blogs/what-to-eat-and-see-this-weekend-at-open-house-chicago/",
+    "says": "The last real Ukrainian restaurant in the neighborhood"
+   },
+   {
+    "by": "Chicago Reader",
+    "url": "https://chicagoreader.com/food/the-iconic-chicago-restaurants-map/",
+    "says": "Old Lviv (Ukrainian)"
+   }
+  ]
  },
  {
   "name": "Veselka",
   "kind": "Restaurant",
   "street": "144 2nd Avenue",
   "city": "New York",
+  "state": "New York",
   "web": "https://veselka.com/pages/locations",
   "lat": 40.72898,
-  "lon": -73.987
+  "lon": -73.987,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://veselka.com/pages/locations",
+    "says": "Find Ukrainian Cuisine Near You"
+   },
+   {
+    "by": "CBS News",
+    "url": "https://www.cbsnews.com/news/ukrainian-restaurant-veselka-new-york-east-village/",
+    "says": "Ukrainian restaurant"
+   }
+  ]
  },
  {
   "name": "Tryzub Ukrainian Kitchen",
   "kind": "Restaurant",
   "street": "2201 West Chicago Avenue",
   "city": "Chicago",
+  "state": "Illinois",
   "web": "https://tryzubchicago.com/",
   "lat": 41.89554,
-  "lon": -87.6822
+  "lon": -87.6822,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://tryzubchicago.com/",
+    "says": "Ukrainian Restaurant Chicago"
+   }
+  ]
  },
  {
   "name": "Ukrainian East Village Restaurant",
   "kind": "Restaurant",
   "street": "140 2nd Avenue",
   "city": "New York",
-  "web": "",
+  "state": "New York",
+  "web": "https://www.ukrainianeastvillagerestaurant.com/",
   "lat": 40.72889,
-  "lon": -73.98715
+  "lon": -73.98715,
+  "basis": [
+   {
+    "by": "Untapped New York",
+    "url": "https://www.untappedcities.com/ukrainian-places-nyc/",
+    "says": "most traditional Ukrainian places in NYC"
+   }
+  ]
  },
  {
   "name": "Sorso",
   "kind": "Restaurant",
   "street": "2475 18th Street Northwest",
   "city": "Washington",
+  "state": "District of Columbia",
   "web": "https://www.sorsodc.com",
   "lat": 38.92236,
-  "lon": -77.04238
+  "lon": -77.04238,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.sorsodc.com",
+    "says": "Italian elegance reimagined with ukrainian soul"
+   }
+  ]
  },
  {
   "name": "Magic Jug",
   "kind": "Restaurant",
   "street": "6354 West Irving Park Road",
   "city": "Chicago",
+  "state": "Illinois",
   "web": "https://magic-jug.com/",
   "lat": 41.95305,
-  "lon": -87.78629
+  "lon": -87.78629,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://magic-jug.com/",
+    "says": "Ukrainian restaurant"
+   }
+  ]
  },
  {
   "name": "Ruta",
   "kind": "Restaurant",
   "street": "327 7th Street Southeast",
   "city": "Washington",
+  "state": "District of Columbia",
   "web": "https://www.rutadc.us/",
   "lat": 38.88538,
-  "lon": -76.99637
+  "lon": -76.99637,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.rutadc.us/",
+    "says": "Ruta Ukrainian Restaurant"
+   }
+  ]
  },
  {
   "name": "Olesya's Kitchen",
   "kind": "Restaurant",
   "street": "908 25th Street",
   "city": "Columbus",
+  "state": "Indiana",
   "web": "https://olesyaskitchen.com/",
   "lat": 39.22314,
-  "lon": -85.91509
+  "lon": -85.91509,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://olesyaskitchen.com/",
+    "says": "The only Ukrainian restaurant in Indiana"
+   }
+  ]
  },
  {
   "name": "Veselka",
   "kind": "Restaurant",
   "street": "646 Lorimer Street",
   "city": "Brooklyn",
+  "state": "New York",
   "web": "https://veselka.com/pages/locations",
   "lat": 40.71637,
-  "lon": -73.94959
+  "lon": -73.94959,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://veselka.com/pages/locations",
+    "says": "Find Ukrainian Cuisine Near You"
+   },
+   {
+    "by": "CBS News",
+    "url": "https://www.cbsnews.com/news/ukrainian-restaurant-veselka-new-york-east-village/",
+    "says": "Ukrainian restaurant"
+   }
+  ]
  },
  {
   "name": "Patisserie Svoi",
   "kind": "Bakery",
   "street": "8 South Euclid Avenue",
   "city": "Saint Louis",
+  "state": "Missouri",
   "web": "https://www.patisseriesvoi.com/",
   "lat": 38.63998,
-  "lon": -90.26208
+  "lon": -90.26208,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.patisseriesvoi.com/about-me",
+    "says": "Originally from Ukraine"
+   },
+   {
+    "by": "St. Louis Magazine",
+    "url": "https://www.stlmag.com/dining/patisserie-svoi-ukranian-baked-goods-desserts-in-cwe/",
+    "says": "Ukrainian baker Taisiia Hrynchyshyn"
+   }
+  ]
  },
  {
   "name": "Tatiana's Restaurant",
   "kind": "Restaurant",
   "street": "4601 Gettysburg Road",
   "city": "Mechanicsburg",
+  "state": "Pennsylvania",
   "web": "https://www.tatianasrestaurant.com/",
   "lat": 40.21314,
-  "lon": -76.95661
+  "lon": -76.95661,
+  "basis": [
+   {
+    "by": "WITF",
+    "url": "https://www.witf.org/2022/06/10/tatianas/",
+    "says": "unique mix of Mediterranean and Ukrainian cuisine"
+   }
+  ]
  },
  {
   "name": "Soup & Sausage Bistro",
   "kind": "Restaurant",
   "street": "4030 East Bell Road",
   "city": "Phoenix",
+  "state": "Arizona",
   "web": "https://soupnsausagebistro.com",
   "lat": 33.64179,
-  "lon": -111.99497
+  "lon": -111.99497,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://soupnsausagebistro.com",
+    "says": "Ukrainian Restaurant in Phoenix"
+   }
+  ]
  },
  {
   "name": "Molotov Kitschen + Cocktails",
   "kind": "Restaurant",
   "street": "3333 East Colfax Avenue",
   "city": "Denver",
+  "state": "Colorado",
   "web": "https://molotovdenver.com/",
   "lat": 39.74032,
-  "lon": -104.94804
+  "lon": -104.94804,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://molotovdenver.com/",
+    "says": "raised in a Ukrainian American home"
+   }
+  ]
  },
  {
   "name": "ofKors Bakery",
   "kind": "Bakery",
   "street": "1359 Main Street",
   "city": "Sarasota",
+  "state": "Florida",
   "web": "https://ofkorsbakery.com/",
   "lat": 27.33616,
-  "lon": -82.5433
+  "lon": -82.5433,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://ofkorsbakery.com/about.php",
+    "says": "The couple came from Ukraine"
+   },
+   {
+    "by": "SRQ Magazine",
+    "url": "https://www.srqmagazine.com/articles/1150/Feeling-Hungary",
+    "says": "Ukrainian owners Alexander Korsykov"
+   }
+  ]
  },
  {
-  "name": "Paradise Village Restaurant",
+  "name": "Paradise Village Hotel & Restaurant",
   "kind": "Restaurant",
   "street": "National Park Highway",
   "city": "Ashford",
+  "state": "Washington",
   "web": "https://paradisevillagelodge.com/",
   "lat": 46.75742,
-  "lon": -122.01289
+  "lon": -122.01289,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.paradisevillagelodge.com/",
+    "says": "our delectable Ukrainian cuisine"
+   }
+  ]
  },
  {
   "name": "Euro Foods",
   "kind": "Grocery and café",
   "street": "Southgate Drive",
   "city": "Charleston",
+  "state": "South Carolina",
   "web": "https://eurofoodsbakeryandcafe.com/",
   "lat": 32.81584,
-  "lon": -79.99325
+  "lon": -79.99325,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://eurofoodsbakeryandcafe.com/",
+    "says": "Pavlichenko is from Ukraine"
+   }
+  ]
  },
  {
   "name": "Emish Market",
   "kind": "Grocery",
   "street": "2040 70th Avenue East",
   "city": "Fife",
+  "state": "Washington",
   "web": "https://www.emishmarket.com/",
   "lat": 47.23878,
-  "lon": -122.33707
+  "lon": -122.33707,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.emishmarket.com/",
+    "says": "Ukrainian Grocery Store"
+   }
+  ]
  },
  {
   "name": "Inna's Cuisine",
   "kind": "Restaurant",
   "street": "26 North Wenatchee Avenue",
   "city": "Wenatchee",
+  "state": "Washington",
   "web": "https://www.innas-cuisine.com/",
   "lat": 47.4254,
-  "lon": -120.31255
+  "lon": -120.31255,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.innas-cuisine.com/",
+    "says": "an eclectic mix of Ukrainian, Greek, and Italian cuisine"
+   }
+  ]
+ },
+ {
+  "name": "Olesia's Taverne",
+  "kind": "Restaurant",
+  "street": "3960 Broadview Road",
+  "city": "Richfield",
+  "state": "Ohio",
+  "web": "https://www.olesiastaverne.com/",
+  "lat": 41.24005,
+  "lon": -81.65543,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.olesiastaverne.com",
+    "says": "where fine dining meets Ukrainian flair"
+   },
+   {
+    "by": "own website",
+    "url": "https://www.olesiastaverne.com/about",
+    "says": "As a Ukrainian native"
+   }
+  ]
+ },
+ {
+  "name": "Chef Sergey's Bakery",
+  "kind": "Bakery",
+  "street": "136 Ashman Circle",
+  "city": "Midland",
+  "state": "Michigan",
+  "web": "https://www.sergeysbakery.com/",
+  "lat": 43.62666,
+  "lon": -84.2281,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.sergeysbakery.com/our-story",
+    "says": "We are two families from Ukraine"
+   },
+   {
+    "by": "WCMU",
+    "url": "https://www.wcmu.org/local-regional-news/2025-01-21/home-and-hope-ukrainian-refugees-open-bakery-in-midland",
+    "says": "Ukrainian refugees open bakery in Midland"
+   }
+  ]
+ },
+ {
+  "name": "Borsch House",
+  "kind": "Counter service",
+  "street": "241 Division Street",
+  "city": "Altoona",
+  "state": "Wisconsin",
+  "web": "https://borschhouse.square.site/",
+  "lat": 44.80686,
+  "lon": -91.4337,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://borschhouse.square.site/",
+    "says": "A Taste of Ukraine"
+   },
+   {
+    "by": "WEAU",
+    "url": "https://www.weau.com/2025/08/21/ukrainian-refugees-follow-american-dream-with-restaurant/",
+    "says": "Ukrainian refugees"
+   }
+  ]
+ },
+ {
+  "name": "Taste of Ukraine",
+  "kind": "Bakery",
+  "street": "389 Dover Chester Road",
+  "city": "Randolph",
+  "state": "New Jersey",
+  "web": "https://www.tasteofukrainellc.com/",
+  "lat": 40.82253,
+  "lon": -74.62616,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.tasteofukrainellc.com/",
+    "says": "Delicious authentic Ukrainian food"
+   }
+  ]
+ },
+ {
+  "name": "The Golden Boar",
+  "kind": "Restaurant",
+  "street": "2158 East County Line Road",
+  "city": "Huntingdon Valley",
+  "state": "Pennsylvania",
+  "web": "https://www.goldenboarrestaurant.com/",
+  "lat": 40.17029,
+  "lon": -75.0736,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.goldenboarrestaurant.com/",
+    "says": "Authentic Ukrainian and Eastern European Food"
+   }
+  ]
+ },
+ {
+  "name": "European Dumplings Cafe",
+  "kind": "Restaurant",
+  "street": "2211 Northwest Military Highway",
+  "city": "Castle Hills",
+  "state": "Texas",
+  "web": "https://www.europeandumplings.com/",
+  "lat": 29.53344,
+  "lon": -98.52298,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.europeandumplings.com/",
+    "says": "Welcome to our Ukrainian restaurant"
+   }
+  ]
+ },
+ {
+  "name": "European Dumplings Cafe",
+  "kind": "Restaurant",
+  "street": "8065 Callaghan Road",
+  "city": "San Antonio",
+  "state": "Texas",
+  "web": "https://www.europeandumplings.com/",
+  "lat": 29.5123,
+  "lon": -98.55155,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.europeandumplings.com/",
+    "says": "Welcome to our Ukrainian restaurant"
+   }
+  ]
  }
 ]

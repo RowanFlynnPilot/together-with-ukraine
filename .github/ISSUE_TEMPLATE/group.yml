@@ -1,0 +1,26 @@
+name: Suggest a group to give to · Запропонувати організацію
+description: A charity or Ukrainian organization for the Give tab.
+title: "Group: "
+labels: [give]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A US charity must appear in IRS records. A Ukrainian group must publish reports or audits, or be confirmed by an independent source.
+        Американська благодійна організація має бути в реєстрі IRS. Українська — публікувати звіти чи аудити або мати незалежне підтвердження.
+  - type: input
+    id: name
+    attributes:
+      label: Name and website · Назва та сайт
+    validations:
+      required: true
+  - type: input
+    id: ein
+    attributes:
+      label: EIN, for a US charity · EIN для американської організації
+  - type: textarea
+    id: reports
+    attributes:
+      label: Where it publishes reports or audits · Де вона публікує звіти чи аудити
+    validations:
+      required: true

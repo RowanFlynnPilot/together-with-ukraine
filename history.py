@@ -3,8 +3,12 @@ Ukrainian text lives in history_uk.py, keyed by the English title; a missing tra
 check.py confirms the source links still load."""
 import html
 
-from i18n import both
+from i18n import both, slug
 import history_uk as UK
+
+# The day the entries about the war as it stands were last brought up to date. check.py fails
+# once this is more than four months old, as a reminder to revise them.
+AS_OF = '2026-10-03'
 
 IEU = 'https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5C'
 def ieu(title, path): return (f'Encyclopedia of Ukraine, “{title}”', IEU + path)
@@ -115,8 +119,16 @@ ERAS = [
  ]),
 ]
 
-def render():
-    """Returns the timeline HTML in both languages, the entry count, and the era list for the jump links."""
+def event_id(title): return 'event-' + slug(title)
+
+def targets():
+    """English title -> (element id, English label, Ukrainian label), for links from other sections."""
+    return {title: (event_id(title), f'{year}: {title}', f'{UK.YEARS.get(year, year)}: {UK.EVENTS[title][0]}')
+            for _, _, _, events in ERAS for year, title, _, _ in events}
+
+def render(story_links):
+    """Returns the timeline HTML in both languages, the entry count, and the era list for the jump links.
+    story_links maps an event id to [(story id, English label, Ukrainian label)]."""
     e = html.escape; out = []; n = 0; eras = []
     for era_id, name, span, events in ERAS:
         name_uk, span_uk = UK.ERAS[name]; eras.append((era_id, name, name_uk))
@@ -125,7 +137,9 @@ def render():
             title_uk, text_uk = UK.EVENTS[title]
             links = '; '.join(f'<a href="{e(url)}" target="_blank" rel="noopener">{e(label)}</a>' for label, url in sources)
             label = both('Sources', 'Джерела') if len(sources) > 1 else both('Source', 'Джерело')
-            out.append(f'        <li class="event"><span class="year">{both(year, UK.YEARS.get(year, year))}</span><div><h4>{both(title, title_uk)}</h4><p>{both(text, text_uk)}</p><p class="src">{label}: {links}</p></div></li>')
+            stories = ''.join(f'<p class="src story-link"><a href="#{sid}">{both("A story from this time: " + en, "Історія з цього часу: " + uk)}</a></p>'
+                              for sid, en, uk in story_links.get(event_id(title), []))
+            out.append(f'        <li class="event" id="{event_id(title)}" tabindex="-1"><span class="year">{both(year, UK.YEARS.get(year, year))}</span><div><h4>{both(title, title_uk)}</h4><p>{both(text, text_uk)}</p><p class="src">{label}: {links}</p>{stories}</div></li>')
             n += 1
         out.append('      </ol>\n    </div>')
     return '\n'.join(out), n, eras

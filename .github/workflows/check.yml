@@ -1,7 +1,8 @@
 name: Check sources
 
-# Every Monday, re-verify the charity records and every link on the page.
-# A failed run means something changed or broke: read the log, then see README.md.
+# Every Monday, re-verify the charity records, every link on the page, the evidence phrases on
+# those pages, and the review dates. A failed run means something changed, broke or went stale:
+# read the log, then see README.md.
 on:
   schedule:
     - cron: '0 13 * * 1'
@@ -13,6 +14,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6

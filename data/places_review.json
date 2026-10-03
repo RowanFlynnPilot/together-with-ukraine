@@ -1,28 +1,5 @@
 {
- "listed": {
-  "Kramarczuk's Sausage Company": "own website; runs Ukraine relief fundraising",
-  "Soup & Sausage Bistro": "own website: 'Ukrainian Restaurant in Phoenix'",
-  "Leleka": "own website: 'Authentic Ukrainian Cuisine'",
-  "Mom, Please": "trades as 'Mom, Please Ukrainian Food'; Resy profile, Nov 2025: family-run Ukrainian",
-  "Misto": "own website: Ukrainian co-owner",
-  "Streecha Ukrainian Kitchen": "Untapped Cities, EV Grieve, NYU News: fundraising kitchen for St. George Ukrainian Catholic Church",
-  "Old Lviv": "Yelp and MapQuest listings: Ukrainian restaurant",
-  "Veselka": "own website; 'Stand with Ukraine' page",
-  "Tryzub Ukrainian Kitchen": "own website",
-  "Ukrainian East Village Restaurant": "Untapped Cities, Wikipedia: restaurant inside the Ukrainian National Home",
-  "Sorso": "own website: 'Italian elegance reimagined with Ukrainian soul'",
-  "Magic Jug": "own website: 'Ukrainian restaurant'",
-  "Ruta": "own website: 'first Ukrainian restaurant in the DMV area'",
-  "Olesya's Kitchen": "own website: 'The only Ukrainian restaurant in Indiana'",
-  "Patisserie Svoi": "own website: owners' traditional Ukrainian medovik",
-  "Tatiana's Restaurant": "PennLive, May 2023, and WITF: Mediterranean and Ukrainian cuisine",
-  "Molotov Kitschen + Cocktails": "own website: Ukrainian American chef-owner",
-  "ofKors Bakery": "SRQ Magazine and Sarasota Magazine: Ukrainian owners",
-  "Ukrainian Cuisine Restaurant": "lodge website: 'our Ukrainian cuisine restaurant'",
-  "Euro Foods": "own website: co-founder is from Ukraine",
-  "Emish Market": "own website: 'Ukrainian Grocery Store'",
-  "Inna's Cuisine": "own website: traditional Ukrainian dishes"
- },
+ "reviewed": "2026-10-03",
  "held": {
   "Traktir": "own website calls it a Russian restaurant",
   "Solodko Boston": "Ukrainian-owned, but no longer at the Brighton address (listings now show Walpole, catering)",
@@ -31,6 +8,17 @@
   "Café Dacha": "no confirmation found",
   "Krasa": "listings disagree (burgers / Ukrainian); no own-site confirmation",
   "Pal-Man Kitchen": "aggregator listings only",
-  "MultiCook Austin": "own site says Eastern European frozen meals, not Ukrainian"
+  "MultiCook Austin": "own site says Eastern European frozen meals, not Ukrainian",
+  "Mama Maria's Ukrainian Kitchen (Parma, OH)": "National Geographic calls it Ukrainian-owned, but it has no website and its name differs across listings",
+  "Lviv International Food (Parma, OH)": "its own page says 'European food' and the newest review found is from 2023",
+  "Ukrainian Cultural Center (Warren, MI)": "an event hall whose weekly public buffet is mostly American food",
+  "Christine's Cuisine (Ferndale, MI)": "own site says 'eastern European comfort food'",
+  "Taste it (Green Bay, WI)": "a mall kiosk selling European sweets; little evidence it is open",
+  "Touch of Ukraine (Madison, WI)": "closed May 31, 2025 (Spectrum News)",
+  "Just Right Cake (Wausau, WI)": "Ukrainian-owned bakery, marked temporarily closed in October 2026; check again later",
+  "Wonder Foods (Warminster, PA)": "own site says 'Eastern European and Jewish cuisine'; only one 2023 article calls it Ukrainian",
+  "Esthetic Bean (South Boston, MA)": "an American cafe whose owner is from Ukraine",
+  "Hatta Ukrainian Cuisine (Wood Village, OR)": "no website; evidence is its own Instagram and a state tourism page, not press",
+  "Multicook stores (Frisco, TX; Philadelphia, PA; and others)": "the brand site now says 'a Ukrainian family business'; held pending a decision on whether frozen-food shops belong on the list (this also covers MultiCook Austin)"
  }
 }

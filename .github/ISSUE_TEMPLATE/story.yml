@@ -1,0 +1,24 @@
+name: Suggest a story · Запропонувати історію
+description: A published report about a Ukrainian person or family.
+title: "Story: "
+labels: [story]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Stories come from news organizations, UN agencies, museums and archives, or established documentary projects, and must be free to read. The person must be named in the report. Stories about people in Russian-occupied territory, or that could put someone at risk, are not used.
+        Історії беремо з медіа, агенцій ООН, музеїв і архівів або визнаних документальних проєктів, і їх мають бути змога прочитати безкоштовно.
+  - type: input
+    id: link
+    attributes:
+      label: Link to the report · Посилання на матеріал
+    validations:
+      required: true
+  - type: input
+    id: link_uk
+    attributes:
+      label: The same report in Ukrainian, if there is one · Той самий матеріал українською, якщо є
+  - type: textarea
+    id: why
+    attributes:
+      label: Who it is about, and why it belongs here · Про кого він і чому його варто додати

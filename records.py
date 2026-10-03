@@ -1,5 +1,8 @@
 """Pull the public records the Give section relies on: IRS filings (through ProPublica's
-Nonprofit Explorer) and Charity Navigator ratings. Used by refresh.py and check.py."""
+Nonprofit Explorer) and Charity Navigator ratings. Used by refresh.py and check.py.
+
+A page that loads but cannot be read stops with an error rather than returning empty values,
+so a change in a site's layout is never mistaken for a charity losing its rating."""
 import re
 
 from curl_cffi import requests
@@ -21,12 +24,15 @@ def irs_record(ein):
     }
 
 def charity_navigator_record(ein):
-    response = get(f'https://www.charitynavigator.org/ein/{ein}')
+    url = f'https://www.charitynavigator.org/ein/{ein}'
+    response = get(url)
     response.raise_for_status()
     stars = re.search(r'"ratingValue":(\d)', response.text)
+    if not stars:
+        if '<span>Not Rated</span>' not in response.text:
+            raise ValueError(f'{url} shows neither a star rating nor "Not Rated"; its layout changed, so update records.py')
+        return {'stars': None, 'program_ratio': None, 'program_years': None}
     ratio = re.search(r'Program Expense Ratio\\",\\"value\\":\\"([\d.]+)% of total expenses\\",\\"description\\":\\"[^"]*?\\",\\"dataSource\\":\\"Public data from IRS Form 990\. Fiscal Years? ([\d, ]+)', response.text)
-    return {
-        'stars': stars.group(1) if stars else None,
-        'program_ratio': float(ratio.group(1)) if ratio else None,
-        'program_years': ratio.group(2).strip() if ratio else None,
-    }
+    if not ratio:
+        raise ValueError(f'{url} has a star rating but no program expense ratio; its layout changed, so update records.py')
+    return {'stars': stars.group(1), 'program_ratio': float(ratio.group(1)), 'program_years': ratio.group(2).strip()}

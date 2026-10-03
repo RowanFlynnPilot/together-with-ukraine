@@ -1,15 +1,16 @@
-"""Build site/index.html from the content modules, the data folder and template.html.
+"""Build site/index.html, and the image shown when the page is shared, from the content modules,
+the data folder and template.html.
 
-Uses no network. A missing translation, an unknown state or kind of place, or a US charity
-without a pulled record stops the build."""
-import json, pathlib, sys
+Uses no network. The build stops on a missing translation, an unknown state or kind of place, a place
+whose coordinates fall outside its state, a link to an anchor that does not exist, two elements with
+the same id, or a US charity without a pulled record."""
+import json, pathlib, re, struct, sys, zlib
+from collections import Counter
 
-import give, history, places_uk
-from i18n import both, fill_markers
+import give, history, places, places_uk, stories
+from i18n import both, dates, fill_markers
 
 ROOT = pathlib.Path(__file__).parent
-MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-MONTHS_UK = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня']
 
 def read_json(name):
     return json.loads((ROOT / 'data' / name).read_text(encoding='utf-8'))
@@ -18,40 +19,67 @@ def embed(obj):
     """JSON that is safe inside a <script> element."""
     return json.dumps(obj, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 
+def cross_links():
+    """Where each story links to in other sections, and the links back from those sections to the story."""
+    targets = {(kind, key): value for kind, module in (('history', history), ('place', places), ('give', give))
+               for key, value in module.targets().items()}
+    back = {'history': {}, 'place': {}, 'give': {}}
+    for story_id, en, uk, kind, key in stories.related():
+        if (kind, key) not in targets: raise ValueError(f'{story_id} links to {kind} {key!r}, which is not on the page')
+        back[kind].setdefault(targets[kind, key][0], []).append((story_id, en, uk))
+    return targets, back
+
+def nav(items, indent='      '):
+    return '\n'.join(f'{indent}<a href="#{i}">{both(en, uk)}</a>' for i, en, uk in items)
+
 def build():
-    places = read_json('places.json')
-    states = read_json('states-10m.json')
-    state_names = {g['properties']['name'] for g in states['objects']['states']['geometries'] if int(g['id']) < 60}
-    if missing := state_names - set(places_uk.STATES):
-        raise ValueError(f'no Ukrainian name for states: {missing}')
-    if missing := {p['kind'] for p in places} - set(places_uk.KINDS):
-        raise ValueError(f'no Ukrainian name for kinds of place: {missing}')
-    for p in places:
-        if p['web'] and not p['web'].startswith(('https://', 'http://')):
-            raise ValueError(f"bad website for {p['name']}: {p['web']}")
+    for name in places.STATE_IDS:
+        if name not in places_uk.STATES: raise ValueError(f'no Ukrainian name for state: {name}')
 
-    year, month, day = (int(x) for x in read_json('checked.json')['date'].split('-'))
-    checked_en = f'{MONTHS_EN[month - 1]} {day}, {year}'
-    checked_uk = f'{day} {MONTHS_UK[month - 1]} {year} року'
-
-    timeline, _, eras = history.render()
-    give_html, _ = give.render()
-    era_nav = '\n'.join(f'      <button data-era="{i}">{both(en, uk)}</button>' for i, en, uk in eras)
+    targets, back = cross_links()
+    timeline, _, eras = history.render(back['history'])
+    people, _, themes = stories.render(targets)
+    give_html, _ = give.render(back['give'])
+    records_en, records_uk = dates(read_json('checked.json')['records'])
+    give_en, give_uk = dates(give.REVIEWED)
+    places_en, places_uk_date = dates(places.REVIEW['reviewed'])
+    summary_en, summary_uk = places.summary()
 
     template = (ROOT / 'template.html').read_text(encoding='utf-8')
     page = (fill_markers(template)
-            .replace('__ERA_NAV__', era_nav).replace('__HISTORY__', timeline).replace('__GIVE__', give_html)
-            .replace('__PULLED_EN__', checked_en).replace('__PULLED_UK__', checked_uk)
-            .replace('__PLACES__', embed(places)).replace('__STATES__', embed(states))
-            .replace('__PLACES_UK__', embed({'states': places_uk.STATES, 'kinds': places_uk.KINDS})))
+            .replace('__ERA_NAV__', nav(eras)).replace('__HISTORY__', timeline)
+            .replace('__THEME_NAV__', nav(themes)).replace('__STORIES__', people)
+            .replace('__PLACES_SUMMARY__', both(summary_en, summary_uk)).replace('__PLACE_LIST__', places.render(back['place']))
+            .replace('__GIVE__', give_html)
+            .replace('__RECORDS_EN__', records_en).replace('__RECORDS_UK__', records_uk)
+            .replace('__GIVE_REVIEWED_EN__', give_en).replace('__GIVE_REVIEWED_UK__', give_uk)
+            .replace('__PLACES_REVIEWED_EN__', places_en).replace('__PLACES_REVIEWED_UK__', places_uk_date)
+            .replace('__PLACES__', embed(places.map_data())).replace('__STATES__', embed(places.TOPO))
+            .replace('__PLACES_UK__', embed({'states': places_uk.STATES})))
+
     markup = page.split('<script type="application/json"')[0]
     if '__' in markup or '{{' in markup:
         raise ValueError('unfilled placeholder in template.html')
+    ids = Counter(re.findall(r'\sid="([^"]+)"', markup))
+    if duplicates := sorted(i for i, n in ids.items() if n > 1):
+        raise ValueError(f'more than one element has the id: {duplicates}')
+    if broken := sorted(set(re.findall(r'href="#([^"]+)"', markup)) - set(ids)):
+        raise ValueError(f'links to anchors that do not exist: {broken}')
     return page
+
+def flag_png(width=1200, height=630):
+    """The Ukrainian flag as a PNG, for link previews. Two solid bands compress to almost nothing."""
+    def chunk(kind, data):
+        return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data))
+    blue, yellow = bytes((0x00, 0x57, 0xB7)) * width, bytes((0xFF, 0xD7, 0x00)) * width
+    rows = b''.join(b'\x00' + (blue if y < height // 2 else yellow) for y in range(height))
+    return (b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', width, height, 8, 2, 0, 0, 0))
+            + chunk(b'IDAT', zlib.compress(rows, 9)) + chunk(b'IEND', b''))
 
 if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
     out = ROOT / 'site' / 'index.html'
     out.parent.mkdir(exist_ok=True)
     out.write_text(build(), encoding='utf-8')
+    (out.parent / 'preview.png').write_bytes(flag_png())
     print(f'built {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)')
