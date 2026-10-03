@@ -31,7 +31,7 @@ python refresh.py; git diff data/              # pull fresh records after check.
 | `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter and the map. `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
 | `build.py` | Assembles the page and resolves the links between sections. No network. Stops on a missing translation, a link to an anchor that does not exist, or two elements with the same id. |
 | `history.py` / `history_uk.py` | Timeline entries with their sources / the Ukrainian text, keyed by English title. `AS_OF` dates the entries about the war today. |
-| `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, and related entries elsewhere on the page. |
+| `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, related entries elsewhere on the page, and optionally a `photo(...)`. |
 | `places.py` | Loads and validates `data/places.json`: checks each place's coordinates fall inside the state it names (point-in-polygon on the TopoJSON), and renders the list. |
 | `give.py` | Organizations, each text an (English, Ukrainian) pair, each with a list of checks. US charities pull facts from `data/`. `REVIEWED` is the date of the last review by hand. A check can carry a fourth item, a phrase its page must contain. |
 | `i18n.py` | `both()`, the `{{..||..}}` marker filler, dates in both languages, Ukrainian plurals, slugs. |
@@ -42,6 +42,7 @@ python refresh.py; git diff data/              # pull fresh records after check.
 | `data/places.json` | The listed businesses, maintained by hand. Each has `state` (full name) and `basis`: a list of `{by, url, says}`, where `by` is `own website` or an outlet name and `says` is an exact phrase on that page. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
+| `images/` | Photos for the stories, openly licensed (rule 7). Copied to `site/images/` by the build. |
 | `.github/ISSUE_TEMPLATE/` | Forms for suggesting a place, story or group, or reporting a mistake. The footer links to them. |
 
 Both languages are in the built page. CSS shows the one matching `<html data-lang>`; the script
@@ -75,6 +76,14 @@ works without the script; the map is drawn last, so a CDN failure takes out only
    family but not the Ukrainian workers whose work permits lapsed. Link the Ukrainian version of
    the report when the outlet published one. Each source's phrase (usually the surname as that
    page spells it) is what `check.py` looks for.
+7. **Photos.** Only openly licensed or public-domain photos, from Wikimedia Commons, credited with
+   author, license and a link, as the license requires. Never a photo from the outlet's article,
+   even credited: credit is not permission, and agency photos (AFP, AP, Getty) bring demand
+   letters. No photos of private people, which would add to what identifies them. Check a
+   "public domain" claim before trusting it: a VOA photo was rejected because VOA also runs wire
+   photos, and a Ukrainian stamp of Prymachenko's art because her paintings are still under
+   copyright. Save the Commons thumbnail (about 500 px) in `images/`; `check.py` confirms the
+   Commons page still shows the license.
 
 ## Deliberately not listed
 

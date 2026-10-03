@@ -1,5 +1,5 @@
-"""Build site/index.html, and the image shown when the page is shared, from the content modules,
-the data folder and template.html.
+"""Build site/index.html, the image shown when the page is shared, and site/images/ (the stories'
+photos), from the content modules, the data and images folders, and template.html.
 
 Uses no network. The build stops on a missing translation, an unknown state or kind of place, a place
 whose coordinates fall outside its state, a link to an anchor that does not exist, two elements with
@@ -82,4 +82,7 @@ if __name__ == '__main__':
     out.parent.mkdir(exist_ok=True)
     out.write_text(build(), encoding='utf-8')
     (out.parent / 'preview.png').write_bytes(flag_png())
+    (out.parent / 'images').mkdir(exist_ok=True)
+    for photo in stories.photos():
+        (out.parent / 'images' / photo.name).write_bytes(photo.read_bytes())
     print(f'built {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)')
