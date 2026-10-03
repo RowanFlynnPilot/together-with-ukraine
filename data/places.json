@@ -2258,5 +2258,25 @@
     "says": "the eatery owned by a Ukrainian-American family"
    }
   ]
+ },
+ {
+  "name": "Alexa's Creperie",
+  "kind": "Café",
+  "street": "238 Cornerstone Boulevard",
+  "city": "Hot Springs",
+  "state": "Arkansas",
+  "web": "https://alexascreperie.com",
+  "lat": 34.46064,
+  "lon": -93.05972,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Arkansas Times",
+    "url": "https://arktimes.com/dining/dining-feature/2022/04/26/from-ukraine-to-hot-springs-alexas-creperie-is-a-family-owned-european-cafe-that-has-spanned-15-years-and-two-continents",
+    "says": "Yana is from the Poltava region of central Ukraine"
+   }
+  ]
  }
 ]
