@@ -135,7 +135,12 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 /* People */
 .theme { margin: 0 0 3rem; }
 .stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; margin-top: 1rem; }
-.story { padding: 1.25rem 0 1.5rem; border-top: 1px solid var(--line); }
+.story { padding: 1.25rem 0 1.5rem; border-top: 1px solid var(--line); display: flow-root; }
+.story-photo { float: right; width: 8.5rem; margin: 0.3rem 0 0.75rem 1.25rem; }
+.story-photo img { display: block; width: 100%; height: auto; background: var(--wash); }
+.story-photo figcaption { margin-top: 0.35rem; font-size: 0.8125rem; line-height: 1.3; color: var(--muted); }
+.story-photo figcaption a { color: inherit; }
+@media (max-width: 34rem) { .story-photo { width: 6.5rem; margin-left: 1rem; } }
 .story-who { margin: 0; color: var(--muted); font-size: 1rem; }
 .story h4 { margin: 0.2rem 0 0.4rem; font-size: 1.25rem; line-height: 1.25; }
 .story p { margin: 0; }
@@ -396,6 +401,7 @@ function setLang(next) {
   document.documentElement.dataset.lang = next;
   document.title = TEXT[next].title;
   for (const b of langButtons) b.setAttribute('aria-pressed', String(b.dataset.setLang === next));
+  for (const img of document.querySelectorAll('img[data-alt-uk]')) img.alt = next === 'uk' ? img.dataset.altUk : img.dataset.altEn;
   try { localStorage.setItem('lang', next); } catch (error) { /* storage unavailable: the choice lasts for this visit */ }
   placesLang();
   mapLang();
