@@ -1,0 +1,58 @@
+{
+ "464604398": {
+  "name": "Razom Inc",
+  "city": "New York",
+  "state": "NY",
+  "ruling": "2015-02-01",
+  "latest_year": 2023,
+  "revenue": 50983503
+ },
+ "465335435": {
+  "name": "Nova Ukraine",
+  "city": "Palo Alto",
+  "state": "CA",
+  "ruling": "2015-04-01",
+  "latest_year": 2023,
+  "revenue": 31397728
+ },
+ "471837509": {
+  "name": "United Help Ukraine",
+  "city": "Fairfax",
+  "state": "VA",
+  "ruling": "2015-06-01",
+  "latest_year": 2023,
+  "revenue": 18532403
+ },
+ "472620675": {
+  "name": "Sunflower Of Peace",
+  "city": "Newton",
+  "state": "MA",
+  "ruling": "2015-06-01",
+  "latest_year": 2023,
+  "revenue": 1587755
+ },
+ "991441326": {
+  "name": "Prytula Foundation Usa",
+  "city": "Chicago",
+  "state": "IL",
+  "ruling": "2024-03-01",
+  "latest_year": null,
+  "revenue": null
+ },
+ "882437069": {
+  "name": "Protez Foundation",
+  "city": "Oakdale",
+  "state": "MN",
+  "ruling": "2022-06-01",
+  "latest_year": 2023,
+  "revenue": 3540039
+ },
+ "883527494": {
+  "name": "Engin Inc",
+  "city": "Stamford",
+  "state": "CT",
+  "ruling": "2022-09-01",
+  "latest_year": 2023,
+  "revenue": 1238335
+ }
+}

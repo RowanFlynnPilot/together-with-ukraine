@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Together with Ukraine</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root {
+  --sky: #0057B7;
+  --wheat: #FFD700;
+  --flag-ink: #0B1F3A;
+  --paper: #FFFFFF;
+  --wash: #EEF3FA;
+  --ink: #0B1F3A;
+  --muted: #4A5B74;
+  --line: #C3D2E6;
+  --link: #0057B7;
+  --map-land: #DCE6F4;
+  --map-has: #9DBDE8;
+  --map-sel: #0057B7;
+  --map-edge: #FFFFFF;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0A1626;
+    --wash: #12233A;
+    --ink: #EAF0F8;
+    --muted: #A8B8CE;
+    --line: #2A4263;
+    --link: #8DBEFF;
+    --map-land: #1B3050;
+    --map-has: #2F5C9C;
+    --map-sel: #8DBEFF;
+    --map-edge: #0A1626;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0A1626;
+  --wash: #12233A;
+  --ink: #EAF0F8;
+  --muted: #A8B8CE;
+  --line: #2A4263;
+  --link: #8DBEFF;
+  --map-land: #1B3050;
+  --map-has: #2F5C9C;
+  --map-sel: #8DBEFF;
+  --map-edge: #0A1626;
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Arsenal", "Segoe UI", system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+[hidden] { display: none !important; }
+/* Both languages are in the page; only the active one is shown. */
+html[data-lang="en"] [data-l="uk"], html[data-lang="uk"] [data-l="en"] { display: none !important; }
+a { color: var(--link); }
+:focus-visible { outline: 3px solid var(--wheat); outline-offset: 2px; box-shadow: 0 0 0 5px var(--flag-ink); }
+.wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
+
+/* The flag: sky over wheat */
+.sky { background: var(--sky); color: #FFFFFF; padding: 1.25rem 0 3rem; }
+.lang { display: flex; justify-content: flex-end; gap: 0.25rem; margin-bottom: 1.75rem; }
+.lang button { font: inherit; font-size: 1rem; color: #FFFFFF; background: transparent; border: 2px solid transparent; padding: 0.3rem 0.7rem; cursor: pointer; }
+.lang button[aria-pressed="true"] { border-color: #FFFFFF; font-weight: 700; }
+.lang button[aria-pressed="false"] { text-decoration: underline; }
+.title { margin: 0; font-weight: 700; }
+.title-uk { display: block; font-size: clamp(2.75rem, 10vw, 7rem); line-height: 0.95; letter-spacing: -0.01em; }
+.title-en { display: block; margin-top: 1rem; font-size: clamp(1.25rem, 2.6vw, 1.75rem); font-weight: 400; }
+.lede { margin: 1.5rem 0 0; max-width: 36rem; }
+.wheat { background: var(--wheat); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; }
+.tabs { display: flex; }
+.tab {
+  flex: 1 1 0;
+  font: inherit; font-weight: 700; font-size: 1.125rem;
+  color: var(--flag-ink); background: transparent;
+  border: 0; padding: 1.6rem 0.5rem; cursor: pointer;
+}
+.tab[aria-selected="true"] { background: var(--flag-ink); color: var(--wheat); }
+@media (max-width: 34rem) { .tab { padding: 1.1rem 0.25rem; } }
+
+main.wrap { padding-top: 3rem; padding-bottom: 4rem; }
+h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 0.75rem; }
+h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
+.intro { max-width: 40rem; margin: 0 0 2.5rem; color: var(--muted); }
+.intro.tight { margin-bottom: 1rem; }
+
+/* History */
+.era-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin: 0 0 2.5rem; }
+.era-nav button { font: inherit; color: var(--link); background: none; border: 0; padding: 0.25rem 0; text-decoration: underline; cursor: pointer; }
+.era { margin: 0 0 3rem; max-width: 46rem; scroll-margin-top: 6.5rem; }
+.era-range { color: var(--muted); font-weight: 400; margin-left: 0.5rem; }
+.events { list-style: none; margin: 1.25rem 0 0; padding: 0 0 0 1.5rem; border-left: 2px dashed var(--line); }
+.event { display: grid; grid-template-columns: 7.75rem 1fr; column-gap: 1.25rem; padding: 0.9rem 0; }
+.year { font-weight: 700; color: var(--link); font-variant-numeric: tabular-nums; }
+.event h4 { margin: 0 0 0.25rem; font-size: 1.125rem; }
+.event p { margin: 0; }
+.src { margin: 0.35rem 0 0; font-size: 0.9375rem; color: var(--muted); }
+.src a { color: inherit; }
+@media (max-width: 34rem) {
+  .event { grid-template-columns: 1fr; }
+  .events { padding-left: 1rem; }
+}
+
+/* Places */
+.places-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+.map-col { position: sticky; top: 6.25rem; }
+#map { width: 100%; height: auto; display: block; }
+.state { fill: var(--map-land); stroke: var(--map-edge); stroke-width: 1; cursor: pointer; }
+.state.has { fill: var(--map-has); }
+.state.sel { fill: var(--map-sel); }
+.dot { fill: var(--wheat); stroke: #0B1F3A; stroke-width: 1.5; pointer-events: none; }
+.filter { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 1.25rem; }
+.filter label { font-weight: 700; }
+select {
+  font: inherit; color: var(--ink); background: var(--paper);
+  border: 2px solid var(--ink); border-radius: 0; padding: 0.4rem 0.6rem; max-width: 100%;
+}
+.group-name { margin: 1.75rem 0 0.25rem; font-size: 1.125rem; color: var(--muted); font-weight: 700; }
+.group-name:first-child { margin-top: 0; }
+.place { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+.place-name { font-weight: 700; margin: 0; }
+.place-meta { margin: 0; color: var(--muted); }
+.place-links { margin: 0.15rem 0 0; display: flex; gap: 1.25rem; }
+.note { background: var(--wash); padding: 1.1rem 1.25rem; margin: 1.75rem 0 0; }
+.note p { margin: 0; }
+.note p + p { margin-top: 0.6rem; }
+@media (max-width: 54rem) {
+  /* One column: map, then the list, then the note. */
+  .places-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+  .map-col { display: contents; }
+  .note { order: 1; margin-top: 0; }
+}
+
+/* Give */
+.cause { margin: 0 0 2.75rem; }
+.cause-intro { margin: 0.35rem 0 0; max-width: 42rem; color: var(--muted); }
+.check-note { max-width: 46rem; margin-top: 0; }
+.check-note ul { margin: 0.6rem 0 0; padding-left: 1.2rem; }
+.check-note li + li { margin-top: 0.4rem; }
+.org { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 2rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+.org-text { max-width: 42rem; }
+.org-name { margin: 0; font-size: 1.25rem; font-weight: 700; }
+.org-kind { margin: 0; color: var(--muted); }
+.org-what { margin: 0.35rem 0 0; }
+.give-link {
+  display: inline-block; background: var(--sky); color: #FFFFFF; font-weight: 700;
+  text-decoration: none; padding: 0.7rem 1.1rem; white-space: nowrap;
+}
+.give-link:hover { background: var(--flag-ink); color: var(--wheat); }
+@media (max-width: 44rem) {
+  .org { grid-template-columns: 1fr; }
+  .give-link { justify-self: start; }
+}
+
+footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var(--muted); font-size: 1rem; }
+footer p { margin: 0 0 0.4rem; max-width: 46rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="sky">
+    <div class="wrap">
+      <div class="lang" role="group" aria-label="Language / Мова">
+        <button type="button" data-set-lang="en" aria-pressed="true">English</button>
+        <button type="button" data-set-lang="uk" aria-pressed="false" lang="uk">Українська</button>
+      </div>
+      <h1 class="title">
+        <span class="title-uk" lang="uk">Разом з Україною</span>
+        <span class="title-en" data-l="en">Together with Ukraine</span>
+      </h1>
+      <p class="lede">{{Read how Ukraine got here, eat and shop at Ukrainian places in the United States, and give to the people defending the country.||Дізнайтеся, який шлях пройшла Україна, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто захищає країну.}}</p>
+    </div>
+  </div>
+</header>
+<!-- Outside the header so it can stay stuck to the top while the page scrolls. -->
+<div class="wheat">
+  <div class="wrap tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-history" aria-controls="history" aria-selected="true">{{History||Історія}}</button>
+    <button class="tab" role="tab" id="tab-places" aria-controls="places" aria-selected="false" tabindex="-1">{{Eat and shop||Заклади}}</button>
+    <button class="tab" role="tab" id="tab-give" aria-controls="give" aria-selected="false" tabindex="-1">{{Give||Допомогти}}</button>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <section id="history" role="tabpanel" aria-labelledby="tab-history">
+    <h2>{{Eleven centuries, briefly||Одинадцять століть коротко}}</h2>
+    <p class="intro tight">{{Ukraine has been a medieval state, a land divided among empires, a Soviet republic and an independent country. Every entry links to the source it was checked against.||Україна була середньовічною державою, землею, поділеною між імперіями, радянською республікою і незалежною країною. До кожного запису додано джерело, за яким його перевірено.}}</p>
+    <nav class="era-nav" aria-label="Jump to an era">
+__ERA_NAV__
+    </nav>
+
+__HISTORY__
+  </section>
+
+  <section id="places" role="tabpanel" aria-labelledby="tab-places" hidden>
+    <h2>{{Ukrainian restaurants, delis and markets||Українські ресторани, кулінарії та крамниці}}</h2>
+    <p class="intro" id="places-summary"></p>
+    <div class="places-grid">
+      <div class="map-col">
+        <svg id="map" viewBox="0 0 975 610" role="img"></svg>
+        <div class="note">
+          <p>{{Every place here calls itself Ukrainian on its own website or is described that way by local press. The list is short because it leaves out places that could not be confirmed. Check hours before you go.||Кожен заклад у цьому списку називає себе українським на власному сайті або так його описує місцева преса. Список короткий, бо до нього не потрапили заклади, які не вдалося підтвердити. Перед візитом перевірте години роботи.}}</p>
+          <p data-l="en">Nothing near you? <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> lists more than 200 Ukrainian companies that sell online.</p>
+          <p data-l="uk" lang="uk">Поблизу нічого немає? На сайті <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> зібрано понад 200 українських компаній, які продають онлайн.</p>
+        </div>
+      </div>
+      <div>
+        <div class="filter">
+          <label for="state-select">{{State||Штат}}</label>
+          <select id="state-select"></select>
+        </div>
+        <div id="place-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="give" role="tabpanel" aria-labelledby="tab-give" hidden>
+    <h2>{{Give money, supplies or time||Допомогти грошима, речами або часом}}</h2>
+    <p class="intro">{{Every group here was checked on __PULLED_EN__, and each entry shows what was checked. US charities had to appear in IRS records. Ukrainian groups had to publish reports or audits, or be confirmed by an independent source. The checks show that a group is registered and accounts for its money. They do not measure its results. Each button opens the group’s own website. No money passes through this page.||Усі організації в цьому списку перевірено __PULLED_UK__, і біля кожної зазначено, що саме перевіряли. Американські благодійні організації мають бути в реєстрі Податкової служби США (IRS). Українські мають публікувати звіти чи аудити або мати підтвердження з незалежного джерела. Перевірка показує, що організація зареєстрована і звітує про кошти. Вона не оцінює результатів її роботи. Кожна кнопка відкриває сайт самої організації. Через цю сторінку гроші не проходять.}}</p>
+
+__GIVE__
+
+    <div class="note check-note">
+      <h3>{{Check any group yourself||Перевірте будь-яку організацію самі}}</h3>
+      <ul data-l="en">
+        <li>Look a US charity up in the <a href="https://apps.irs.gov/app/eos/" target="_blank" rel="noopener">IRS Tax Exempt Organization Search</a> and match the EIN, not the name. IRS records list four separate nonprofits called Save Ukraine or Save Ukraine Now.</li>
+        <li>Read its tax filings on <a href="https://projects.propublica.org/nonprofits/" target="_blank" rel="noopener">ProPublica’s Nonprofit Explorer</a> and its rating on <a href="https://www.charitynavigator.org/" target="_blank" rel="noopener">Charity Navigator</a>.</li>
+        <li>Type the web address yourself or use the links here. The Federal Trade Commission explains <a href="https://consumer.ftc.gov/features/donating-safely-and-avoiding-scams" target="_blank" rel="noopener">how to spot a charity scam</a>.</li>
+      </ul>
+      <ul data-l="uk" lang="uk">
+        <li>Знайдіть американську благодійну організацію в <a href="https://apps.irs.gov/app/eos/" target="_blank" rel="noopener">реєстрі звільнених від податків організацій IRS</a> і звіряйте номер EIN, а не назву. У реєстрі IRS є чотири різні організації з назвою Save Ukraine або Save Ukraine Now.</li>
+        <li>Прочитайте її податкові декларації в <a href="https://projects.propublica.org/nonprofits/" target="_blank" rel="noopener">Nonprofit Explorer від ProPublica</a> та оцінку на <a href="https://www.charitynavigator.org/" target="_blank" rel="noopener">Charity Navigator</a>.</li>
+        <li>Вводьте адресу сайту самі або користуйтеся посиланнями з цієї сторінки. Федеральна торгова комісія США пояснює, <a href="https://consumer.ftc.gov/features/donating-safely-and-avoiding-scams" target="_blank" rel="noopener">як розпізнати шахрайство під виглядом благодійності</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>{{Places were found through OpenStreetMap (© OpenStreetMap contributors, Open Database License) and each was checked against its own website or local press on __PULLED_EN__.||Заклади знайдено через OpenStreetMap (© учасники OpenStreetMap, Open Database License); кожен перевірено за його власним сайтом або місцевою пресою __PULLED_UK__.}}</p>
+    <p>{{Organizations checked __PULLED_EN__ against IRS records, Charity Navigator and their own published reports. The history is a short overview. Most entries draw on the Internet Encyclopedia of Ukraine, published by the Canadian Institute of Ukrainian Studies.||Організації перевірено __PULLED_UK__ за реєстром IRS, Charity Navigator та їхніми власними звітами. Історичний розділ — це стислий огляд. Більшість записів спирається на Internet Encyclopedia of Ukraine, яку видає Канадський інститут українських студій.}}</p>
+    <p data-l="uk" lang="uk">Український текст перекладено автоматично, і його ще має перевірити носій мови.</p>
+  </div>
+</footer>
+
+<script type="application/json" id="places-data">__PLACES__</script>
+<script type="application/json" id="states-data">__STATES__</script>
+<script type="application/json" id="places-uk">__PLACES_UK__</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+// Tabs
+const tabs = [...document.querySelectorAll('.tab')];
+const tabBar = document.querySelector('.wheat');
+const main = document.querySelector('main');
+function showTab(tab) {
+  for (const t of tabs) {
+    const active = t === tab;
+    t.setAttribute('aria-selected', String(active));
+    t.tabIndex = active ? 0 : -1;
+    document.getElementById(t.getAttribute('aria-controls')).hidden = !active;
+  }
+  // When the tab bar is stuck to the top of the screen, start the new section at its beginning.
+  const offset = main.getBoundingClientRect().top - tabBar.offsetHeight;
+  if (offset < 0) window.scrollBy(0, offset);
+}
+tabs.forEach((tab, i) => {
+  tab.addEventListener('click', () => showTab(tab));
+  tab.addEventListener('keydown', event => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+    if (!step) return;
+    const next = tabs[(i + step + tabs.length) % tabs.length];
+    next.focus();
+    showTab(next);
+  });
+});
+for (const button of document.querySelectorAll('[data-era]')) {
+  button.addEventListener('click', () => document.getElementById(button.dataset.era).scrollIntoView());
+}
+
+// Language. The static text of both languages is already in the page; this switches which one shows
+// and tells the places section to redraw its labels.
+const UK = JSON.parse(document.getElementById('places-uk').textContent);
+const TEXT = {
+  en: {
+    title: 'Together with Ukraine',
+    stateName: s => s.properties.name,
+    kind: kind => kind,
+    allStates: n => `All states (${n})`,
+    summary: (n, k, dc) => `${n} places in ${k} states` + (dc ? ' and Washington, DC.' : '.'),
+    empty: name => `No places listed in ${name} yet. Pick a shaded state, or buy from Ukrainian brands online through the link beside the map.`,
+    website: 'Website',
+    map: 'Map of the United States with a dot for each listed place. Select a state to filter the list.',
+  },
+  uk: {
+    title: 'Разом з Україною',
+    stateName: s => UK.states[s.properties.name],
+    kind: kind => UK.kinds[kind],
+    allStates: n => `Усі штати (${n})`,
+    summary: (n, k, dc) => `Закладів: ${n}. Штатів: ${k}` + (dc ? ', а також Вашингтон (округ Колумбія).' : '.'),
+    empty: name => `${name}: у списку поки немає закладів. Оберіть зафарбований штат або купуйте в українських брендів онлайн за посиланням біля мапи.`,
+    website: 'Сайт',
+    map: 'Мапа Сполучених Штатів із позначкою для кожного закладу зі списку. Оберіть штат, щоб відфільтрувати список.',
+  },
+};
+let lang = 'en';
+let drawPlaces = () => {};
+const langButtons = [...document.querySelectorAll('[data-set-lang]')];
+function setLang(next) {
+  lang = next;
+  document.documentElement.lang = next;
+  document.documentElement.dataset.lang = next;
+  document.title = TEXT[next].title;
+  for (const b of langButtons) b.setAttribute('aria-pressed', String(b.dataset.setLang === next));
+  try { localStorage.setItem('lang', next); } catch (error) { /* storage unavailable: the choice lasts for this visit */ }
+  drawPlaces();
+}
+for (const b of langButtons) b.addEventListener('click', () => setLang(b.dataset.setLang));
+let savedLang = null;
+try { savedLang = localStorage.getItem('lang'); } catch (error) { /* storage unavailable */ }
+setLang(savedLang === 'en' || savedLang === 'uk' ? savedLang : navigator.language.toLowerCase().startsWith('uk') ? 'uk' : 'en');
+
+// Data
+const DC_ID = '11';
+const topo = JSON.parse(document.getElementById('states-data').textContent);
+const states = topojson.feature(topo, topo.objects.states).features
+  .filter(s => Number(s.id) < 60)
+  .sort((a, b) => a.properties.name.localeCompare(b.properties.name));
+
+// A place belongs to the state its coordinates fall in. Places outside every state are not listed.
+const places = JSON.parse(document.getElementById('places-data').textContent)
+  .map(p => ({ ...p, state: states.find(s => d3.geoContains(s, [p.lon, p.lat])) }))
+  .filter(p => p.state)
+  .sort((a, b) => a.state.properties.name.localeCompare(b.state.properties.name) || a.name.localeCompare(b.name));
+
+const countByState = d3.rollup(places, v => v.length, p => p.state.id);
+let selected = '';
+
+const stateCount = [...countByState.keys()].filter(id => id !== DC_ID).length;
+const byName = (a, b) => TEXT[lang].stateName(a).localeCompare(TEXT[lang].stateName(b), lang);
+
+// Map
+const projection = d3.geoAlbersUsa().fitSize([975, 610], { type: 'FeatureCollection', features: states });
+const path = d3.geoPath(projection);
+const svg = d3.select('#map');
+const statePaths = svg.append('g').selectAll('path').data(states).join('path')
+  .attr('d', path)
+  .attr('class', s => 'state' + (countByState.has(s.id) ? ' has' : ''))
+  .on('click', (event, s) => select(selected === s.id ? '' : s.id));
+const stateTitles = statePaths.append('title');
+svg.append('g').selectAll('circle').data(places).join('circle')
+  .attr('class', 'dot')
+  .attr('r', 6)
+  .attr('transform', p => `translate(${projection([p.lon, p.lat])})`);
+
+// Filter
+const stateSelect = document.getElementById('state-select');
+stateSelect.addEventListener('change', () => select(stateSelect.value));
+
+// List
+const list = document.getElementById('place-list');
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  node.className = className;
+  if (text) node.textContent = text;
+  return node;
+}
+function link(text, href) {
+  const a = el('a', '', text);
+  a.href = href;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  return a;
+}
+function placeNode(p) {
+  const node = el('div', 'place');
+  node.append(el('p', 'place-name', p.name));
+  node.append(el('p', 'place-meta', [TEXT[lang].kind(p.kind), p.street, p.city].filter(Boolean).join(', ')));
+  const links = el('p', 'place-links');
+  if (p.web) links.append(link(TEXT[lang].website, p.web));
+  const query = [p.name, p.street, p.city, p.state.properties.name].join(', ');
+  links.append(link('Google Maps', 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query)));
+  node.append(links);
+  return node;
+}
+function select(stateId) {
+  selected = stateId;
+  stateSelect.value = stateId;
+  statePaths.classed('sel', s => s.id === stateId);
+  const shown = stateId ? places.filter(p => p.state.id === stateId) : places;
+  list.replaceChildren();
+  if (shown.length === 0) {
+    list.append(el('p', '', TEXT[lang].empty(TEXT[lang].stateName(states.find(s => s.id === stateId)))));
+    return;
+  }
+  const groups = [...d3.group(shown, p => p.state.id).values()].sort((a, b) => byName(a[0].state, b[0].state));
+  for (const group of groups) {
+    if (!stateId) list.append(el('p', 'group-name', TEXT[lang].stateName(group[0].state)));
+    for (const p of group) list.append(placeNode(p));
+  }
+}
+// Everything in this section that depends on the language.
+drawPlaces = () => {
+  const T = TEXT[lang];
+  document.getElementById('places-summary').textContent = T.summary(places.length, stateCount, countByState.has(DC_ID));
+  document.getElementById('map').setAttribute('aria-label', T.map);
+  stateTitles.text(T.stateName);
+  stateSelect.replaceChildren(new Option(T.allStates(places.length), ''));
+  for (const s of [...states].sort(byName)) {
+    const n = countByState.get(s.id);
+    stateSelect.append(new Option(n ? `${T.stateName(s)} (${n})` : T.stateName(s), s.id));
+  }
+  select(selected);
+};
+drawPlaces();
+</script>
+</body>
+</html>

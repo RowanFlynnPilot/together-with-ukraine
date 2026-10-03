@@ -1,0 +1,218 @@
+[
+ {
+  "name": "Kramarczuk's Sausage Company",
+  "kind": "Restaurant",
+  "street": "207 East Hennepin Avenue",
+  "city": "Minneapolis",
+  "web": "https://kramarczuks.com/",
+  "lat": 44.98779,
+  "lon": -93.25743
+ },
+ {
+  "name": "Soup & Sausage Bistro",
+  "kind": "Restaurant",
+  "street": "13240 North 7th Street",
+  "city": "Phoenix",
+  "web": "https://soupnsausagebistro.com",
+  "lat": 33.60679,
+  "lon": -112.06571
+ },
+ {
+  "name": "Leleka",
+  "kind": "Restaurant",
+  "street": "40 Belden Place",
+  "city": "San Francisco",
+  "web": "https://www.lelekasf.com/",
+  "lat": 37.79129,
+  "lon": -122.40369
+ },
+ {
+  "name": "Mom, Please",
+  "kind": "Restaurant",
+  "street": "13151 Fountain Park Drive",
+  "city": "Playa Vista",
+  "web": "https://cafe.mom-please.com/",
+  "lat": 33.97462,
+  "lon": -118.42988
+ },
+ {
+  "name": "Misto",
+  "kind": "Café",
+  "street": "7466 South Broadway",
+  "city": "Red Hook",
+  "web": "https://www.misto-eats.com/",
+  "lat": 41.99409,
+  "lon": -73.87627
+ },
+ {
+  "name": "Streecha Ukrainian Kitchen",
+  "kind": "Restaurant",
+  "street": "33 East 7th Street",
+  "city": "New York",
+  "web": "",
+  "lat": 40.72845,
+  "lon": -73.98896
+ },
+ {
+  "name": "Old Lviv",
+  "kind": "Café",
+  "street": "2228 West Chicago Avenue",
+  "city": "Chicago",
+  "web": "",
+  "lat": 41.89593,
+  "lon": -87.68317
+ },
+ {
+  "name": "Veselka",
+  "kind": "Restaurant",
+  "street": "144 2nd Avenue",
+  "city": "New York",
+  "web": "https://veselka.com/pages/locations",
+  "lat": 40.72898,
+  "lon": -73.987
+ },
+ {
+  "name": "Tryzub Ukrainian Kitchen",
+  "kind": "Restaurant",
+  "street": "2201 West Chicago Avenue",
+  "city": "Chicago",
+  "web": "https://tryzubchicago.com/",
+  "lat": 41.89554,
+  "lon": -87.6822
+ },
+ {
+  "name": "Ukrainian East Village Restaurant",
+  "kind": "Restaurant",
+  "street": "140 2nd Avenue",
+  "city": "New York",
+  "web": "",
+  "lat": 40.72889,
+  "lon": -73.98715
+ },
+ {
+  "name": "Sorso",
+  "kind": "Restaurant",
+  "street": "2475 18th Street Northwest",
+  "city": "Washington",
+  "web": "https://www.sorsodc.com",
+  "lat": 38.92236,
+  "lon": -77.04238
+ },
+ {
+  "name": "Magic Jug",
+  "kind": "Restaurant",
+  "street": "6354 West Irving Park Road",
+  "city": "Chicago",
+  "web": "https://magic-jug.com/",
+  "lat": 41.95305,
+  "lon": -87.78629
+ },
+ {
+  "name": "Ruta",
+  "kind": "Restaurant",
+  "street": "327 7th Street Southeast",
+  "city": "Washington",
+  "web": "https://www.rutadc.us/",
+  "lat": 38.88538,
+  "lon": -76.99637
+ },
+ {
+  "name": "Olesya's Kitchen",
+  "kind": "Restaurant",
+  "street": "908 25th Street",
+  "city": "Columbus",
+  "web": "https://olesyaskitchen.com/",
+  "lat": 39.22314,
+  "lon": -85.91509
+ },
+ {
+  "name": "Veselka",
+  "kind": "Restaurant",
+  "street": "646 Lorimer Street",
+  "city": "Brooklyn",
+  "web": "https://veselka.com/pages/locations",
+  "lat": 40.71637,
+  "lon": -73.94959
+ },
+ {
+  "name": "Patisserie Svoi",
+  "kind": "Bakery",
+  "street": "8 South Euclid Avenue",
+  "city": "Saint Louis",
+  "web": "https://www.patisseriesvoi.com/",
+  "lat": 38.63998,
+  "lon": -90.26208
+ },
+ {
+  "name": "Tatiana's Restaurant",
+  "kind": "Restaurant",
+  "street": "4601 Gettysburg Road",
+  "city": "Mechanicsburg",
+  "web": "https://www.tatianasrestaurant.com/",
+  "lat": 40.21314,
+  "lon": -76.95661
+ },
+ {
+  "name": "Soup & Sausage Bistro",
+  "kind": "Restaurant",
+  "street": "4030 East Bell Road",
+  "city": "Phoenix",
+  "web": "https://soupnsausagebistro.com",
+  "lat": 33.64179,
+  "lon": -111.99497
+ },
+ {
+  "name": "Molotov Kitschen + Cocktails",
+  "kind": "Restaurant",
+  "street": "3333 East Colfax Avenue",
+  "city": "Denver",
+  "web": "https://molotovdenver.com/",
+  "lat": 39.74032,
+  "lon": -104.94804
+ },
+ {
+  "name": "ofKors Bakery",
+  "kind": "Bakery",
+  "street": "1359 Main Street",
+  "city": "Sarasota",
+  "web": "https://ofkorsbakery.com/",
+  "lat": 27.33616,
+  "lon": -82.5433
+ },
+ {
+  "name": "Paradise Village Restaurant",
+  "kind": "Restaurant",
+  "street": "National Park Highway",
+  "city": "Ashford",
+  "web": "https://paradisevillagelodge.com/",
+  "lat": 46.75742,
+  "lon": -122.01289
+ },
+ {
+  "name": "Euro Foods",
+  "kind": "Grocery and café",
+  "street": "Southgate Drive",
+  "city": "Charleston",
+  "web": "https://eurofoodsbakeryandcafe.com/",
+  "lat": 32.81584,
+  "lon": -79.99325
+ },
+ {
+  "name": "Emish Market",
+  "kind": "Grocery",
+  "street": "2040 70th Avenue East",
+  "city": "Fife",
+  "web": "https://www.emishmarket.com/",
+  "lat": 47.23878,
+  "lon": -122.33707
+ },
+ {
+  "name": "Inna's Cuisine",
+  "kind": "Restaurant",
+  "street": "26 North Wenatchee Avenue",
+  "city": "Wenatchee",
+  "web": "https://www.innas-cuisine.com/",
+  "lat": 47.4254,
+  "lon": -120.31255
+ }
+]
