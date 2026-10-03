@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Together with Ukraine</title>
-<meta name="description" content="Ukraine’s history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<meta name="description" content="Ukraine’s history, the stories of its people, its culture and food, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
 <link rel="canonical" href="https://rowanflynnpilot.github.io/together-with-ukraine/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Together with Ukraine · Разом з Україною">
-<meta property="og:description" content="Ukraine’s history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<meta property="og:description" content="Ukraine’s history, the stories of its people, its culture and food, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
 <meta property="og:url" content="https://rowanflynnpilot.github.io/together-with-ukraine/">
 <meta property="og:image" content="https://rowanflynnpilot.github.io/together-with-ukraine/preview.png">
 <meta property="og:image:width" content="1200">
@@ -83,8 +83,16 @@ a { color: var(--link); }
 .wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
 
 /* The flag: sky over wheat */
-.sky { background: var(--sky); color: #FFFFFF; padding: 1.25rem 0 3rem; }
-.lang { display: flex; justify-content: flex-end; gap: 0.25rem; margin-bottom: 1.75rem; }
+/* The photo sits under a deep blue wash, so white text stays readable and the band still reads as the flag's blue. */
+.sky {
+  background: linear-gradient(rgba(0, 72, 156, 0.78), rgba(0, 87, 183, 0.88)), url("images/hero-lavra.jpg") center 35% / cover, var(--sky);
+  color: #FFFFFF; padding: 1.25rem 0 1.25rem;
+}
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.75rem; }
+.flag { display: block; width: 3rem; height: 2rem; box-shadow: 0 0 0 2px #FFFFFF; }
+.lang { display: flex; gap: 0.25rem; }
+.hero-credit { margin: 2rem 0 0; font-size: 0.8125rem; color: rgba(255, 255, 255, 0.88); text-align: right; }
+.hero-credit a { color: inherit; }
 .lang button { font: inherit; font-size: 1rem; color: #FFFFFF; background: transparent; border: 2px solid transparent; padding: 0.3rem 0.7rem; cursor: pointer; }
 .lang button[aria-pressed="true"] { border-color: #FFFFFF; font-weight: 700; }
 .lang button[aria-pressed="false"] { text-decoration: underline; }
@@ -101,7 +109,7 @@ a { color: var(--link); }
   border: 0; padding: 1.6rem 0.5rem; cursor: pointer;
 }
 .tab[aria-selected="true"] { background: var(--flag-ink); color: var(--wheat); }
-@media (max-width: 34rem) { .tab { padding: 1.1rem 0.15rem; font-size: 1rem; line-height: 1.2; } }
+@media (max-width: 34rem) { .tab { padding: 1rem 0.1rem; font-size: 0.9375rem; line-height: 1.2; } }
 
 main.wrap { padding-top: 3rem; padding-bottom: 4rem; }
 h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 0.75rem; }
@@ -109,8 +117,8 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .intro { max-width: 40rem; margin: 0 0 2.5rem; color: var(--muted); }
 .intro.tight { margin-bottom: 1rem; }
 /* Anything a link can jump to clears the sticky tab bar, and briefly lights up when reached. */
-[role="tabpanel"], .era, .event, .theme, .story, .place, .org { scroll-margin-top: 6.5rem; }
-.event:focus, .story:focus, .place:focus, .org:focus { outline: none; }
+[role="tabpanel"], .era, .event, .theme, .story, .place, .org, .culture-section, .culture-item { scroll-margin-top: 6.5rem; }
+.event:focus, .story:focus, .place:focus, .org:focus, .culture-item:focus { outline: none; }
 .flash { animation: flash 2.5s ease-out; }
 @keyframes flash { from { background: var(--wash); box-shadow: 0 0 0 0.6rem var(--wash); } to { background: transparent; box-shadow: 0 0 0 0.6rem transparent; } }
 .story-link a { font-weight: 700; }
@@ -146,6 +154,28 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .story p { margin: 0; }
 .story .src { margin-top: 0.5rem; }
 @media (max-width: 54rem) { .stories { grid-template-columns: minmax(0, 1fr); } }
+
+/* Culture */
+.culture-section { margin: 0 0 3rem; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1.75rem 1.25rem; margin-top: 1rem; }
+.gallery-item { margin: 0; }
+.gallery-item img { display: block; width: 100%; height: auto; background: var(--wash); }
+.gallery-item figcaption { margin-top: 0.45rem; display: grid; gap: 0.15rem; }
+.gallery-caption { font-weight: 700; line-height: 1.3; }
+.gallery-link { font-size: 0.9375rem; }
+.credit, .culture-photo figcaption { font-size: 0.8125rem; line-height: 1.3; color: var(--muted); }
+.credit a, .culture-photo figcaption a { color: inherit; }
+.culture-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; margin-top: 1rem; }
+.culture-item { padding: 1.1rem 0 1.25rem; border-top: 1px solid var(--line); display: flow-root; }
+.culture-item h4 { margin: 0 0 0.3rem; font-size: 1.2rem; line-height: 1.25; }
+.culture-item p { margin: 0; }
+.culture-item .src { margin-top: 0.4rem; }
+.culture-meta { color: var(--muted); font-size: 1rem; margin-bottom: 0.2rem !important; }
+.culture-photo { float: right; width: 8.5rem; margin: 0.3rem 0 0.75rem 1.25rem; }
+.culture-photo img { display: block; width: 100%; height: auto; background: var(--wash); }
+.culture-photo figcaption { margin-top: 0.35rem; }
+@media (max-width: 54rem) { .culture-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 34rem) { .culture-photo { width: 6.5rem; margin-left: 1rem; } }
 
 /* Places */
 .places-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
@@ -211,15 +241,19 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
 <header>
   <div class="sky">
     <div class="wrap">
-      <div class="lang" role="group" aria-label="Language / Мова">
-        <button type="button" data-set-lang="en" aria-pressed="true">English</button>
-        <button type="button" data-set-lang="uk" aria-pressed="false" lang="uk">Українська</button>
+      <div class="topbar">
+        <svg class="flag" viewBox="0 0 3 2" role="img" aria-label="Flag of Ukraine · Прапор України"><rect width="3" height="1" fill="#0057B7"/><rect y="1" width="3" height="1" fill="#FFD700"/></svg>
+        <div class="lang" role="group" aria-label="Language / Мова">
+          <button type="button" data-set-lang="en" aria-pressed="true">English</button>
+          <button type="button" data-set-lang="uk" aria-pressed="false" lang="uk">Українська</button>
+        </div>
       </div>
       <h1 class="title">
         <span class="title-uk" lang="uk">Разом з Україною</span>
         <span class="title-en" data-l="en">Together with Ukraine</span>
       </h1>
-      <p class="lede">{{Read how Ukraine got here and the stories of its people, eat and shop at Ukrainian places in the United States, and give to the people defending the country.||Дізнайтеся, який шлях пройшла Україна, прочитайте історії її людей, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто захищає країну.}}</p>
+      <p class="lede">{{Read how Ukraine got here and the stories of its people, discover its culture and food, eat and shop at Ukrainian places in the United States, and give to the people defending the country.||Дізнайтеся, який шлях пройшла Україна, прочитайте історії її людей, відкрийте її культуру й кухню, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто захищає країну.}}</p>
+      <p class="hero-credit">{{The Kyiv Pechersk Lavra in morning mist||Києво-Печерська лавра в ранковому тумані}} · __HERO_CREDIT__</p>
     </div>
   </div>
 </header>
@@ -228,6 +262,7 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
   <div class="wrap tabs" role="tablist" aria-label="Sections">
     <button class="tab" role="tab" id="tab-history" aria-controls="history" aria-selected="true">{{History||Історія}}</button>
     <button class="tab" role="tab" id="tab-stories" aria-controls="stories" aria-selected="false" tabindex="-1">{{People||Люди}}</button>
+    <button class="tab" role="tab" id="tab-culture" aria-controls="culture" aria-selected="false" tabindex="-1">{{Culture||Культура}}</button>
     <button class="tab" role="tab" id="tab-places" aria-controls="places" aria-selected="false" tabindex="-1">{{Eat and shop||Заклади}}</button>
     <button class="tab" role="tab" id="tab-give" aria-controls="give" aria-selected="false" tabindex="-1">{{Give||Допомогти}}</button>
   </div>
@@ -253,6 +288,16 @@ __THEME_NAV__
     </nav>
 
 __STORIES__
+  </section>
+
+  <section id="culture" role="tabpanel" aria-labelledby="tab-culture" hidden>
+    <h2>{{Ukrainian culture||Українська культура}}</h2>
+    <p class="intro tight">{{Landscapes and landmarks, food, traditions and festivals that are Ukrainian in their own right. Every entry links to its sources, recipes stay on their authors’ sites, and every photo is openly licensed.||Краєвиди й пам’ятки, кухня, традиції та фестивалі, які є українськими за своєю суттю. Кожен запис має посилання на джерела, рецепти залишаються на сайтах їхніх авторів, а всі фото — з відкритими ліцензіями.}}</p>
+    <nav class="era-nav" aria-label="Jump to a section">
+__CULTURE_NAV__
+    </nav>
+
+__CULTURE__
   </section>
 
   <section id="places" role="tabpanel" aria-labelledby="tab-places" hidden>

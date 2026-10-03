@@ -12,42 +12,17 @@ their keys: ('history', English title), ('place', (name, city)), ('give', Englis
 A story may have a photo, but only one that is openly licensed or in the public domain, credited as
 its license requires (rule 6). Never a photo from the outlet's article: crediting it is not permission.
 check.py confirms each photo's Wikimedia Commons page still carries the same license."""
-import datetime, html, pathlib, struct
+import datetime, html
 
+import photos
 from i18n import both, dates, slug
+from photos import photo
 
-IMAGES = pathlib.Path(__file__).parent / 'images'
 LANGUAGE_NAMES = {'en': ('in English', 'англійською'), 'uk': ('in Ukrainian', 'українською')}
 RELATED_LABELS = {'history': ('In the timeline', 'В історії'), 'place': ('On the map', 'На мапі'), 'give': ('Give', 'Допомогти')}
-# License name -> the phrase its Wikimedia Commons file page shows, which check.py looks for.
-LICENSES = {
-    'CC BY 4.0': 'Creative Commons Attribution 4.0 International',
-    'CC BY-SA 4.0': 'Creative Commons Attribution-Share Alike 4.0 International',
-    'CC BY-SA 3.0 pl': 'Creative Commons Attribution-Share Alike 3.0 Poland',
-}
 
 def story(person, context, title, text, sources, related=(), photo=None):
     return dict(id='story-' + slug(person[0]), person=person, context=context, title=title, text=text, sources=sources, related=related, photo=photo)
-
-def photo(file, alt, author, license, license_url, page):
-    """A photo in images/: alt text (English, Ukrainian), the author as Commons credits them, the license and
-    its deed, and the Commons file page the photo came from."""
-    return dict(file=file, alt=alt, author=author, license=license, license_url=license_url, page=page)
-
-def image_size(path):
-    """(width, height) of a JPEG or PNG, read from its header."""
-    data = path.read_bytes()
-    if data[:8] == b'\x89PNG\r\n\x1a\n':
-        return struct.unpack('>II', data[16:24])
-    if data[:2] == b'\xff\xd8':
-        i = 2
-        while i + 9 < len(data):
-            marker, length = data[i + 1], struct.unpack('>H', data[i + 2:i + 4])[0]
-            if 0xC0 <= marker <= 0xCF and marker not in (0xC4, 0xC8, 0xCC):  # a start-of-frame segment
-                height, width = struct.unpack('>HH', data[i + 5:i + 9])
-                return width, height
-            i += 2 + length
-    raise ValueError(f'{path}: not a JPEG or PNG the build can read')
 
 INVASION = ('history', 'Russia launches a full-scale invasion')
 UKRAINER = 'Ukraїner'
@@ -130,7 +105,7 @@ THEMES = [
          'Київський кухар і ресторатор Євген Клопотенко, переможець «МастерШефа» 2015 року, очолив успішну кампанію за внесення борщу до списку культурної спадщини ЮНЕСКО, що потребує термінової охорони. Коли 2022 року російські війська наступали на Київ, його ресторан став бомбосховищем, а згодом він відкрив тимчасовий ресторан у Львові й варив борщ на львівському вокзалі. Роками він разом з істориками шукав в українських літературних рукописах згадки про страви, які готували сотні років тому, а 2024 року видав англомовну кулінарну книжку. Згадуючи, як світ перестав зважати на війну в Сирії, він сказав NPR, що найбільше його мотивує бажання, щоб Україна не зникла так само.'),
         [('en', 'NPR', '2024-11-10', 'https://www.npr.org/2024/11/08/nx-s1-5168055/ukraine-chef-ukrainian-cuisine', 'Klopotenko')],
         photo=photo('klopotenko.jpg', ('Yevhen Klopotenko in a chef’s jacket', 'Євген Клопотенко в кухарському кітелі'), 'Владислав Нагорний',
-                    'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/', 'https://commons.wikimedia.org/wiki/File:%D0%84%D0%B2%D0%B3%D0%B5%D0%BD_%D0%9A%D0%BB%D0%BE%D0%BF%D0%BE%D1%82%D0%B5%D0%BD%D0%BA%D0%BE_01.jpg')),
+                    'CC BY-SA 4.0', 'https://commons.wikimedia.org/wiki/File:%D0%84%D0%B2%D0%B3%D0%B5%D0%BD_%D0%9A%D0%BB%D0%BE%D0%BF%D0%BE%D1%82%D0%B5%D0%BD%D0%BA%D0%BE_01.jpg')),
   story(('Victoria Amelina', 'Вікторія Амеліна'), ('Writer and war crimes researcher', 'Письменниця і дослідниця воєнних злочинів'),
         ('A book her friends brought to print', 'Книжка, яку друзі підготували до друку'),
         ('Victoria Amelina left a career in IT to write full time in 2015, and after Russia’s full-scale invasion she began working as a war crimes researcher. She died at 37 in July 2023 from injuries suffered when Russian missiles struck a restaurant in Kramatorsk, leaving the manuscript of her book Looking at Women, Looking at War unfinished. A group of her closest friends and colleagues prepared it for publication. In June 2025 it won Britain’s Orwell Prize for political writing, and Amelina became the first Ukrainian writer to receive it.',
@@ -138,7 +113,7 @@ THEMES = [
         [('en', 'The Kyiv Independent', '2025-06-25', 'https://kyivindependent.com/ukrainian-author-killed-by-russia-awarded-uks-prestigious-orwell-prize-in-political-writing/', 'Amelina'),
          ('en', 'Al Jazeera', '2023-07-03', 'https://www.aljazeera.com/news/2023/7/3/victoria-amelina-tracked-russian-war-crimes-a-missile-killed-her', 'Amelina')],
         photo=photo('amelina.jpg', ('Victoria Amelina at a literary festival in Wrocław, 2018', 'Вікторія Амеліна на літературному фестивалі у Вроцлаві, 2018 рік'), 'Rafał Komorowski',
-                    'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/', 'https://commons.wikimedia.org/wiki/File:Victoria_Amelina_1022.jpg')),
+                    'CC BY-SA 4.0', 'https://commons.wikimedia.org/wiki/File:Victoria_Amelina_1022.jpg')),
   story(('Hryhoriy Demyanov', 'Григорій Дем’янов'), ('From the Donetsk region to Dnipro', 'З Донеччини до Дніпра'),
         ('Medieval statues, rescued by hand', 'Середньовічні статуї, врятовані власноруч'),
         ('In 2024, volunteers moved stone statues carved centuries ago by the Cumans, or Polovtsy, a nomadic people of southern Ukraine, away from the front line in the Donetsk region. Volunteer Hryhoriy Demyanov said his team took out the first two with a car and trailer, using crowbars, a winch and their hands. On a later trip, he said, the shelling was heavy and drones were overhead, so they had to work very quickly. By June, nine sculptures had reached the relative safety of Dnipro on five trips paid for with donations from Ukrainians and foreigners. Demyanov said few such statues were left and that they were part of Ukraine’s history and identity, and Oleksandr Starik, acting director of the Dnipropetrovsk National Historical Museum, said removing them from the battlefield was essential.',
@@ -204,7 +179,7 @@ THEMES = [
         [('en', 'Radio Free Europe/Radio Liberty', '2024-05-17', 'https://www.rferl.org/a/crimea-tatars-dzhemilev-genocide/32951623.html', 'Dzhemilev')],
         [('history', 'The Crimean Tatars are deported')],
         photo=photo('dzhemilev.jpg', ('Mustafa Dzhemilev at the Senate of Poland', 'Мустафа Джемілєв у Сенаті Польщі'), 'Katarzyna Czerwińska',
-                    'CC BY-SA 3.0 pl', 'https://creativecommons.org/licenses/by-sa/3.0/pl/deed.en', 'https://commons.wikimedia.org/wiki/File:Mustafa_Dzhemilev_Senate_of_Poland_02.JPG')),
+                    'CC BY-SA 3.0 pl', 'https://commons.wikimedia.org/wiki/File:Mustafa_Dzhemilev_Senate_of_Poland_02.JPG')),
   story(('Hanna Zavorotna', 'Ганна Заворотна'), ('Kupovate, Chornobyl exclusion zone', 'Куповате, Чорнобильська зона відчуження'),
         ('Home again, inside the zone', 'Знову вдома, у зоні'),
         ('Hanna Zavorotna, born in 1933, stayed in her village of Kupovate for almost six days after the Chornobyl explosion, because no one told her about the explosion or the radiation. She learned of the evacuation while working in a collective-farm field, when the head of the village came to tell them. Her family spent that summer in the village of Kopyliv, then moved to a house in nearby Hruzke that had no stove, and after the winter they decided to go home. When Ukraїner told her story in 2018, she was 84 and one of 18 people living in a village that had about a thousand residents before the accident.',
@@ -219,7 +194,7 @@ THEMES = [
         [('en', 'The Kyiv Independent', '2023-11-21', 'https://kyivindependent.com/a-nations-blossoming-euromaidan-activists-and-their-further-battles-against-russia/', 'Chekh')],
         [('history', 'The Revolution of Dignity')],
         photo=photo('chekh.jpg', ('Artem Chekh at the Meridian Czernowitz festival in Chernivtsi, 2021', 'Артем Чех на фестивалі «Меридіан Черновіц» у Чернівцях, 2021 рік'), 'Germany2019',
-                    'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/', 'https://commons.wikimedia.org/wiki/File:Artem_Tschech_am_Meridian_Czernowitz,_2021.png')),
+                    'CC BY-SA 4.0', 'https://commons.wikimedia.org/wiki/File:Artem_Tschech_am_Meridian_Czernowitz,_2021.png')),
  ]),
 ]
 
@@ -238,33 +213,22 @@ def _validate():
             datetime.date.fromisoformat(date)
         if s['id'] in ids: raise ValueError(f'two stories have the id {s["id"]}')
         ids.add(s['id'])
-        if p := s['photo']:
-            if p['license'] not in LICENSES: raise ValueError(f'{s["id"]}: photo license {p["license"]!r} is not one the page accepts')
-            if not p['license_url'].startswith('https://creativecommons.org/licenses/'): raise ValueError(f'{s["id"]}: photo needs its license deed')
-            if not p['page'].startswith('https://commons.wikimedia.org/wiki/File:'): raise ValueError(f'{s["id"]}: photo needs its Commons file page')
-            if not (p['author'].strip() and all(x.strip() for x in p['alt'])): raise ValueError(f'{s["id"]}: photo needs its author and alt text in both languages')
-            p['size'] = image_size(IMAGES / p['file'])
+        if s['photo']: photos.validate(s['photo'], s['id'])
 _validate()
 
-def photos():
-    """The image files the page uses, for build.py to copy."""
-    return [IMAGES / s['photo']['file'] for s in STORIES if s['photo']]
+def photo_files():
+    """The image files the stories use, for build.py to copy."""
+    return [photos.IMAGES / s['photo']['file'] for s in STORIES if s['photo']]
 
 def claims():
     """(url, phrase, what) for check.py: each source page must still carry the story, and each photo's page its license."""
     return ([(url, phrase, f'story of {s["person"][0]}: {outlet}') for s in STORIES for _, outlet, _, url, phrase in s['sources']]
-            + [(s['photo']['page'], LICENSES[s['photo']['license']], f'photo of {s["person"][0]}: license') for s in STORIES if s['photo']])
+            + [photos.claim(s['photo'], f'photo of {s["person"][0]}: license') for s in STORIES if s['photo']])
 
 def _photo(s):
     p = s['photo']
     if not p: return ''
-    e = html.escape; width, height = p['size']
-    author = f'<a href="{e(p["page"])}" target="_blank" rel="noopener">{e(p["author"])}</a>'
-    license = f'<a href="{e(p["license_url"])}" target="_blank" rel="noopener">{e(p["license"])}</a>'
-    return (f'\n          <figure class="story-photo"><img src="images/{e(p["file"])}" width="{width}" height="{height}" loading="lazy" '
-            f'alt="{e(p["alt"][0])}" data-alt-en="{e(p["alt"][0])}" data-alt-uk="{e(p["alt"][1])}">'
-            f'<figcaption><span data-l="en">Photo: {author}, {license}, via Wikimedia Commons</span>'
-            f'<span data-l="uk" lang="uk">Фото: {author}, {license}, з Вікісховища</span></figcaption></figure>')
+    return f'\n          <figure class="story-photo">{photos.img(p)}<figcaption>{photos.credit(p)}</figcaption></figure>'
 
 def related():
     """(story id, English name, Ukrainian name, kind, key) for every link from a story to another section."""

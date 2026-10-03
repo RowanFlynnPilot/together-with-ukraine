@@ -8,9 +8,11 @@ Live: https://rowanflynnpilot.github.io/together-with-ukraine/ — the repo name
 
 ## What it is
 
-One static page, English and Ukrainian, with four tabs: a sourced history timeline, stories of
-Ukrainian people summarized from published reports, a map of Ukrainian places to eat and shop in the
-US, and a list of vetted ways to give money, supplies or time. Stories link to the timeline entry,
+One static page, English and Ukrainian, with five tabs: a sourced history timeline, stories of
+Ukrainian people summarized from published reports, Ukrainian culture (a photo gallery, food with
+recipes, traditions, holidays, US festivals and resources), a map of Ukrainian places to eat and shop
+in the US, and a list of vetted ways to give money, supplies or time. The header carries the flag
+and a photo of the Kyiv Pechersk Lavra under a blue wash. Stories link to the timeline entry,
 place or organization they involve, and those link back. Every tab and entry has its own address
 (`#give`, `#event-the-holodomor`, `#story-…`, `#place-…`, `#org-…`); `?lang=uk` forces Ukrainian.
 
@@ -32,6 +34,8 @@ python scout.py                                # leads for new places from OpenS
 | `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter and the map. `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
 | `build.py` | Assembles the page and resolves the links between sections. No network. Stops on a missing translation, a link to an anchor that does not exist, or two elements with the same id. |
 | `history.py` / `history_uk.py` | Timeline entries with their sources / the Ukrainian text, keyed by English title. `AS_OF` dates the entries about the war today. |
+| `culture.py` | The Culture tab: the header photo, the gallery, and the food, traditions, "Ukrainian, not Russian", holidays, events and resources sections. `REVIEWED` dates the events and resources. |
+| `photos.py` | Photo rules shared by stories and culture: accepted licenses, image sizes, the credit line, the license claim `check.py` looks for. |
 | `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, related entries elsewhere on the page, and optionally a `photo(...)`. |
 | `places.py` | Loads and validates `data/places.json`: checks each place's coordinates fall inside the state it names (point-in-polygon on the TopoJSON), and renders the list. |
 | `give.py` | Organizations, each text an (English, Ukrainian) pair, each with a list of checks. US charities pull facts from `data/`. `REVIEWED` is the date of the last review by hand. A check can carry a fourth item, a phrase its page must contain. |
@@ -44,7 +48,7 @@ python scout.py                                # leads for new places from OpenS
 | `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
-| `images/` | Photos for the stories, openly licensed (rule 7). Copied to `site/images/` by the build. |
+| `images/` | Photos for the stories, the header and the Culture tab, openly licensed (rule 7), saved at display size. Copied to `site/images/` by the build. |
 | `.github/ISSUE_TEMPLATE/` | Forms for suggesting a place, story or group, or reporting a mistake. The footer links to them. |
 
 Both languages are in the built page. CSS shows the one matching `<html data-lang>`; the script
@@ -90,7 +94,13 @@ works without the script; the map is drawn last, so a CDN failure takes out only
    "public domain" claim before trusting it: a VOA photo was rejected because VOA also runs wire
    photos, and a Ukrainian stamp of Prymachenko's art because her paintings are still under
    copyright. Save the Commons thumbnail (about 500 px) in `images/`; `check.py` confirms the
-   Commons page still shows the license.
+   Commons page still shows the license. Licenses accepted are listed in `photos.py`.
+8. **Culture.** Every sentence is supported by the sources it links to, and each Ukrainian claim
+   rests on an authoritative source (UNESCO, the Encyclopedia of Ukraine, ukraine.ua, the Ukrainian
+   Institute, museums, major outlets). Leave out dishes and customs shared across the former USSR
+   unless a source calls them Ukrainian. Recipes are linked, never copied, and come from Ukrainian
+   sources first (ukraine.ua, Yevhen Klopotenko, the Ukrainian Institute). Events come from their
+   organizers' own pages; give the usual month rather than a date unless the page states one.
 
 ## Deliberately not listed
 
