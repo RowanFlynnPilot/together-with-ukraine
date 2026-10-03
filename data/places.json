@@ -8,6 +8,9 @@
   "web": "https://kramarczuks.com/",
   "lat": 44.98779,
   "lon": -93.25743,
+  "ukrainian": [
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -30,6 +33,9 @@
   "web": "https://soupnsausagebistro.com",
   "lat": 33.60679,
   "lon": -112.06571,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -47,6 +53,9 @@
   "web": "https://www.lelekasf.com/",
   "lat": 37.79129,
   "lon": -122.40369,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -64,6 +73,9 @@
   "web": "https://cafe.mom-please.com/",
   "lat": 33.97462,
   "lon": -118.42988,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "LA Weekly",
@@ -86,6 +98,9 @@
   "web": "https://www.misto-eats.com/",
   "lat": 41.99409,
   "lon": -73.87627,
+  "ukrainian": [
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -103,6 +118,9 @@
   "web": "",
   "lat": 40.72845,
   "lon": -73.98896,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "EV Grieve",
@@ -125,6 +143,9 @@
   "web": "",
   "lat": 41.89593,
   "lon": -87.68317,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "Chicago Reader",
@@ -147,6 +168,9 @@
   "web": "https://veselka.com/pages/locations",
   "lat": 40.72898,
   "lon": -73.987,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -169,6 +193,9 @@
   "web": "https://tryzubchicago.com/",
   "lat": 41.89554,
   "lon": -87.6822,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -186,6 +213,9 @@
   "web": "https://www.ukrainianeastvillagerestaurant.com/",
   "lat": 40.72889,
   "lon": -73.98715,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "Untapped New York",
@@ -203,11 +233,14 @@
   "web": "https://www.sorsodc.com",
   "lat": 38.92236,
   "lon": -77.04238,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
     "url": "https://www.sorsodc.com",
-    "says": "Italian elegance reimagined with ukrainian soul"
+    "says": "reimagined through Ukrainian flavors"
    }
   ]
  },
@@ -220,6 +253,9 @@
   "web": "https://magic-jug.com/",
   "lat": 41.95305,
   "lon": -87.78629,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -237,6 +273,9 @@
   "web": "https://www.rutadc.us/",
   "lat": 38.88538,
   "lon": -76.99637,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -254,6 +293,9 @@
   "web": "https://olesyaskitchen.com/",
   "lat": 39.22314,
   "lon": -85.91509,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -271,6 +313,9 @@
   "web": "https://veselka.com/pages/locations",
   "lat": 40.71637,
   "lon": -73.94959,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -293,6 +338,9 @@
   "web": "https://www.patisseriesvoi.com/",
   "lat": 38.63998,
   "lon": -90.26208,
+  "ukrainian": [
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -315,6 +363,9 @@
   "web": "https://www.tatianasrestaurant.com/",
   "lat": 40.21314,
   "lon": -76.95661,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "WITF",
@@ -332,6 +383,9 @@
   "web": "https://soupnsausagebistro.com",
   "lat": 33.64179,
   "lon": -111.99497,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -349,6 +403,9 @@
   "web": "https://molotovdenver.com/",
   "lat": 39.74032,
   "lon": -104.94804,
+  "ukrainian": [
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -366,6 +423,9 @@
   "web": "https://ofkorsbakery.com/",
   "lat": 27.33616,
   "lon": -82.5433,
+  "ukrainian": [
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -388,6 +448,9 @@
   "web": "https://paradisevillagelodge.com/",
   "lat": 46.75742,
   "lon": -122.01289,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -405,6 +468,9 @@
   "web": "https://eurofoodsbakeryandcafe.com/",
   "lat": 32.81584,
   "lon": -79.99325,
+  "ukrainian": [
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -422,6 +488,9 @@
   "web": "https://www.emishmarket.com/",
   "lat": 47.23878,
   "lon": -122.33707,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -439,6 +508,9 @@
   "web": "https://www.innas-cuisine.com/",
   "lat": 47.4254,
   "lon": -120.31255,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -456,6 +528,10 @@
   "web": "https://www.olesiastaverne.com/",
   "lat": 41.24005,
   "lon": -81.65543,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -478,6 +554,9 @@
   "web": "https://www.sergeysbakery.com/",
   "lat": 43.62666,
   "lon": -84.2281,
+  "ukrainian": [
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -500,6 +579,10 @@
   "web": "https://borschhouse.square.site/",
   "lat": 44.80686,
   "lon": -91.4337,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -522,6 +605,9 @@
   "web": "https://www.tasteofukrainellc.com/",
   "lat": 40.82253,
   "lon": -74.62616,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -539,6 +625,9 @@
   "web": "https://www.goldenboarrestaurant.com/",
   "lat": 40.17029,
   "lon": -75.0736,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -556,6 +645,9 @@
   "web": "https://www.europeandumplings.com/",
   "lat": 29.53344,
   "lon": -98.52298,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
@@ -573,11 +665,1597 @@
   "web": "https://www.europeandumplings.com/",
   "lat": 29.5123,
   "lon": -98.55155,
+  "ukrainian": [
+   "food"
+  ],
   "basis": [
    {
     "by": "own website",
     "url": "https://www.europeandumplings.com/",
     "says": "Welcome to our Ukrainian restaurant"
+   }
+  ]
+ },
+ {
+  "name": "Laika Cheesecakes & Espresso",
+  "kind": "Bakery",
+  "street": "4718 Broadway",
+  "city": "San Antonio",
+  "state": "Texas",
+  "web": "https://laikacheesecakes.com/",
+  "lat": 29.46945,
+  "lon": -98.46354,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "San Antonio Current",
+    "url": "https://www.sacurrent.com/food-drink/flavor/homegrown-chain-laika-cheesecakes-plans-new-location-in-far-north-san-antonio/",
+    "says": "Founded by Ukrainian immigrants Anna Afanasieva and Viktor Krisma"
+   },
+   {
+    "by": "NPR",
+    "url": "https://www.npr.org/2022/03/07/1084870853/a-ukrainian-owned-bakery-in-texas-raises-money-for-ukraine",
+    "says": "The Ukrainian owners of Laika Cheesecakes and Espresso"
+   }
+  ]
+ },
+ {
+  "name": "Laika Cheesecakes & Espresso",
+  "kind": "Bakery",
+  "street": "6626 West Loop 1604 North",
+  "city": "San Antonio",
+  "state": "Texas",
+  "web": "https://laikacheesecakes.com/",
+  "lat": 29.50098,
+  "lon": -98.70131,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "San Antonio Current",
+    "url": "https://www.sacurrent.com/food-drink/flavor/homegrown-chain-laika-cheesecakes-plans-new-location-in-far-north-san-antonio/",
+    "says": "Founded by Ukrainian immigrants Anna Afanasieva and Viktor Krisma"
+   },
+   {
+    "by": "NPR",
+    "url": "https://www.npr.org/2022/03/07/1084870853/a-ukrainian-owned-bakery-in-texas-raises-money-for-ukraine",
+    "says": "The Ukrainian owners of Laika Cheesecakes and Espresso"
+   }
+  ]
+ },
+ {
+  "name": "Laika Cheesecakes & Espresso",
+  "kind": "Bakery",
+  "street": "11881 Bandera Road",
+  "city": "Helotes",
+  "state": "Texas",
+  "web": "https://laikacheesecakes.com/",
+  "lat": 29.55558,
+  "lon": -98.6692,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "San Antonio Current",
+    "url": "https://www.sacurrent.com/food-drink/flavor/homegrown-chain-laika-cheesecakes-plans-new-location-in-far-north-san-antonio/",
+    "says": "Founded by Ukrainian immigrants Anna Afanasieva and Viktor Krisma"
+   },
+   {
+    "by": "NPR",
+    "url": "https://www.npr.org/2022/03/07/1084870853/a-ukrainian-owned-bakery-in-texas-raises-money-for-ukraine",
+    "says": "The Ukrainian owners of Laika Cheesecakes and Espresso"
+   }
+  ]
+ },
+ {
+  "name": "Laika Cheesecakes & Espresso",
+  "kind": "Bakery",
+  "street": "1430 Unicorn Avenue",
+  "city": "New Braunfels",
+  "state": "Texas",
+  "web": "https://laikacheesecakes.com/",
+  "lat": 29.69044,
+  "lon": -98.12063,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "San Antonio Current",
+    "url": "https://www.sacurrent.com/food-drink/flavor/homegrown-chain-laika-cheesecakes-plans-new-location-in-far-north-san-antonio/",
+    "says": "Founded by Ukrainian immigrants Anna Afanasieva and Viktor Krisma"
+   },
+   {
+    "by": "NPR",
+    "url": "https://www.npr.org/2022/03/07/1084870853/a-ukrainian-owned-bakery-in-texas-raises-money-for-ukraine",
+    "says": "The Ukrainian owners of Laika Cheesecakes and Espresso"
+   }
+  ]
+ },
+ {
+  "name": "Borderless European Market",
+  "kind": "Grocery",
+  "street": "2121 West Parmer Lane",
+  "city": "Austin",
+  "state": "Texas",
+  "web": "https://www.bemaustin.com/",
+  "lat": 30.41582,
+  "lon": -97.69774,
+  "ukrainian": [
+   "owner",
+   "goods"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.bemaustin.com/",
+    "says": "Taras, from Ukraine"
+   },
+   {
+    "by": "own website",
+    "url": "https://www.bemaustin.com/",
+    "says": "stocked with authentic products from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "European Market Café",
+  "kind": "Grocery and café",
+  "street": "11170 Antioch Road",
+  "city": "Overland Park",
+  "state": "Kansas",
+  "web": "https://europeanmarketcafe.com/",
+  "lat": 38.92646,
+  "lon": -94.68634,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "KSHB 41 Kansas City",
+    "url": "https://www.kshb.com/news/local-news/ukrainian-american-man-opens-european-market-in-overland-park-to-share-slice-of-home",
+    "says": "Ukrainian-American Vlad Polishchuk is serving a slice of his homeland"
+   }
+  ]
+ },
+ {
+  "name": "Piece & Freedom Bakery",
+  "kind": "Bakery",
+  "street": "301 Main Street",
+  "city": "Ames",
+  "state": "Iowa",
+  "web": "https://www.pieceandfreedombakery.com/",
+  "lat": 42.02526,
+  "lon": -93.6139,
+  "ukrainian": [
+   "owner",
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "Iowa Public Radio",
+    "url": "https://www.iowapublicradio.org/arts-life/2025-03-06/ames-bakery-serves-a-piece-of-the-homeland-for-ukrainians",
+    "says": "serving both sweet and savory treats from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Shokolad Pastry & Cafe",
+  "kind": "Café",
+  "street": "2524 West Chicago Avenue",
+  "city": "Chicago",
+  "state": "Illinois",
+  "web": "https://www.shokoladpastryandcafe.com/",
+  "lat": 41.89584,
+  "lon": -87.69041,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.shokoladpastryandcafe.com/home",
+    "says": "traditional Ukrainian dishes"
+   },
+   {
+    "by": "Borderless Magazine",
+    "url": "https://borderlessmag.org/2025/04/24/ukraine-immigrant-chicago-shokolad-cafe/",
+    "says": "Ukrainian Woman Overcomes Poverty, Opens Chicago Cafe"
+   }
+  ]
+ },
+ {
+  "name": "Velour",
+  "kind": "Restaurant",
+  "street": "4742 North Cumberland Avenue",
+  "city": "Chicago",
+  "state": "Illinois",
+  "web": "https://www.velourchicago.com/",
+  "lat": 41.9658,
+  "lon": -87.83681,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.velourchicago.com/",
+    "says": "Velour is a modern Ukrainian restaurant"
+   }
+  ]
+ },
+ {
+  "name": "Anelya",
+  "kind": "Restaurant",
+  "street": "3472 North Elston Avenue",
+  "city": "Chicago",
+  "state": "Illinois",
+  "web": "https://www.anelyarestaurant.com/",
+  "lat": 41.94422,
+  "lon": -87.70564,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "Time Out Chicago",
+    "url": "https://www.timeout.com/chicago/news/chicagos-coolest-neighborhood-officially-has-a-new-no-1-restaurant-092925",
+    "says": "Anelya is an exceptional Ukrainian restaurant"
+   },
+   {
+    "by": "WTTW",
+    "url": "https://www.wttw.com/playlist/2026/08/19/soloway-coffee-abrah-bakery-ukrainian-independence-day",
+    "says": "Ukrainian restaurants, including Anelya"
+   }
+  ]
+ },
+ {
+  "name": "Abrah Bakery & Daily Bistro",
+  "kind": "Bakery",
+  "street": "2269 North Lincoln Avenue",
+  "city": "Chicago",
+  "state": "Illinois",
+  "web": "https://solowaycoffee.com/pages/abrah-bakery-daily-bistro",
+  "lat": 41.92342,
+  "lon": -87.64555,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "WTTW",
+    "url": "https://www.wttw.com/playlist/2026/08/19/soloway-coffee-abrah-bakery-ukrainian-independence-day",
+    "says": "A Ukrainian Couple Builds a New Life in Chicago"
+   },
+   {
+    "by": "own website",
+    "url": "https://solowaycoffee.com/pages/abrah-bakery-daily-bistro",
+    "says": "Abrah is about Ukrainian heart and American life"
+   }
+  ]
+ },
+ {
+  "name": "Soloway Coffee",
+  "kind": "Café",
+  "street": "2275 North Lincoln Avenue",
+  "city": "Chicago",
+  "state": "Illinois",
+  "web": "https://solowaycoffee.com/pages/soloway-coffee-lincoln",
+  "lat": 41.92357,
+  "lon": -87.64593,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://solowaycoffee.com/",
+    "says": "founded in Ukraine by Arthur and Iryna Yuzvik"
+   },
+   {
+    "by": "WTTW",
+    "url": "https://www.wttw.com/playlist/2026/08/19/soloway-coffee-abrah-bakery-ukrainian-independence-day",
+    "says": "their native Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Soloway Coffee",
+  "kind": "Café",
+  "street": "1708 North Damen Avenue",
+  "city": "Chicago",
+  "state": "Illinois",
+  "web": "https://solowaycoffee.com/pages/bucktown",
+  "lat": 41.91263,
+  "lon": -87.67769,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://solowaycoffee.com/",
+    "says": "founded in Ukraine by Arthur and Iryna Yuzvik"
+   }
+  ]
+ },
+ {
+  "name": "Delta Gift Shop",
+  "kind": "Gift shop",
+  "street": "2242 West Chicago Avenue",
+  "city": "Chicago",
+  "state": "Illinois",
+  "web": "https://delta-ukrainian.com/",
+  "lat": 41.89594,
+  "lon": -87.68353,
+  "ukrainian": [
+   "goods"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://delta-ukrainian.com/",
+    "says": "the oldest and largest Ukrainian goods store"
+   }
+  ]
+ },
+ {
+  "name": "Mama Maria's Ukrainian Village Kitchen",
+  "kind": "Deli",
+  "street": "5342 State Road",
+  "city": "Parma",
+  "state": "Ohio",
+  "web": "",
+  "lat": 41.41503,
+  "lon": -81.71058,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "National Geographic",
+    "url": "https://www.nationalgeographic.com/travel/article/immigrant-communities-midwest-restaurants-cafes-",
+    "says": "One of the first Ukrainian-owned businesses in Parma"
+   }
+  ]
+ },
+ {
+  "name": "Christine's Cuisine",
+  "kind": "Restaurant",
+  "street": "729 East Nine Mile Road",
+  "city": "Ferndale",
+  "state": "Michigan",
+  "web": "https://christinescuisineinc.com/",
+  "lat": 42.4613,
+  "lon": -83.12403,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "WDIV ClickOnDetroit",
+    "url": "https://www.clickondetroit.com/news/local/2022/03/03/theyre-my-people-i-have-to-ferndale-restaurant-donates-100-of-wednesday-sales-to-ukrainians/",
+    "says": "her parents were from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Lviv Croissants",
+  "kind": "Bakery",
+  "street": "5343 Sunrise Boulevard",
+  "city": "Fair Oaks",
+  "state": "California",
+  "web": "https://lvivcroissants.com/us/",
+  "lat": 38.66305,
+  "lon": -121.27223,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://lvivcroissants.com/us/about-us/",
+    "says": "a proudly Ukrainian brand"
+   },
+   {
+    "by": "own website",
+    "url": "https://lvivcroissants.com/us/lviv-croissants-has-arrived-in-california/",
+    "says": "favorites from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Lviv Croissants",
+  "kind": "Bakery",
+  "street": "321 Ramsay Way",
+  "city": "Kent",
+  "state": "Washington",
+  "web": "https://lvivcroissants.com/us/",
+  "lat": 47.38405,
+  "lon": -122.23486,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://lvivcroissants.com/us/about-us/",
+    "says": "a proudly Ukrainian brand"
+   }
+  ]
+ },
+ {
+  "name": "Lviv Croissants",
+  "kind": "Bakery",
+  "street": "Westfield Southcenter",
+  "city": "Tukwila",
+  "state": "Washington",
+  "web": "https://lvivcroissants.com/us/",
+  "lat": 47.45986,
+  "lon": -122.25842,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://lvivcroissants.com/us/about-us/",
+    "says": "a proudly Ukrainian brand"
+   }
+  ]
+ },
+ {
+  "name": "Lviv Croissants",
+  "kind": "Bakery",
+  "street": "610 West Crossville Road",
+  "city": "Roswell",
+  "state": "Georgia",
+  "web": "https://lvivcroissants.com/us/",
+  "lat": 34.05545,
+  "lon": -84.37772,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://lvivcroissants.com/us/about-us/",
+    "says": "a proudly Ukrainian brand"
+   }
+  ]
+ },
+ {
+  "name": "All Pierogi Kitchen",
+  "kind": "Restaurant",
+  "street": "1245 West Baseline Road",
+  "city": "Mesa",
+  "state": "Arizona",
+  "web": "https://allpierogi.com/",
+  "lat": 33.37823,
+  "lon": -111.86118,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://allpierogi.com/",
+    "says": "Serving Authentic Ukrainian food in Arizona since 2010"
+   },
+   {
+    "by": "own website",
+    "url": "https://allpierogi.com/about",
+    "says": "is 3/4 Ukrainian"
+   }
+  ]
+ },
+ {
+  "name": "Ardour Bakery + Coffee",
+  "kind": "Bakery",
+  "street": "119 East Sellers Avenue",
+  "city": "Ridley Park",
+  "state": "Pennsylvania",
+  "web": "https://ardourbakery.com/",
+  "lat": 39.87976,
+  "lon": -75.32234,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "DELCO.Today",
+    "url": "https://delco.today/2022/02/ukrainian-couple-bring-taste-of-europe-to-their-folsom-bakery/",
+    "says": "are natives of Ukraine"
+   },
+   {
+    "by": "CBS Philadelphia",
+    "url": "https://www.cbsnews.com/philadelphia/news/illya-zayarchenko-ridley-park-baker-ukraine-donations/",
+    "says": "A Ukrainian bakery owner in Delaware County"
+   }
+  ]
+ },
+ {
+  "name": "The Choice",
+  "kind": "Restaurant",
+  "street": "845 West Lancaster Avenue",
+  "city": "Bryn Mawr",
+  "state": "Pennsylvania",
+  "web": "https://www.thechoice-restaurant.com/",
+  "lat": 40.02229,
+  "lon": -75.31969,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "The Villanovan",
+    "url": "https://villanovan.com/1436/culture/small-business-spotlight-the-choice-in-bryn-mawr/",
+    "says": "Originally from Ukraine, Hyvel now owns The Choice"
+   },
+   {
+    "by": "The Philadelphia Inquirer",
+    "url": "https://www.inquirer.com/food/craig-laban/restaurant-review-the-choice-bryn-mawr-20220408.html",
+    "says": "owned by two Ukrainian families"
+   }
+  ]
+ },
+ {
+  "name": "Wonder Foods",
+  "kind": "Grocery",
+  "street": "630 York Road",
+  "city": "Warminster",
+  "state": "Pennsylvania",
+  "web": "https://wonderfoodsmarket.com/",
+  "lat": 40.20752,
+  "lon": -75.09951,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "BUCKSCO.Today",
+    "url": "https://bucksco.today/2023/11/wonder-foods-supports-refugees/",
+    "says": "a Ukrainian Grocery Store"
+   },
+   {
+    "by": "BUCKSCO.Today",
+    "url": "https://bucksco.today/2023/11/wonder-foods-supports-refugees/",
+    "says": "A Ukrainian immigrant herself"
+   }
+  ]
+ },
+ {
+  "name": "Esthetic Bean",
+  "kind": "Café",
+  "street": "16 Preble Street",
+  "city": "Boston",
+  "state": "Massachusetts",
+  "web": "",
+  "lat": 42.32961,
+  "lon": -71.05635,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "South Boston Online",
+    "url": "https://southbostononline.com/look-whos-cooking-julia-kotlinska/",
+    "says": "I came from my home country of Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Ruta",
+  "kind": "Restaurant",
+  "street": "4862 Cordell Avenue",
+  "city": "Bethesda",
+  "state": "Maryland",
+  "web": "https://www.rutadc.us/ruta-md",
+  "lat": 38.9896,
+  "lon": -77.09749,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.rutadc.us/ruta-md",
+    "says": "the first Ukrainian restaurant in Maryland"
+   }
+  ]
+ },
+ {
+  "name": "Pizza Harbor",
+  "kind": "Restaurant",
+  "street": "2 East Wells Street",
+  "city": "Baltimore",
+  "state": "Maryland",
+  "web": "https://pizza-harbor.com/",
+  "lat": 39.26852,
+  "lon": -76.61309,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://pizza-harbor.com/",
+    "says": "one of the most famous dishes of Ukrainian cuisine"
+   },
+   {
+    "by": "Baltimore Magazine",
+    "url": "https://www.baltimoremagazine.com/section/fooddrink/pizza-harbor-federal-hill-ukrainian-food-review/",
+    "says": "flavors from their native Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Veres Ukrainian Restaurant",
+  "kind": "Restaurant",
+  "street": "2874 Coney Island Avenue",
+  "city": "Brooklyn",
+  "state": "New York",
+  "web": "https://veresrestaurant.com/",
+  "lat": 40.58618,
+  "lon": -73.9604,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://veresrestaurant.com/",
+    "says": "brings modern Ukrainian cuisine to Brooklyn"
+   }
+  ]
+ },
+ {
+  "name": "East Village Meat Market",
+  "kind": "Deli",
+  "street": "139 2nd Avenue",
+  "city": "New York",
+  "state": "New York",
+  "web": "https://www.eastvillagemeatmarket.com/",
+  "lat": 40.72905,
+  "lon": -73.98757,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.eastvillagemeatmarket.com/",
+    "says": "A family-owned Ukrainian butcher shop"
+   },
+   {
+    "by": "Untapped New York",
+    "url": "https://www.untappedcities.com/ukrainian-places-nyc/",
+    "says": "one of the last remaining Ukrainian butcher shops"
+   }
+  ]
+ },
+ {
+  "name": "Corner of Ukraine",
+  "kind": "Restaurant",
+  "street": "85 Main Street",
+  "city": "Nyack",
+  "state": "New York",
+  "web": "https://cornerofukraine.com/",
+  "lat": 41.09096,
+  "lon": -73.91879,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://cornerofukraine.com/about-us",
+    "says": "All the best dishes from the Ukrainian cuisine"
+   },
+   {
+    "by": "News 12",
+    "url": "https://longisland.news12.com/nyack-welcomes-new-ukrainian-restaurant-corner-of-ukraine",
+    "says": "Nyack welcomes new Ukrainian restaurant"
+   }
+  ]
+ },
+ {
+  "name": "Smachna Kawa",
+  "kind": "Café",
+  "street": "154 Farnsworth Avenue",
+  "city": "Bordentown",
+  "state": "New Jersey",
+  "web": "",
+  "lat": 40.14748,
+  "lon": -74.71294,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "TAPinto Bordentown",
+    "url": "https://www.tapinto.net/towns/bordentown/sections/food-and-drink/articles/bordentown-ukraine-immigrants-bakery",
+    "says": "Ukrainian Immigrants Pursue the American Dream"
+   },
+   {
+    "by": "TAPinto Bordentown",
+    "url": "https://www.tapinto.net/towns/bordentown/sections/community-happenings/articles/artists-for-allies-a-benefit-for-ukraine-to-be-held-at-smachna-kawa-coffee-shop-in-bordentown-city",
+    "says": "their home in the Ukrainian city of Kharkiv"
+   }
+  ]
+ },
+ {
+  "name": "Special Occasions Sweets by Tanya",
+  "kind": "Bakery",
+  "street": "378 Meigs Street",
+  "city": "Rochester",
+  "state": "New York",
+  "web": "",
+  "lat": 43.14677,
+  "lon": -77.59475,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "13WHAM",
+    "url": "https://13wham.com/news/good-day-arc-rochester/my-roc-story-immigrant-owned-bakery-goes-viral-special-occasions-sweets-by-tanya",
+    "says": "Owner Tanya Kirilchuk emigrated from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Galicia Restaurant",
+  "kind": "Restaurant",
+  "street": "4704 West Ridge Road",
+  "city": "Spencerport",
+  "state": "New York",
+  "web": "https://www.galiciarestaurant.com/",
+  "lat": 43.22282,
+  "lon": -77.76293,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.galiciarestaurant.com/",
+    "says": "Ukrainian Comfort Food"
+   },
+   {
+    "by": "own website",
+    "url": "https://www.galiciarestaurant.com/",
+    "says": "We come from Galicia, a historic region of Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Arka",
+  "kind": "Gift shop",
+  "street": "89 East 2nd Street",
+  "city": "New York",
+  "state": "New York",
+  "web": "",
+  "lat": 40.72373,
+  "lon": -73.98775,
+  "ukrainian": [
+   "goods"
+  ],
+  "basis": [
+   {
+    "by": "Untapped New York",
+    "url": "https://www.untappedcities.com/little-ukraine-nyc/",
+    "says": "every unique Ukrainian gift"
+   }
+  ]
+ },
+ {
+  "name": "Rondel",
+  "kind": "Restaurant",
+  "street": "2006 Coney Island Avenue",
+  "city": "Brooklyn",
+  "state": "New York",
+  "web": "",
+  "lat": 40.60832,
+  "lon": -73.96241,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "Untapped New York",
+    "url": "https://www.untappedcities.com/ukrainian-places-nyc/",
+    "says": "Rondel is a Ukrainian restaurant"
+   }
+  ]
+ },
+ {
+  "name": "Golden Leo",
+  "kind": "Restaurant",
+  "street": "1794 Sheepshead Bay Road",
+  "city": "Brooklyn",
+  "state": "New York",
+  "web": "",
+  "lat": 40.58386,
+  "lon": -73.95088,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "Untapped New York",
+    "url": "https://www.untappedcities.com/ukrainian-places-nyc/",
+    "says": "another popular Brooklyn Ukrainian restaurant"
+   }
+  ]
+ },
+ {
+  "name": "Varenyk House",
+  "kind": "Deli",
+  "street": "67-14 Fresh Pond Road",
+  "city": "Ridgewood",
+  "state": "New York",
+  "web": "https://www.varenykhouse.com/",
+  "lat": 40.70541,
+  "lon": -73.89663,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.varenykhouse.com/about-us",
+    "says": "traditional Ukrainian comfort food"
+   },
+   {
+    "by": "Untapped New York",
+    "url": "https://www.untappedcities.com/ukrainian-places-nyc/",
+    "says": "One of the only Ukrainian places in Queens"
+   }
+  ]
+ },
+ {
+  "name": "Veselka",
+  "kind": "Counter service",
+  "street": "89 East 42nd Street",
+  "city": "New York",
+  "state": "New York",
+  "web": "https://veselka.com/pages/locations",
+  "lat": 40.75281,
+  "lon": -73.97718,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://veselka.com/pages/about",
+    "says": "serving up Ukrainian soul food"
+   }
+  ]
+ },
+ {
+  "name": "Sunflower Tastes",
+  "kind": "Deli",
+  "street": "115 East Railroad Avenue",
+  "city": "Port Angeles",
+  "state": "Washington",
+  "web": "https://sunflowertastes.com/",
+  "lat": 48.1206,
+  "lon": -123.43064,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Peninsula Daily News",
+    "url": "https://www.peninsuladailynews.com/2025/08/30/ukrainian-baker-opens-deli-donates-proceeds-from-rye/",
+    "says": "the flavors of her Ukrainian homeland"
+   }
+  ]
+ },
+ {
+  "name": "Banderyky",
+  "kind": "Counter service",
+  "street": "8700 Northeast Vancouver Mall Drive",
+  "city": "Vancouver",
+  "state": "Washington",
+  "web": "",
+  "lat": 45.65827,
+  "lon": -122.58328,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "The Columbian",
+    "url": "https://www.columbian.com/news/2023/sep/22/ukrainian-eatery-in-vancouver-mall-food-court-offers-taste-of-home/",
+    "says": "Ukrainian eatery in Vancouver Mall food court"
+   }
+  ]
+ },
+ {
+  "name": "Svitoch & Sweet Touch Cafe",
+  "kind": "Grocery and café",
+  "street": "4804 Northeast Thurston Way",
+  "city": "Vancouver",
+  "state": "Washington",
+  "web": "https://www.sweet-touchbakery.com/",
+  "lat": 45.65706,
+  "lon": -122.5903,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "The Columbian",
+    "url": "https://projects.columbian.com/2018/01/21/vancouvers-international-grocery-stores-burst-with-ethnic-flavors/",
+    "says": "Olga Mikhalets came to Vancouver from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Chant'el Cafe",
+  "kind": "Café",
+  "street": "1750 Prairie City Road",
+  "city": "Folsom",
+  "state": "California",
+  "web": "",
+  "lat": 38.65119,
+  "lon": -121.16549,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "The Sacramento Bee",
+    "url": "https://www.sacbee.com/food-drink/article259441174.html",
+    "says": "one of few Ukrainian-owned restaurants"
+   },
+   {
+    "by": "ABC10",
+    "url": "https://www.abc10.com/article/life/food/cafe-owner-brings-a-taste-of-ukraine-to-folsom/103-62d655a0-166f-47c6-9aae-ca1b4a0716f4",
+    "says": "popular Ukrainian dishes and desserts"
+   }
+  ]
+ },
+ {
+  "name": "Franko&Co",
+  "kind": "Café",
+  "street": "721 Bridgeway",
+  "city": "Sausalito",
+  "state": "California",
+  "web": "",
+  "lat": 37.85617,
+  "lon": -122.47989,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Eater SF",
+    "url": "https://sf.eater.com/2024/12/19/24325155/ukraine-bakeries-frankoandco-dessee-bay-area",
+    "says": "deeply rooted in Ukrainian aesthetics and flavors"
+   },
+   {
+    "by": "WhatNow San Francisco",
+    "url": "https://whatnow.com/san-francisco/restaurants/franko-friends-to-open-on-union-street-in-san-francisco/",
+    "says": "a Ukrainian-owned business"
+   }
+  ]
+ },
+ {
+  "name": "Adore Coffee House",
+  "kind": "Café",
+  "street": "550 Cedar Street",
+  "city": "San Diego",
+  "state": "California",
+  "web": "https://coldbrewsandiego.com/",
+  "lat": 32.72213,
+  "lon": -117.16008,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "ABC 10News San Diego",
+    "url": "https://www.10news.com/positivelysandiego/new-coffee-house-downtown-is-dream-come-true-for-ukrainian-woman-after-losing-husband",
+    "says": "moved to San Diego from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "European Foods",
+  "kind": "Grocery and café",
+  "street": "13520 Aurora Avenue North",
+  "city": "Seattle",
+  "state": "Washington",
+  "web": "https://www.europeanfoodseattle.com/",
+  "lat": 47.72751,
+  "lon": -122.34451,
+  "ukrainian": [
+   "owner",
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.europeanfoodseattle.com/about",
+    "says": "The current owner, Oksana, is originally from Ukraine"
+   },
+   {
+    "by": "own website",
+    "url": "https://www.europeanfoodseattle.com/about",
+    "says": "the taste of authentic Ukrainian cuisine"
+   }
+  ]
+ },
+ {
+  "name": "Cedar Coffee",
+  "kind": "Café",
+  "street": "701 North Monroe Street",
+  "city": "Spokane",
+  "state": "Washington",
+  "web": "https://cedar.coffee/",
+  "lat": 47.66361,
+  "lon": -117.42683,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "KXLY",
+    "url": "https://www.kxly.com/news/national-and-world-news/i-know-what-is-war-ukrainian-coffee-shop-owner-raising-money-for-his-home-country/article_c571e162-22fc-5669-b9cf-b836ef508a8c.html",
+    "says": "Ukrainian coffee shop owner raising money for his home country"
+   }
+  ]
+ },
+ {
+  "name": "Sweet Tooth",
+  "kind": "Bakery",
+  "street": "1230 South Grand Boulevard",
+  "city": "Spokane",
+  "state": "Washington",
+  "web": "",
+  "lat": 47.644,
+  "lon": -117.41062,
+  "ukrainian": [
+   "owner",
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "The Spokesman-Review",
+    "url": "https://www.spokesman.com/stories/2025/oct/07/new-sweet-tooth-donut-shop-brings-international-fl/",
+    "says": "A Ukrainian refugee family soft launched their second business"
+   },
+   {
+    "by": "The Spokesman-Review",
+    "url": "https://www.spokesman.com/stories/2025/oct/07/new-sweet-tooth-donut-shop-brings-international-fl/",
+    "says": "a variety of Ukrainian and French pastries"
+   }
+  ]
+ },
+ {
+  "name": "Nubo Café & Bakery",
+  "kind": "Café",
+  "street": "420 Cleveland Street",
+  "city": "Clearwater",
+  "state": "Florida",
+  "web": "",
+  "lat": 27.96576,
+  "lon": -82.80043,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Patch",
+    "url": "https://patch.com/florida/clearwater/ukrainian-cafe-opens-downtown-clearwater-part-cleveland-street-redevelopment",
+    "says": "offering from-scratch Ukrainian specialties"
+   },
+   {
+    "by": "Patch",
+    "url": "https://patch.com/florida/clearwater/ukrainian-cafe-opens-downtown-clearwater-part-cleveland-street-redevelopment",
+    "says": "moved to the United States from Ukraine in 2024"
+   }
+  ]
+ },
+ {
+  "name": "Pierogi Bar St Pete",
+  "kind": "Restaurant",
+  "street": "6661 Central Avenue",
+  "city": "Saint Petersburg",
+  "state": "Florida",
+  "web": "https://pierogi.bar/",
+  "lat": 27.77088,
+  "lon": -82.72934,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://pierogi.bar/",
+    "says": "Authentic Ukrainian cuisine"
+   }
+  ]
+ },
+ {
+  "name": "Pierogi Shop",
+  "kind": "Deli",
+  "street": "300 South Central Avenue",
+  "city": "Flagler Beach",
+  "state": "Florida",
+  "web": "https://www.thehappypounds.com/",
+  "lat": 29.47911,
+  "lon": -81.12776,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.thehappypounds.com/",
+    "says": "We specialize in Ukrainian Comfort Food"
+   }
+  ]
+ },
+ {
+  "name": "Slava Café & Bakery",
+  "kind": "Café",
+  "street": "37 Wall Street",
+  "city": "Asheville",
+  "state": "North Carolina",
+  "web": "https://slavaasheville.com/",
+  "lat": 35.59472,
+  "lon": -82.55579,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Mountain Xpress",
+    "url": "https://mountainx.com/food/food-news/whats-new-in-food-slava-brings-ukrainian-cuisine-to-downtown/",
+    "says": "Ukrainian native Svitlana Eadie"
+   },
+   {
+    "by": "Mountain Xpress",
+    "url": "https://mountainx.com/food/food-news/whats-new-in-food-slava-brings-ukrainian-cuisine-to-downtown/",
+    "says": "The bakery offers traditional Ukrainian items"
+   }
+  ]
+ },
+ {
+  "name": "Atmosphera Cafe",
+  "kind": "Restaurant",
+  "street": "3620 Walton Drive",
+  "city": "Myrtle Beach",
+  "state": "South Carolina",
+  "web": "https://atmosphera.cafe/",
+  "lat": 33.68344,
+  "lon": -78.95719,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://atmosphera.cafe/",
+    "says": "founded by a family from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Atmosphera Grill",
+  "kind": "Restaurant",
+  "street": "4390 Highway 17",
+  "city": "Murrells Inlet",
+  "state": "South Carolina",
+  "web": "https://atmosphera.cafe/",
+  "lat": 33.55495,
+  "lon": -79.04641,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "The Sun News",
+    "url": "https://www.myrtlebeachonline.com/living/food-drink/article316953236.html",
+    "says": "The owners are from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Kyiv Cakes",
+  "kind": "Bakery",
+  "street": "17697 Kenwood Trail",
+  "city": "Lakeville",
+  "state": "Minnesota",
+  "web": "",
+  "lat": 44.69375,
+  "lon": -93.28483,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Mpls.St.Paul Magazine",
+    "url": "https://mspmag.com/eat-and-drink/mill-city-rising-best-bakeries-of-the-twin-cities/",
+    "says": "Motta, who grew up in Vinnytsia in Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Crème de la Crème Bakery & Cafe",
+  "kind": "Bakery",
+  "street": "5311 Westpointe Plaza Drive",
+  "city": "Columbus",
+  "state": "Ohio",
+  "web": "https://crme-de-la-crme-bakery-cafe.square.site/",
+  "lat": 39.98351,
+  "lon": -83.15005,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "614NOW",
+    "url": "https://614now.com/2023/food-drink/theres-a-newly-opened-european-inspired-coffee-shop-in-town",
+    "says": "our bakers and employees are Ukrainian"
+   },
+   {
+    "by": "Columbus Underground",
+    "url": "https://columbusunderground.com/treat-to-try-the-sublime-creme-de-la-creme-ma1/",
+    "says": "the team behind Creme de la Creme has origins in Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Ideal Deli",
+  "kind": "Deli",
+  "street": "249 West Dundee Road",
+  "city": "Buffalo Grove",
+  "state": "Illinois",
+  "web": "https://idealdeli.com/",
+  "lat": 42.13886,
+  "lon": -87.96358,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://idealdeli.com/",
+    "says": "From traditional Ukrainian dishes to classic European recipes"
+   }
+  ]
+ },
+ {
+  "name": "SimSim",
+  "kind": "Restaurant",
+  "street": "9998 Main Street",
+  "city": "Fairfax",
+  "state": "Virginia",
+  "web": "https://simsimfairfax.com/",
+  "lat": 38.84435,
+  "lon": -77.29124,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://simsimfairfax.com/",
+    "says": "Palestinian & Ukrainian Kitchen"
+   },
+   {
+    "by": "Northern Virginia Magazine",
+    "url": "https://northernvirginiamag.com/food-and-drink/2026/10/02/17-new-northern-virginia-restaurants-that-are-fresh-on-the-scene/",
+    "says": "Palestinian and Ukrainian cuisine under one roof"
+   }
+  ]
+ },
+ {
+  "name": "Krem Bakery & Cafe",
+  "kind": "Bakery",
+  "street": "2923 Virginia Beach Boulevard",
+  "city": "Virginia Beach",
+  "state": "Virginia",
+  "web": "https://www.krembakeryandcafe.com/",
+  "lat": 36.84362,
+  "lon": -76.07259,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.krembakeryandcafe.com/",
+    "says": "UKRAINIAN OWNED"
+   },
+   {
+    "by": "own website",
+    "url": "https://www.krembakeryandcafe.com/about",
+    "says": "came to the USA from Ukraine in 2013"
+   }
+  ]
+ },
+ {
+  "name": "Operation Brew Coffee and Bakery",
+  "kind": "Café",
+  "street": "1329 Oceana Boulevard",
+  "city": "Virginia Beach",
+  "state": "Virginia",
+  "web": "https://operationbrewva.com/",
+  "lat": 36.79584,
+  "lon": -76.00077,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "13News Now",
+    "url": "https://www.13newsnow.com/article/life/food/friday-flavor/operation-brew-coffee-and-bakery-oceana-virginia-beach/291-214485b9-1698-4608-80a2-a79051fe6479",
+    "says": "I'm originally from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "The Veranda",
+  "kind": "Restaurant",
+  "street": "401 North Great Neck Road",
+  "city": "Virginia Beach",
+  "state": "Virginia",
+  "web": "https://www.verandavb.com/",
+  "lat": 36.8466,
+  "lon": -76.04909,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.verandavb.com/our-story",
+    "says": "Inna and Marian arrived from Ukraine"
+   },
+   {
+    "by": "13News Now",
+    "url": "https://www.13newsnow.com/article/life/food/friday-flavor/new-virginia-beach-restaurant-serves-up-homemade-pasta/291-495403a6-327a-45c7-926e-e978f9a6bfbb",
+    "says": "The couple moved from Ukraine nine years ago"
+   }
+  ]
+ },
+ {
+  "name": "Black Forest Deli",
+  "kind": "Deli",
+  "street": "745 West Union Boulevard",
+  "city": "Bethlehem",
+  "state": "Pennsylvania",
+  "web": "https://blackforestdelilv.com/",
+  "lat": 40.62515,
+  "lon": -75.39379,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://blackforestdelilv.com/",
+    "says": "their bi-monthly Kyiv Dinner event"
+   },
+   {
+    "by": "own website",
+    "url": "https://blackforestdelilv.com/",
+    "says": "a small town located in the western part of Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Red Rock Deli",
+  "kind": "Deli",
+  "street": "2414 San Mateo Place Northeast",
+  "city": "Albuquerque",
+  "state": "New Mexico",
+  "web": "",
+  "lat": 35.10614,
+  "lon": -106.58631,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "New Mexico Magazine",
+    "url": "https://www.newmexicomagazine.org/blog/post/albuquerque-culinary-scene-offers-central-eastern-european-treats/",
+    "says": "a hearty Ukrainian borscht"
+   },
+   {
+    "by": "New Mexico Magazine",
+    "url": "https://www.newmexicomagazine.org/blog/post/albuquerque-culinary-scene-offers-central-eastern-european-treats/",
+    "says": "Born in Soviet Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Oregon Trail Corner Store",
+  "kind": "Grocery and café",
+  "street": "20120 US Highway 26",
+  "city": "Lewellen",
+  "state": "Nebraska",
+  "web": "",
+  "lat": 41.33246,
+  "lon": -102.14444,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "KOLN 10/11 NOW",
+    "url": "https://www.1011now.com/2024/04/04/hearty-meals-ukrainian-dishes-await-you-lewellen/",
+    "says": "I like to cook Ukrainian food"
+   },
+   {
+    "by": "KOLN 10/11 NOW",
+    "url": "https://www.1011now.com/2024/04/04/hearty-meals-ukrainian-dishes-await-you-lewellen/",
+    "says": "Josh is from Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Olha's Market",
+  "kind": "Bakery",
+  "street": "1841 South Sheridan Avenue",
+  "city": "Sheridan",
+  "state": "Wyoming",
+  "web": "https://olhas.com/",
+  "lat": 44.77719,
+  "lon": -106.94713,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://olhas.com/",
+    "says": "Ukrainian Specialties"
+   },
+   {
+    "by": "own website",
+    "url": "https://olhas.com/",
+    "says": "Inspired by Ukrainian, Polish, and Italian flavors"
+   }
+  ]
+ },
+ {
+  "name": "Taste of Ukraine",
+  "kind": "Restaurant",
+  "street": "106 East Maple Street",
+  "city": "Nicholasville",
+  "state": "Kentucky",
+  "web": "https://tasteofukraineky.com/",
+  "lat": 37.88026,
+  "lon": -84.57288,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://tasteofukraineky.com/",
+    "says": "Kentucky's First Authentic Ukrainian Restaurant"
+   },
+   {
+    "by": "Jessamine Journal",
+    "url": "https://jessaminejournal.com/2026/02/24/first-ukrainian-restaurant-in-kentucky-opens-in-nicholasville/",
+    "says": "first and only Ukrainian restaurant in Kentucky"
+   }
+  ]
+ },
+ {
+  "name": "European Delights Gourmet Bakery",
+  "kind": "Bakery",
+  "street": "221 East Brannon Road",
+  "city": "Nicholasville",
+  "state": "Kentucky",
+  "web": "https://europeandelightsbakery.com/",
+  "lat": 37.95604,
+  "lon": -84.53508,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "LEX18",
+    "url": "https://www.lex18.com/news/local-business-owners-speak-about-the-invasion-of-their-home-country-ukraine",
+    "says": "shop owners, both born in Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Tartine & Tartelette",
+  "kind": "Restaurant",
+  "street": "11121 Health Park Boulevard",
+  "city": "Naples",
+  "state": "Florida",
+  "web": "https://www.tartinetartelette.com/",
+  "lat": 26.27287,
+  "lon": -81.78958,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Florida Weekly",
+    "url": "https://www.floridaweekly.com/articles/naples/best-french-flavor-with-ukrainian-hearts-3/",
+    "says": "The restaurant is French; they are Ukrainian."
+   },
+   {
+    "by": "WINK News",
+    "url": "https://www.winknews.com/news/collier/ukrainian-family-using-their-restaurant-to-raise-money-to-help-people-escape-fighting-in-ukraine/article_25b70ff8-4fa2-5397-b71e-be8aa50677fb.html",
+    "says": "A Ukrainian couple who came to Southwest Florida"
+   }
+  ]
+ },
+ {
+  "name": "Kiev Deli",
+  "kind": "Deli",
+  "street": "4031 Cattlemen Road",
+  "city": "Sarasota",
+  "state": "Florida",
+  "web": "https://www.kievdeli.com/",
+  "lat": 27.29635,
+  "lon": -82.45151,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "FOX 13 Tampa Bay",
+    "url": "https://www.fox13news.com/news/sarasota-deli-owner-begs-russians-to-be-stronger-than-putin-as-she-plans-benefit-for-ukraine",
+    "says": "Klothakis was born in Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Crepe Bistro",
+  "kind": "Café",
+  "street": "1605 Galleria Boulevard",
+  "city": "Charlotte",
+  "state": "North Carolina",
+  "web": "https://www.crepebistroclt.com/",
+  "lat": 35.13529,
+  "lon": -80.73685,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "WCNC",
+    "url": "https://www.yahoo.com/lifestyle/articles/ukrainian-community-finds-connection-comfort-210523227.html",
+    "says": "Ukrainian family-owned Crepe Bistro"
+   },
+   {
+    "by": "Queen City News",
+    "url": "https://www.qcnews.com/news/world-news/ukraine-crisis/we-have-to-do-something-ukrainian-americans-rally-to-support-their-charlotte-restaurant/",
+    "says": "the eatery owned by a Ukrainian-American family"
    }
   ]
  }

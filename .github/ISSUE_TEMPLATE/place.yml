@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        A place is listed only if it calls itself Ukrainian on its own website, or local press describes it that way. Serving Ukrainian food is not enough.
-        Заклад потрапляє до списку, лише якщо він називає себе українським на власному сайті або так його описує місцева преса.
+        A place is listed if its own website or the press says it serves Ukrainian food, sells Ukrainian goods, or is owned by Ukrainians. "Eastern European" alone is not enough.
+        Заклад потрапляє до списку, якщо його сайт або преса зазначає, що він пропонує українську їжу, продає українські товари або належить українцям.
   - type: input
     id: name
     attributes:
@@ -21,7 +21,7 @@ body:
   - type: textarea
     id: evidence
     attributes:
-      label: Where it is described as Ukrainian · Де його названо українським
-      description: A link to the page on its own site, or to a local news article, and the words it uses.
+      label: Where it says so · Де про це сказано
+      description: A link to the page on its own site, or to a news article, and the words it uses.
     validations:
       required: true
