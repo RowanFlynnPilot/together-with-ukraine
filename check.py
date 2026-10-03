@@ -20,7 +20,7 @@ confirmed on them, are listed for a look by hand instead of failing the run. Any
 error fails it, because browsers would show a warning too."""
 import base64, datetime, hashlib, html, json, pathlib, re, sys, time
 
-import build, give, history, places, stories
+import build, culture, give, history, places, stories
 from records import RequestException, charity_navigator_record, get, irs_record
 
 DATA = pathlib.Path(__file__).parent / 'data'
@@ -31,6 +31,7 @@ MAX_AGE = {  # what, (date, days)
     'the entries about the war today (AS_OF in history.py)': (history.AS_OF, 120),
     'the review of the places ("reviewed" in data/places_review.json)': (places.REVIEW['reviewed'], 365),
     'the review of the Give list (REVIEWED in give.py)': (give.REVIEWED, 180),
+    "the review of the Culture tab's events and resources (REVIEWED in culture.py)": (culture.REVIEWED, 365),
 }
 
 def record_problems():
@@ -76,7 +77,7 @@ def page_text(response):
 def web_report():
     """Returns (problems, refused, link count, phrase count). refused lists each refused url with the phrases it should carry."""
     page = build.build()
-    claims = places.claims() + give.claims() + stories.claims()
+    claims = places.claims() + give.claims() + stories.claims() + culture.claims()
     urls = {html.unescape(u) for u in re.findall(r'(?:href|src)="(https?://[^"]+)"', page) if not u.startswith(NOT_SOURCES)}
     urls |= {url for url, _, _ in claims}
     integrity = dict(re.findall(r'<script src="([^"]+)" integrity="([^"]+)"', page))

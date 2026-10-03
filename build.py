@@ -7,7 +7,7 @@ the same id, or a US charity without a pulled record."""
 import json, pathlib, re, struct, sys, zlib
 from collections import Counter
 
-import give, history, places, places_uk, stories
+import culture, give, history, places, places_uk, stories
 from i18n import both, dates, fill_markers
 
 ROOT = pathlib.Path(__file__).parent
@@ -39,6 +39,7 @@ def build():
     targets, back = cross_links()
     timeline, _, eras = history.render(back['history'])
     people, _, themes = stories.render(targets)
+    culture_html, culture_nav = culture.render(targets)
     give_html, _ = give.render(back['give'])
     records_en, records_uk = dates(read_json('checked.json')['records'])
     give_en, give_uk = dates(give.REVIEWED)
@@ -49,6 +50,7 @@ def build():
     page = (fill_markers(template)
             .replace('__ERA_NAV__', nav(eras)).replace('__HISTORY__', timeline)
             .replace('__THEME_NAV__', nav(themes)).replace('__STORIES__', people)
+            .replace('__CULTURE_NAV__', nav(culture_nav)).replace('__CULTURE__', culture_html).replace('__HERO_CREDIT__', culture.hero_credit())
             .replace('__PLACES_SUMMARY__', both(summary_en, summary_uk)).replace('__PLACE_LIST__', places.render(back['place']))
             .replace('__GIVE__', give_html)
             .replace('__RECORDS_EN__', records_en).replace('__RECORDS_UK__', records_uk)
@@ -83,6 +85,6 @@ if __name__ == '__main__':
     out.write_text(build(), encoding='utf-8')
     (out.parent / 'preview.png').write_bytes(flag_png())
     (out.parent / 'images').mkdir(exist_ok=True)
-    for photo in stories.photos():
+    for photo in stories.photo_files() + culture.photo_files():
         (out.parent / 'images' / photo.name).write_bytes(photo.read_bytes())
     print(f'built {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)')
