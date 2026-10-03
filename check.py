@@ -1,20 +1,37 @@
 """Re-verify what the page claims against the live web.
 
 1. Every US charity's IRS record and Charity Navigator rating must still match data/.
-2. Every link on the page, and every listed business's website, must still load.
+2. Every link on the page must still load.
+3. Every recorded phrase must still be on its page: the evidence each business is listed on, the EIN on
+   a charity's own site, the person a story is about on the report it comes from. A page that loads
+   without its phrase has changed: the business rebranded or closed, the story was taken down, or the
+   site was redesigned and the phrase needs updating.
+4. The scripts loaded from the CDN must still match their integrity hashes, or browsers will refuse them.
+5. Nothing the page dates may be too old: the entries about the war today, and the reviews by hand
+   of the places and of the Give list.
 
-Prints a report and exits 1 if anything changed or broke, so a scheduled run fails loudly.
+Prints a report and exits 1 if anything changed, broke or went stale, so a scheduled run fails loudly.
 
-A site that answers 403 or 429 has turned the checker away, which says nothing about whether
-the page exists. Which sites do that depends on the network the check runs from, so those links
-are reported as refused instead of failing the run."""
-import html, json, pathlib, re, sys, time
+A site that answers 403 or 429 has turned the checker away, which says nothing about whether the page
+exists. Which sites do that depends on the network the check runs from. A site that leaves out part of
+its certificate chain (ukrainer.net does) works in browsers, which fetch the missing certificate
+themselves, but cannot be verified by a script. Those links, with the phrases that could not be
+confirmed on them, are listed for a look by hand instead of failing the run. Any other certificate
+error fails it, because browsers would show a warning too."""
+import base64, datetime, hashlib, html, json, pathlib, re, sys, time
 
-import build, give
+import build, give, history, places, stories
 from records import RequestException, charity_navigator_record, get, irs_record
 
 DATA = pathlib.Path(__file__).parent / 'data'
-REFUSED = ('403', '429')  # the site turned the checker away
+INCOMPLETE_CHAIN = 'incomplete certificate chain'
+REFUSED = ('403', '429', INCOMPLETE_CHAIN)  # links the checker cannot judge, listed for a look by hand
+NOT_SOURCES = ('https://www.google.com/maps/search/',)  # searches the page builds for each place
+MAX_AGE = {  # what, (date, days)
+    'the entries about the war today (AS_OF in history.py)': (history.AS_OF, 120),
+    'the review of the places ("reviewed" in data/places_review.json)': (places.REVIEW['reviewed'], 365),
+    'the review of the Give list (REVIEWED in give.py)': (give.REVIEWED, 180),
+}
 
 def record_problems():
     problems = []
@@ -23,7 +40,7 @@ def record_problems():
         for ein in give.EINS:
             try:
                 live = pull(ein)
-            except RequestException as error:
+            except (RequestException, ValueError) as error:
                 problems.append(f'{name}: could not pull the record for EIN {ein} ({error})')
                 continue
             for field, old in stored[ein].items():
@@ -31,38 +48,64 @@ def record_problems():
                     problems.append(f'{name}: EIN {ein} ({give.IRS[ein]["name"]}) {field} changed from {old!r} to {live[field]!r}')
     return problems
 
-def link_status(url):
-    try:
-        return str(get(url).status_code)
-    except RequestException as error:
-        return type(error).__name__
+def stale():
+    today = datetime.date.today()
+    return [f'{what} is dated {date}, more than {days} days ago: review it, then update the date'
+            for what, (date, days) in MAX_AGE.items() if (today - datetime.date.fromisoformat(date)).days > days]
 
-def link_report():
-    """Returns (broken, refused, total): links that failed, links whose site refused the check, and the count."""
+def fetch(url):
+    """(status, response). A failure other than a refusal gets one more try: slow sites time out now and then."""
+    for attempt in range(2):
+        try:
+            response = get(url)
+            status = str(response.status_code)
+        except RequestException as error:
+            response = None
+            status = INCOMPLETE_CHAIN if 'unable to get local issuer certificate' in str(error) else type(error).__name__
+        if status in ('200', *REFUSED) or attempt:
+            return status, response
+        time.sleep(5)
+
+def normalize(text):
+    return ' '.join(text.replace('’', "'").replace('‘', "'").split()).casefold()
+
+def page_text(response):
+    """The page's text with the tags removed. Script contents stay, because some sites carry their text in page data."""
+    return normalize(html.unescape(re.sub(r'<[^>]+>', ' ', response.text)))
+
+def web_report():
+    """Returns (problems, refused, link count, phrase count). refused lists each refused url with the phrases it should carry."""
     page = build.build()
-    urls = {html.unescape(u) for u in re.findall(r'(?:href|src)="(https?://[^"]+)"', page)}
-    urls |= {p['web'] for p in json.loads((DATA / 'places.json').read_text(encoding='utf-8')) if p['web']}
-    broken, refused = [], []
-    for url in sorted(urls):
-        status = link_status(url)
-        if status not in ('200', *REFUSED):  # slow sites time out now and then, so a failure gets one more try
-            time.sleep(5)
-            status = link_status(url)
-        if status in REFUSED:
-            refused.append(url)
-        elif status != '200':
-            broken.append(f'link returned {status}: {url}')
-    return broken, refused, len(urls)
+    claims = places.claims() + give.claims() + stories.claims()
+    urls = {html.unescape(u) for u in re.findall(r'(?:href|src)="(https?://[^"]+)"', page) if not u.startswith(NOT_SOURCES)}
+    urls |= {url for url, _, _ in claims}
+    integrity = dict(re.findall(r'<script src="([^"]+)" integrity="([^"]+)"', page))
+    results = {url: fetch(url) for url in sorted(urls)}
+    problems, refused = [], {}
+    for url, (status, _) in results.items():
+        if status in REFUSED: refused[url] = (status, [])
+        elif status != '200': problems.append(f'link returned {status}: {url}')
+    texts = {url: page_text(response) for url, (status, response) in results.items() if status == '200'}
+    for url, phrase, what in claims:
+        if url in refused: refused[url][1].append(phrase)
+        elif url in texts and normalize(phrase) not in texts[url]:
+            problems.append(f'{what}: "{phrase}" is no longer on {url}')
+    for url, expected in integrity.items():
+        status, response = results[url]
+        actual = 'sha384-' + base64.b64encode(hashlib.sha384(response.content).digest()).decode() if status == '200' else None
+        if actual and actual != expected:
+            problems.append(f'{url} no longer matches its integrity hash, so browsers will refuse it: pin a version whose hash is {actual}')
+    return problems, refused, len(urls), len(claims)
 
 if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
-    problems = record_problems()
-    broken, refused, total = link_report()
-    problems += broken
-    print(f'{total} links, {len(give.EINS)} charity records checked.')
-    print(f'Refused the automated check, so open these by hand ({len(refused)}):')
-    for url in refused:
-        print(f'  {url}')
+    problems = record_problems() + stale()
+    web_problems, refused, links, phrases = web_report()
+    problems += web_problems
+    print(f'{links} links, {phrases} phrases on them, {len(give.EINS)} charity records checked.')
+    print(f'Could not be checked automatically, so open these by hand ({len(refused)}):')
+    for url, (status, expected) in refused.items():
+        print(f'  {url} ({status})' + ''.join(f'\n      should say: "{phrase}"' for phrase in expected))
     if problems:
         print(f'\n{len(problems)} PROBLEMS:')
         for problem in problems:

@@ -4,7 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Together with Ukraine</title>
+<meta name="description" content="Ukraine’s history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<link rel="canonical" href="https://rowanflynnpilot.github.io/together-with-ukraine/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Together with Ukraine · Разом з Україною">
+<meta property="og:description" content="Ukraine’s history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<meta property="og:url" content="https://rowanflynnpilot.github.io/together-with-ukraine/">
+<meta property="og:image" content="https://rowanflynnpilot.github.io/together-with-ukraine/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The flag of Ukraine: blue over yellow">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0057B7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='1' fill='%230057B7'/%3E%3Crect y='1' width='3' height='1' fill='%23FFD700'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400&display=swap">
+<!-- Without the script the tabs cannot switch, so show every section in turn. -->
+<noscript><style>section[role="tabpanel"][hidden] { display: block !important; } .wheat, .lang, .filter, #map { display: none; }</style></noscript>
 <style>
 :root {
   --sky: #0057B7;
@@ -86,18 +101,24 @@ a { color: var(--link); }
   border: 0; padding: 1.6rem 0.5rem; cursor: pointer;
 }
 .tab[aria-selected="true"] { background: var(--flag-ink); color: var(--wheat); }
-@media (max-width: 34rem) { .tab { padding: 1.1rem 0.25rem; } }
+@media (max-width: 34rem) { .tab { padding: 1.1rem 0.15rem; font-size: 1rem; line-height: 1.2; } }
 
 main.wrap { padding-top: 3rem; padding-bottom: 4rem; }
 h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 0.75rem; }
 h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .intro { max-width: 40rem; margin: 0 0 2.5rem; color: var(--muted); }
 .intro.tight { margin-bottom: 1rem; }
+/* Anything a link can jump to clears the sticky tab bar, and briefly lights up when reached. */
+[role="tabpanel"], .era, .event, .theme, .story, .place, .org { scroll-margin-top: 6.5rem; }
+.event:focus, .story:focus, .place:focus, .org:focus { outline: none; }
+.flash { animation: flash 2.5s ease-out; }
+@keyframes flash { from { background: var(--wash); box-shadow: 0 0 0 0.6rem var(--wash); } to { background: transparent; box-shadow: 0 0 0 0.6rem transparent; } }
+.story-link a { font-weight: 700; }
 
 /* History */
 .era-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin: 0 0 2.5rem; }
-.era-nav button { font: inherit; color: var(--link); background: none; border: 0; padding: 0.25rem 0; text-decoration: underline; cursor: pointer; }
-.era { margin: 0 0 3rem; max-width: 46rem; scroll-margin-top: 6.5rem; }
+.era-nav a { display: inline-block; padding: 0.25rem 0; }
+.era { margin: 0 0 3rem; max-width: 46rem; }
 .era-range { color: var(--muted); font-weight: 400; margin-left: 0.5rem; }
 .events { list-style: none; margin: 1.25rem 0 0; padding: 0 0 0 1.5rem; border-left: 2px dashed var(--line); }
 .event { display: grid; grid-template-columns: 7.75rem 1fr; column-gap: 1.25rem; padding: 0.9rem 0; }
@@ -110,6 +131,16 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
   .event { grid-template-columns: 1fr; }
   .events { padding-left: 1rem; }
 }
+
+/* People */
+.theme { margin: 0 0 3rem; }
+.stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; margin-top: 1rem; }
+.story { padding: 1.25rem 0 1.5rem; border-top: 1px solid var(--line); }
+.story-who { margin: 0; color: var(--muted); font-size: 1rem; }
+.story h4 { margin: 0.2rem 0 0.4rem; font-size: 1.25rem; line-height: 1.25; }
+.story p { margin: 0; }
+.story .src { margin-top: 0.5rem; }
+@media (max-width: 54rem) { .stories { grid-template-columns: minmax(0, 1fr); } }
 
 /* Places */
 .places-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
@@ -126,11 +157,13 @@ select {
   border: 2px solid var(--ink); border-radius: 0; padding: 0.4rem 0.6rem; max-width: 100%;
 }
 .group-name { margin: 1.75rem 0 0.25rem; font-size: 1.125rem; color: var(--muted); font-weight: 700; }
-.group-name:first-child { margin-top: 0; }
+.state-group:first-child .group-name { margin-top: 0; }
+#place-list.filtered .group-name { display: none; }
 .place { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
 .place-name { font-weight: 700; margin: 0; }
 .place-meta { margin: 0; color: var(--muted); }
-.place-links { margin: 0.15rem 0 0; display: flex; gap: 1.25rem; }
+.place .src { margin-top: 0.15rem; }
+.place-links { margin: 0.15rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
 .note { background: var(--wash); padding: 1.1rem 1.25rem; margin: 1.75rem 0 0; }
 .note p { margin: 0; }
 .note p + p { margin-top: 0.6rem; }
@@ -179,7 +212,7 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
         <span class="title-uk" lang="uk">Разом з Україною</span>
         <span class="title-en" data-l="en">Together with Ukraine</span>
       </h1>
-      <p class="lede">{{Read how Ukraine got here, eat and shop at Ukrainian places in the United States, and give to the people defending the country.||Дізнайтеся, який шлях пройшла Україна, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто захищає країну.}}</p>
+      <p class="lede">{{Read how Ukraine got here and the stories of its people, eat and shop at Ukrainian places in the United States, and give to the people defending the country.||Дізнайтеся, який шлях пройшла Україна, прочитайте історії її людей, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто захищає країну.}}</p>
     </div>
   </div>
 </header>
@@ -187,6 +220,7 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
 <div class="wheat">
   <div class="wrap tabs" role="tablist" aria-label="Sections">
     <button class="tab" role="tab" id="tab-history" aria-controls="history" aria-selected="true">{{History||Історія}}</button>
+    <button class="tab" role="tab" id="tab-stories" aria-controls="stories" aria-selected="false" tabindex="-1">{{People||Люди}}</button>
     <button class="tab" role="tab" id="tab-places" aria-controls="places" aria-selected="false" tabindex="-1">{{Eat and shop||Заклади}}</button>
     <button class="tab" role="tab" id="tab-give" aria-controls="give" aria-selected="false" tabindex="-1">{{Give||Допомогти}}</button>
   </div>
@@ -204,14 +238,24 @@ __ERA_NAV__
 __HISTORY__
   </section>
 
+  <section id="stories" role="tabpanel" aria-labelledby="tab-stories" hidden>
+    <h2>{{Stories of Ukrainians||Історії українців}}</h2>
+    <p class="intro tight">{{People in Ukraine, Ukrainians who made a home in the United States, and people who lived through the history in the first tab, as reported by news organizations, UN agencies and museums. Each summary is ours and says only what the report says. Follow the link to read the story as it was published.||Люди в Україні, українці, які знайшли дім у Сполучених Штатах, і ті, хто пережив події з розділу «Історія», — так, як про них розповіли журналісти, агенції ООН і музеї. Кожен виклад написали ми, і в ньому лише те, що є у джерелі. Перейдіть за посиланням, щоб прочитати історію так, як її опублікували.}}</p>
+    <nav class="era-nav" aria-label="Jump to a theme">
+__THEME_NAV__
+    </nav>
+
+__STORIES__
+  </section>
+
   <section id="places" role="tabpanel" aria-labelledby="tab-places" hidden>
     <h2>{{Ukrainian restaurants, delis and markets||Українські ресторани, кулінарії та крамниці}}</h2>
-    <p class="intro" id="places-summary"></p>
+    <p class="intro">__PLACES_SUMMARY__</p>
     <div class="places-grid">
       <div class="map-col">
         <svg id="map" viewBox="0 0 975 610" role="img"></svg>
         <div class="note">
-          <p>{{Every place here calls itself Ukrainian on its own website or is described that way by local press. The list is short because it leaves out places that could not be confirmed. Check hours before you go.||Кожен заклад у цьому списку називає себе українським на власному сайті або так його описує місцева преса. Список короткий, бо до нього не потрапили заклади, які не вдалося підтвердити. Перед візитом перевірте години роботи.}}</p>
+          <p>{{Every place here calls itself Ukrainian on its own website or is described that way by local press, and each listing shows where. The list is short because it leaves out places that could not be confirmed. Check hours before you go.||Кожен заклад у цьому списку називає себе українським на власному сайті або так його описує місцева преса, і біля кожного вказано, де саме. Список короткий, бо до нього не потрапили заклади, які не вдалося підтвердити. Перед візитом перевірте години роботи.}}</p>
           <p data-l="en">Nothing near you? <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> lists more than 200 Ukrainian companies that sell online.</p>
           <p data-l="uk" lang="uk">Поблизу нічого немає? На сайті <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> зібрано понад 200 українських компаній, які продають онлайн.</p>
         </div>
@@ -221,14 +265,17 @@ __HISTORY__
           <label for="state-select">{{State||Штат}}</label>
           <select id="state-select"></select>
         </div>
-        <div id="place-list"></div>
+        <div id="place-list">
+__PLACE_LIST__
+        </div>
+        <p id="places-empty" hidden></p>
       </div>
     </div>
   </section>
 
   <section id="give" role="tabpanel" aria-labelledby="tab-give" hidden>
     <h2>{{Give money, supplies or time||Допомогти грошима, речами або часом}}</h2>
-    <p class="intro">{{Every group here was checked on __PULLED_EN__, and each entry shows what was checked. US charities had to appear in IRS records. Ukrainian groups had to publish reports or audits, or be confirmed by an independent source. The checks show that a group is registered and accounts for its money. They do not measure its results. Each button opens the group’s own website. No money passes through this page.||Усі організації в цьому списку перевірено __PULLED_UK__, і біля кожної зазначено, що саме перевіряли. Американські благодійні організації мають бути в реєстрі Податкової служби США (IRS). Українські мають публікувати звіти чи аудити або мати підтвердження з незалежного джерела. Перевірка показує, що організація зареєстрована і звітує про кошти. Вона не оцінює результатів її роботи. Кожна кнопка відкриває сайт самої організації. Через цю сторінку гроші не проходять.}}</p>
+    <p class="intro">{{Every group here was reviewed on __GIVE_REVIEWED_EN__, and each entry shows what was checked. US charities had to appear in IRS records; their figures and Charity Navigator ratings are as of __RECORDS_EN__. Ukrainian groups had to publish reports or audits, or be confirmed by an independent source. The checks show that a group is registered and accounts for its money. They do not measure its results. Each button opens the group’s own website. No money passes through this page.||Усі організації в цьому списку перевірено __GIVE_REVIEWED_UK__, і біля кожної зазначено, що саме перевіряли. Американські благодійні організації мають бути в реєстрі Податкової служби США (IRS); їхні фінансові дані та оцінки Charity Navigator наведено станом на __RECORDS_UK__. Українські мають публікувати звіти чи аудити або мати підтвердження з незалежного джерела. Перевірка показує, що організація зареєстрована і звітує про кошти. Вона не оцінює результатів її роботи. Кожна кнопка відкриває сайт самої організації. Через цю сторінку гроші не проходять.}}</p>
 
 __GIVE__
 
@@ -251,8 +298,10 @@ __GIVE__
 
 <footer>
   <div class="wrap">
-    <p>{{Places were found through OpenStreetMap (© OpenStreetMap contributors, Open Database License) and each was checked against its own website or local press on __PULLED_EN__.||Заклади знайдено через OpenStreetMap (© учасники OpenStreetMap, Open Database License); кожен перевірено за його власним сайтом або місцевою пресою __PULLED_UK__.}}</p>
-    <p>{{Organizations checked __PULLED_EN__ against IRS records, Charity Navigator and their own published reports. The history is a short overview. Most entries draw on the Internet Encyclopedia of Ukraine, published by the Canadian Institute of Ukrainian Studies.||Організації перевірено __PULLED_UK__ за реєстром IRS, Charity Navigator та їхніми власними звітами. Історичний розділ — це стислий огляд. Більшість записів спирається на Internet Encyclopedia of Ukraine, яку видає Канадський інститут українських студій.}}</p>
+    <p>{{Places were found through OpenStreetMap (© OpenStreetMap contributors, Open Database License) and each was checked against its own website or local press on __PLACES_REVIEWED_EN__.||Заклади знайдено через OpenStreetMap (© учасники OpenStreetMap, Open Database License); кожен перевірено за його власним сайтом або місцевою пресою __PLACES_REVIEWED_UK__.}}</p>
+    <p>{{Organizations checked __GIVE_REVIEWED_EN__ against IRS records, Charity Navigator and their own published reports. The history is a short overview. Most entries draw on the Internet Encyclopedia of Ukraine, published by the Canadian Institute of Ukrainian Studies. The stories are short summaries; the reports they come from belong to their publishers.||Організації перевірено __GIVE_REVIEWED_UK__ за реєстром IRS, Charity Navigator та їхніми власними звітами. Історичний розділ — це стислий огляд. Більшість записів спирається на Internet Encyclopedia of Ukraine, яку видає Канадський інститут українських студій. Історії людей — це короткі виклади; оригінальні матеріали належать їхнім видавцям.}}</p>
+    <p data-l="en">Found a mistake, or know a place, group or story that belongs here? <a href="https://github.com/RowanFlynnPilot/together-with-ukraine/issues/new/choose" target="_blank" rel="noopener">Say so on GitHub</a>.</p>
+    <p data-l="uk" lang="uk">Помітили помилку або знаєте заклад, організацію чи історію, які варто додати? <a href="https://github.com/RowanFlynnPilot/together-with-ukraine/issues/new/choose" target="_blank" rel="noopener">Напишіть на GitHub</a>.</p>
     <p data-l="uk" lang="uk">Український текст перекладено автоматично, і його ще має перевірити носій мови.</p>
   </div>
 </footer>
@@ -260,65 +309,86 @@ __GIVE__
 <script type="application/json" id="places-data">__PLACES__</script>
 <script type="application/json" id="states-data">__STATES__</script>
 <script type="application/json" id="places-uk">__PLACES_UK__</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<!-- The integrity hashes make the browser refuse these files if the CDN ever serves anything else. check.py confirms they still match. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" integrity="sha384-9dCJK6nh7skY14HrcvlLYlFga9/MehJjL9ONWRflmiXNRuf8p2jiF4Y5PR881PTq" crossorigin="anonymous"></script>
 <script>
-// Tabs
+// Tabs. The address keeps the open section (#give) or entry (#story-...), so any of them can be linked to.
 const tabs = [...document.querySelectorAll('.tab')];
 const tabBar = document.querySelector('.wheat');
 const main = document.querySelector('main');
+const panelOf = tab => document.getElementById(tab.getAttribute('aria-controls'));
 function showTab(tab) {
   for (const t of tabs) {
     const active = t === tab;
     t.setAttribute('aria-selected', String(active));
     t.tabIndex = active ? 0 : -1;
-    document.getElementById(t.getAttribute('aria-controls')).hidden = !active;
+    panelOf(t).hidden = !active;
   }
   // When the tab bar is stuck to the top of the screen, start the new section at its beginning.
   const offset = main.getBoundingClientRect().top - tabBar.offsetHeight;
   if (offset < 0) window.scrollBy(0, offset);
 }
+// Open what an anchor points at: a whole section, or one entry inside it.
+function reveal(target) {
+  const panel = target.closest('[role="tabpanel"]');
+  showTab(tabs.find(t => panelOf(t) === panel));
+  history.replaceState(null, '', '#' + target.id);
+  if (target === panel) return;
+  if (target.closest('.state-group')?.hidden) select('');
+  target.scrollIntoView();
+  if (target.tabIndex === -1) target.focus({ preventScroll: true });
+  target.classList.remove('flash');
+  void target.offsetWidth;  // restart the highlight if it is already running
+  target.classList.add('flash');
+}
+const findTarget = hash => {
+  const target = hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
+  return target && target.closest('[role="tabpanel"]') ? target : null;
+};
 tabs.forEach((tab, i) => {
-  tab.addEventListener('click', () => showTab(tab));
+  tab.addEventListener('click', () => reveal(panelOf(tab)));
   tab.addEventListener('keydown', event => {
-    const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
-    if (!step) return;
-    const next = tabs[(i + step + tabs.length) % tabs.length];
+    const next = { ArrowRight: tabs[(i + 1) % tabs.length], ArrowLeft: tabs[(i - 1 + tabs.length) % tabs.length], Home: tabs[0], End: tabs[tabs.length - 1] }[event.key];
+    if (!next) return;
+    event.preventDefault();
     next.focus();
-    showTab(next);
+    reveal(panelOf(next));
   });
 });
-for (const button of document.querySelectorAll('[data-era]')) {
-  button.addEventListener('click', () => document.getElementById(button.dataset.era).scrollIntoView());
-}
+document.addEventListener('click', event => {
+  const link = event.target.closest('a[href^="#"]');
+  const target = link && findTarget(link.getAttribute('href'));
+  if (!target) return;
+  event.preventDefault();
+  reveal(target);
+});
+window.addEventListener('hashchange', () => {
+  const target = findTarget(location.hash);
+  if (target) reveal(target);
+});
 
-// Language. The static text of both languages is already in the page; this switches which one shows
-// and tells the places section to redraw its labels.
+// Language. The text of both languages is already in the page; this switches which one shows
+// and redraws what the script writes itself: the state menu, the order of the states, the map labels.
 const UK = JSON.parse(document.getElementById('places-uk').textContent);
 const TEXT = {
   en: {
     title: 'Together with Ukraine',
-    stateName: s => s.properties.name,
-    kind: kind => kind,
+    stateName: name => name,
     allStates: n => `All states (${n})`,
-    summary: (n, k, dc) => `${n} places in ${k} states` + (dc ? ' and Washington, DC.' : '.'),
     empty: name => `No places listed in ${name} yet. Pick a shaded state, or buy from Ukrainian brands online through the link beside the map.`,
-    website: 'Website',
     map: 'Map of the United States with a dot for each listed place. Select a state to filter the list.',
   },
   uk: {
     title: 'Разом з Україною',
-    stateName: s => UK.states[s.properties.name],
-    kind: kind => UK.kinds[kind],
+    stateName: name => UK.states[name],
     allStates: n => `Усі штати (${n})`,
-    summary: (n, k, dc) => `Закладів: ${n}. Штатів: ${k}` + (dc ? ', а також Вашингтон (округ Колумбія).' : '.'),
     empty: name => `${name}: у списку поки немає закладів. Оберіть зафарбований штат або купуйте в українських брендів онлайн за посиланням біля мапи.`,
-    website: 'Сайт',
     map: 'Мапа Сполучених Штатів із позначкою для кожного закладу зі списку. Оберіть штат, щоб відфільтрувати список.',
   },
 };
 let lang = 'en';
-let drawPlaces = () => {};
+let mapLang = () => {};  // replaced once the map is drawn
 const langButtons = [...document.querySelectorAll('[data-set-lang]')];
 function setLang(next) {
   lang = next;
@@ -327,38 +397,66 @@ function setLang(next) {
   document.title = TEXT[next].title;
   for (const b of langButtons) b.setAttribute('aria-pressed', String(b.dataset.setLang === next));
   try { localStorage.setItem('lang', next); } catch (error) { /* storage unavailable: the choice lasts for this visit */ }
-  drawPlaces();
+  placesLang();
+  mapLang();
 }
-for (const b of langButtons) b.addEventListener('click', () => setLang(b.dataset.setLang));
+for (const b of langButtons) b.addEventListener('click', () => {
+  setLang(b.dataset.setLang);
+  // Keep the choice in the address too, so a copied link opens in the same language.
+  const url = new URL(location.href);
+  url.searchParams.set('lang', lang);
+  history.replaceState(null, '', url);
+});
+
+// Places. The list itself is in the page; the script filters it by state.
+const topo = JSON.parse(document.getElementById('states-data').textContent);
+const stateNames = new Map(topo.objects.states.geometries.filter(g => Number(g.id) < 60).map(g => [g.id, g.properties.name]));
+const places = JSON.parse(document.getElementById('places-data').textContent);
+const countByState = new Map();
+for (const p of places) countByState.set(p.state, (countByState.get(p.state) || 0) + 1);
+const list = document.getElementById('place-list');
+const groups = [...list.querySelectorAll('.state-group')];
+const empty = document.getElementById('places-empty');
+const stateSelect = document.getElementById('state-select');
+const nameOf = id => TEXT[lang].stateName(stateNames.get(id));
+const byName = (a, b) => nameOf(a).localeCompare(nameOf(b), lang);
+let selected = '';
+let markSelected = () => {};  // replaced once the map is drawn
+function select(stateId) {
+  selected = stateId;
+  stateSelect.value = stateId;
+  list.classList.toggle('filtered', Boolean(stateId));
+  for (const g of groups) g.hidden = Boolean(stateId) && g.dataset.state !== stateId;
+  empty.hidden = !stateId || countByState.has(stateId);
+  if (!empty.hidden) empty.textContent = TEXT[lang].empty(nameOf(stateId));
+  markSelected(stateId);
+}
+stateSelect.addEventListener('change', () => select(stateSelect.value));
+function placesLang() {
+  const T = TEXT[lang];
+  for (const g of [...groups].sort((a, b) => byName(a.dataset.state, b.dataset.state))) list.append(g);
+  stateSelect.replaceChildren(new Option(T.allStates(places.length), ''));
+  for (const id of [...stateNames.keys()].sort(byName)) {
+    const n = countByState.get(id);
+    stateSelect.append(new Option(n ? `${nameOf(id)} (${n})` : nameOf(id), id));
+  }
+  document.getElementById('map').setAttribute('aria-label', T.map);
+  select(selected);
+}
+
 let savedLang = null;
 try { savedLang = localStorage.getItem('lang'); } catch (error) { /* storage unavailable */ }
-setLang(savedLang === 'en' || savedLang === 'uk' ? savedLang : navigator.language.toLowerCase().startsWith('uk') ? 'uk' : 'en');
+const askedLang = new URLSearchParams(location.search).get('lang');
+setLang([askedLang, savedLang].find(l => l === 'en' || l === 'uk') || (navigator.language.toLowerCase().startsWith('uk') ? 'uk' : 'en'));
+const start = findTarget(location.hash);
+if (start) reveal(start);
 
-// Data
-const DC_ID = '11';
-const topo = JSON.parse(document.getElementById('states-data').textContent);
-const states = topojson.feature(topo, topo.objects.states).features
-  .filter(s => Number(s.id) < 60)
-  .sort((a, b) => a.properties.name.localeCompare(b.properties.name));
-
-// A place belongs to the state its coordinates fall in. Places outside every state are not listed.
-const places = JSON.parse(document.getElementById('places-data').textContent)
-  .map(p => ({ ...p, state: states.find(s => d3.geoContains(s, [p.lon, p.lat])) }))
-  .filter(p => p.state)
-  .sort((a, b) => a.state.properties.name.localeCompare(b.state.properties.name) || a.name.localeCompare(b.name));
-
-const countByState = d3.rollup(places, v => v.length, p => p.state.id);
-let selected = '';
-
-const stateCount = [...countByState.keys()].filter(id => id !== DC_ID).length;
-const byName = (a, b) => TEXT[lang].stateName(a).localeCompare(TEXT[lang].stateName(b), lang);
-
-// Map
+// Map. Drawn last because it needs the two libraries above; everything else works without them.
+const states = topojson.feature(topo, topo.objects.states).features.filter(s => Number(s.id) < 60);
 const projection = d3.geoAlbersUsa().fitSize([975, 610], { type: 'FeatureCollection', features: states });
-const path = d3.geoPath(projection);
 const svg = d3.select('#map');
 const statePaths = svg.append('g').selectAll('path').data(states).join('path')
-  .attr('d', path)
+  .attr('d', d3.geoPath(projection))
   .attr('class', s => 'state' + (countByState.has(s.id) ? ' has' : ''))
   .on('click', (event, s) => select(selected === s.id ? '' : s.id));
 const stateTitles = statePaths.append('title');
@@ -366,67 +464,10 @@ svg.append('g').selectAll('circle').data(places).join('circle')
   .attr('class', 'dot')
   .attr('r', 6)
   .attr('transform', p => `translate(${projection([p.lon, p.lat])})`);
-
-// Filter
-const stateSelect = document.getElementById('state-select');
-stateSelect.addEventListener('change', () => select(stateSelect.value));
-
-// List
-const list = document.getElementById('place-list');
-function el(tag, className, text) {
-  const node = document.createElement(tag);
-  node.className = className;
-  if (text) node.textContent = text;
-  return node;
-}
-function link(text, href) {
-  const a = el('a', '', text);
-  a.href = href;
-  a.target = '_blank';
-  a.rel = 'noopener';
-  return a;
-}
-function placeNode(p) {
-  const node = el('div', 'place');
-  node.append(el('p', 'place-name', p.name));
-  node.append(el('p', 'place-meta', [TEXT[lang].kind(p.kind), p.street, p.city].filter(Boolean).join(', ')));
-  const links = el('p', 'place-links');
-  if (p.web) links.append(link(TEXT[lang].website, p.web));
-  const query = [p.name, p.street, p.city, p.state.properties.name].join(', ');
-  links.append(link('Google Maps', 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query)));
-  node.append(links);
-  return node;
-}
-function select(stateId) {
-  selected = stateId;
-  stateSelect.value = stateId;
-  statePaths.classed('sel', s => s.id === stateId);
-  const shown = stateId ? places.filter(p => p.state.id === stateId) : places;
-  list.replaceChildren();
-  if (shown.length === 0) {
-    list.append(el('p', '', TEXT[lang].empty(TEXT[lang].stateName(states.find(s => s.id === stateId)))));
-    return;
-  }
-  const groups = [...d3.group(shown, p => p.state.id).values()].sort((a, b) => byName(a[0].state, b[0].state));
-  for (const group of groups) {
-    if (!stateId) list.append(el('p', 'group-name', TEXT[lang].stateName(group[0].state)));
-    for (const p of group) list.append(placeNode(p));
-  }
-}
-// Everything in this section that depends on the language.
-drawPlaces = () => {
-  const T = TEXT[lang];
-  document.getElementById('places-summary').textContent = T.summary(places.length, stateCount, countByState.has(DC_ID));
-  document.getElementById('map').setAttribute('aria-label', T.map);
-  stateTitles.text(T.stateName);
-  stateSelect.replaceChildren(new Option(T.allStates(places.length), ''));
-  for (const s of [...states].sort(byName)) {
-    const n = countByState.get(s.id);
-    stateSelect.append(new Option(n ? `${T.stateName(s)} (${n})` : T.stateName(s), s.id));
-  }
-  select(selected);
-};
-drawPlaces();
+markSelected = stateId => statePaths.classed('sel', s => s.id === stateId);
+mapLang = () => stateTitles.text(s => nameOf(s.id));
+markSelected(selected);
+mapLang();
 </script>
 </body>
 </html>

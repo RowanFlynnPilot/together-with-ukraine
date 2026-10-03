@@ -1,0 +1,27 @@
+name: Suggest a place · Запропонувати заклад
+description: A Ukrainian restaurant, bakery, deli or market in the United States.
+title: "Place: "
+labels: [place]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A place is listed only if it calls itself Ukrainian on its own website, or local press describes it that way. Serving Ukrainian food is not enough.
+        Заклад потрапляє до списку, лише якщо він називає себе українським на власному сайті або так його описує місцева преса.
+  - type: input
+    id: name
+    attributes:
+      label: Name and address · Назва та адреса
+    validations:
+      required: true
+  - type: input
+    id: website
+    attributes:
+      label: Its website, if it has one · Сайт закладу, якщо є
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Where it is described as Ukrainian · Де його названо українським
+      description: A link to the page on its own site, or to a local news article, and the words it uses.
+    validations:
+      required: true

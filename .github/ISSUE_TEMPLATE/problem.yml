@@ -1,0 +1,16 @@
+name: Report a mistake · Повідомити про помилку
+description: Something on the page is wrong, out of date, or badly translated.
+title: "Fix: "
+labels: [fix]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong, and where · Що не так і де
+      description: Quote the text or name the entry, and say which language.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: What it should say, with a source if you have one · Як має бути, із джерелом, якщо є

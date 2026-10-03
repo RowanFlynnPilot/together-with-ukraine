@@ -3,15 +3,21 @@ Each text is an (English, Ukrainian) pair.
 
 US charities draw their IRS facts and ratings from data/irs.json and data/charity_navigator.json,
 which refresh.py pulls and check.py compares against the live records. A charity with no record
-stops the build."""
+stops the build.
+
+A check may name a phrase its page must contain, as a fourth item: (English, Ukrainian, url, phrase).
+check.py confirms each phrase is still there. "EIN on its own site matches" checks register the EIN."""
 import html, json, pathlib
 
-from i18n import both
+from i18n import both, plural_uk, slug
 
 DATA = pathlib.Path(__file__).parent / 'data'
 IRS = json.loads((DATA / 'irs.json').read_text(encoding='utf-8'))
 CN = json.loads((DATA / 'charity_navigator.json').read_text(encoding='utf-8'))
+# The day every entry below was last reviewed by hand. check.py fails once it is six months old.
+REVIEWED = '2026-10-03'
 EINS = []  # every US charity on the page, filled as the entries below are built
+CLAIMS = []  # (url, phrase, what) for check.py, filled as the entries below are built
 READ_VIA_SEARCH = ('its site blocks automated checks, so it was read through search', 'сайт блокує автоматичні перевірки, тому його читали через пошук', None)
 EIN_MATCHES = ('EIN on its own site matches', 'EIN на сайті організації збігається')
 
@@ -30,8 +36,9 @@ def us(ein):
     cn_url = f'https://www.charitynavigator.org/ein/{ein}'
     if c['stars']:
         ratio = c['program_ratio']
+        stars_uk = plural_uk(int(c['stars']), 'зірка', 'зірки', 'зірок')
         checks.append((f'Charity Navigator: {c["stars"]} of 4 stars, with {ratio:.1f}% of spending going to programs over three years',
-                       f'Charity Navigator: {c["stars"]} зірки з 4; на програми йде {num_uk(ratio)} % витрат (середнє за три роки)', cn_url))
+                       f'Charity Navigator: {c["stars"]} {stars_uk} з 4; на програми йде {num_uk(ratio)} % витрат (середнє за три роки)', cn_url))
     else:
         checks.append(('not yet rated by Charity Navigator', 'Charity Navigator ще не оцінював', cn_url))
     kind = (f'US 501(c)(3), EIN {shown}, {r["city"]}, {r["state"]}', f'Благодійна організація США 501(c)(3), EIN {shown}, {r["city"]}, {r["state"]}')
@@ -39,7 +46,10 @@ def us(ein):
 
 def org(name, kind, what, checks, action, url): return dict(name=name, kind=kind, what=what, checks=checks, action=action, url=url)
 def us_org(name, ein, what, extra_checks, action, url):
-    kind, checks = us(ein); return org(name, kind, what, checks + extra_checks, action, url)
+    kind, checks = us(ein)
+    for check in extra_checks:
+        if check[:2] == EIN_MATCHES: CLAIMS.append((check[2], f'{ein[:2]}-{ein[2:]}', f'{name[0]}: EIN on its own site'))
+    return org(name, kind, what, checks + extra_checks, action, url)
 def give_at(domain): return (f'Give at {domain}', f'Пожертвувати на {domain}')
 def same(name): return (name, name)
 
@@ -52,7 +62,7 @@ GROUPS = [
       ('Ukraine’s official fundraising platform, started by President Zelenskyy in 2022. You choose where your money goes: defense, demining, medical aid, education or rebuilding.',
        'Офіційна фандрейзингова платформа України, яку 2022 року започаткував президент Зеленський. Ви самі обираєте напрям: оборона, розмінування, медична допомога, освіта чи відбудова.'),
       [('official .gov.ua site', 'офіційний сайт у домені .gov.ua', None),
-       ('audited by Deloitte and BDO', 'аудит проводять Deloitte і BDO', 'https://u24.gov.ua/about'),
+       ('audited by Deloitte and BDO', 'аудит проводять Deloitte і BDO', 'https://u24.gov.ua/about', 'Deloitte and BDO'),
        ('publishes weekly spending reports', 'щотижня публікує звіти про витрати', 'https://u24.gov.ua/reports')],
       give_at('u24.gov.ua'), 'https://u24.gov.ua/'),
   org(('Come Back Alive', '«Повернись живим»'), ('Ukrainian foundation, since 2014', 'Український фонд, з 2014 року'),
@@ -65,7 +75,7 @@ GROUPS = [
   org(('Serhiy Prytula Charity Foundation', 'Благодійний фонд Сергія Притули'), ('Ukrainian foundation, since 2020', 'Український фонд, з 2020 року'),
       ('Buys drones, vehicles, optics and medical supplies for the military, and runs humanitarian aid alongside.',
        'Купує для війська дрони, транспорт, оптику й медичні засоби, а також надає гуманітарну допомогу.'),
-      [('in Ukraine’s state register as a nonprofit since July 2020, with reported income of about 2 billion hryvnias for 2025', 'у державному реєстрі України як неприбуткова організація з липня 2020 року; задекларований дохід за 2025 рік — близько 2 млрд гривень', 'https://opendatabot.ua/c/43720363'),
+      [('in Ukraine’s state register as a nonprofit since July 2020, with reported income of about 2 billion hryvnias for 2025', 'у державному реєстрі України як неприбуткова організація з липня 2020 року; задекларований дохід за 2025 рік — близько 2 млрд гривень', 'https://opendatabot.ua/c/43720363', '43720363'),
        ('publishes an annual report and monthly reports on its military aid', 'публікує річний звіт і щомісячні звіти про допомогу війську', 'https://prytulafoundation.org/military-reports'),
        READ_VIA_SEARCH],
       give_at('prytulafoundation.org'), 'https://prytulafoundation.org/en/'),
@@ -76,7 +86,7 @@ GROUPS = [
   us_org(same('Razom for Ukraine'), '464604398',
       ('Founded in 2014; razom means “together.” Delivers medical and humanitarian aid in Ukraine and speaks up for Ukraine in the United States.',
        'Заснована 2014 року. Доставляє медичну й гуманітарну допомогу в Україну та обстоює інтереси України у Сполучених Штатах.'),
-      [(*EIN_MATCHES, RAZOM_FAQ), ('publishes its financials', 'публікує фінансову звітність', 'https://www.razomforukraine.org/about-us/financials/')],
+      [(*EIN_MATCHES, RAZOM_FAQ), ('publishes its financials', 'публікує фінансову звітність', 'https://www.razomforukraine.org/about-us/financials/', '990')],
       give_at('razomforukraine.org'), 'https://www.razomforukraine.org/donate/'),
   us_org(same('Nova Ukraine'), '465335435',
       ('Supplies hospitals, evacuates civilians and supports schools and communities across Ukraine.',
@@ -96,7 +106,7 @@ GROUPS = [
       ('The US arm of the Prytula foundation, limited to civilian aid: medical supplies, evacuation vehicles, shelters and demining.',
        'Американське відділення фонду Притули, яке займається лише цивільною допомогою: медичні засоби, транспорт для евакуації, укриття та розмінування.'),
       [('announced by Serhiy Prytula himself', 'про створення оголосив сам Сергій Притула', 'https://x.com/serhiyprytula/status/1829871215206408239'),
-       ('posts its Form 990 and auditor’s report', 'публікує податкову форму 990 і аудиторський звіт', 'https://prytulafoundation.us/transparency')],
+       ('posts its Form 990 and auditor’s report', 'публікує податкову форму 990 і аудиторський звіт', 'https://prytulafoundation.us/transparency', '990')],
       give_at('prytulafoundation.us'), 'https://prytulafoundation.us/'),
  ]),
  (('Wounded and rehabilitation', 'Поранені та реабілітація'), None, [
@@ -148,7 +158,7 @@ GROUPS = [
   us_org(same('ENGin'), '883527494',
       ('Pairs you with someone in Ukraine for a weekly video chat in English. You help them practice and learn about each other’s countries.',
        'Знайде вам співрозмовника в Україні для щотижневих відеорозмов англійською. Ви допомагаєте практикувати мову, і обоє дізнаєтеся більше про країни одне одного.'),
-      [('says on its own site that it is a registered 501(c)(3)', 'на власному сайті зазначає, що є зареєстрованою організацією 501(c)(3)', 'https://www.enginprogram.org/faqs-for-volunteers')],
+      [('says on its own site that it is a registered 501(c)(3)', 'на власному сайті зазначає, що є зареєстрованою організацією 501(c)(3)', 'https://www.enginprogram.org/faqs-for-volunteers', '501(c)(3)')],
       ('Volunteer with ENGin', 'Стати волонтером ENGin'), 'https://www.enginprogram.org/volunteer'),
   org(('Razom volunteers', 'Волонтерство в Razom'), ('Run by Razom for Ukraine, listed above', 'Організація Razom for Ukraine, згадана вище'),
       ('Razom takes volunteer applications through a form on its questions page and places people as its teams need them.',
@@ -162,21 +172,34 @@ GROUPS = [
  ]),
 ]
 
-def render():
+def org_id(o): return 'org-' + slug(o['name'][0])
+
+def targets():
+    """English name -> (element id, English label, Ukrainian label), for links from other sections."""
+    return {o['name'][0]: (org_id(o), *o['name']) for _, _, orgs in GROUPS for o in orgs}
+
+def claims():
+    """(url, phrase, what) for check.py: phrases each check's page must still contain."""
+    return CLAIMS + [(check[2], check[3], f'{o["name"][0]}: {check[0]}') for _, _, orgs in GROUPS for o in orgs for check in o['checks'] if len(check) == 4]
+
+def render(story_links):
+    """story_links maps an org id to [(story id, English label, Ukrainian label)]."""
     e = html.escape; out = []; n = 0
     for title, intro, orgs in GROUPS:
         out.append(f'    <div class="cause">\n      <h3>{both(*title)}</h3>')
         if intro: out.append(f'      <p class="cause-intro">{both(*intro)}</p>')
         for o in orgs:
             parts = []
-            for en, uk, url in o['checks']:
+            for en, uk, url, *_ in o['checks']:
                 parts.append(f'<a href="{e(url)}" target="_blank" rel="noopener">{both(en, uk)}</a>' if url else both(en, uk))
-            out.append(f'''      <div class="org">
+            stories = ''.join(f'\n          <p class="src story-link"><a href="#{sid}">{both("A story: " + en, "Історія: " + uk)}</a></p>'
+                              for sid, en, uk in story_links.get(org_id(o), []))
+            out.append(f'''      <div class="org" id="{org_id(o)}" tabindex="-1">
         <div class="org-text">
           <p class="org-name">{both(*o["name"])}</p>
           <p class="org-kind">{both(*o["kind"])}</p>
           <p class="org-what">{both(*o["what"])}</p>
-          <p class="src">{both("Checked", "Перевірено")}: {"; ".join(parts)}.</p>
+          <p class="src">{both("Checked", "Перевірено")}: {"; ".join(parts)}.</p>{stories}
         </div>
         <a class="give-link" href="{e(o["url"])}" target="_blank" rel="noopener">{both(*o["action"])}</a>
       </div>''')
