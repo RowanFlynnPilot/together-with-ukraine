@@ -125,7 +125,10 @@ Windows defaults to another encoding.
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко). When that is done, delete the footer paragraph in `template.html` that says the
   Ukrainian is a machine translation.
-- The places list is thin: 24 places in 12 states and DC, with nothing in Ohio, Michigan,
-  New Jersey, Massachusetts or Texas. New places must pass rule 2.
+- The places list has 31 places in 17 states and DC; Massachusetts still has none that qualify.
+  Undecided: whether Multicook's frozen-food shops (now "a Ukrainian family business" on the brand
+  site) belong; see `held`. Unverified leads: SLAVA Cafe (Asheville, NC), Nubo Café (Clearwater,
+  FL), Sunflower Tastes (Port Angeles, WA), Banderyky (Vancouver, WA), Shchedryk grocery (Berlin, CT).
+  New places must pass rule 2.
 - Most pre-2022 history rests on one encyclopedia. A second independent source on the contested
   entries (Pereiaslav, the Holodomor, Crimea) would strengthen it.

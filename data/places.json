@@ -118,7 +118,7 @@
  },
  {
   "name": "Old Lviv",
-  "kind": "Café",
+  "kind": "Restaurant",
   "street": "2228 West Chicago Avenue",
   "city": "Chicago",
   "state": "Illinois",
@@ -380,7 +380,7 @@
   ]
  },
  {
-  "name": "Paradise Village Restaurant",
+  "name": "Paradise Village Hotel & Restaurant",
   "kind": "Restaurant",
   "street": "National Park Highway",
   "city": "Ashford",
@@ -391,8 +391,8 @@
   "basis": [
    {
     "by": "own website",
-    "url": "https://paradisevillagelodge.com/",
-    "says": "Ukrainian Cuisine"
+    "url": "https://www.paradisevillagelodge.com/",
+    "says": "our delectable Ukrainian cuisine"
    }
   ]
  },
@@ -444,6 +444,140 @@
     "by": "own website",
     "url": "https://www.innas-cuisine.com/",
     "says": "an eclectic mix of Ukrainian, Greek, and Italian cuisine"
+   }
+  ]
+ },
+ {
+  "name": "Olesia's Taverne",
+  "kind": "Restaurant",
+  "street": "3960 Broadview Road",
+  "city": "Richfield",
+  "state": "Ohio",
+  "web": "https://www.olesiastaverne.com/",
+  "lat": 41.24005,
+  "lon": -81.65543,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.olesiastaverne.com",
+    "says": "where fine dining meets Ukrainian flair"
+   },
+   {
+    "by": "own website",
+    "url": "https://www.olesiastaverne.com/about",
+    "says": "As a Ukrainian native"
+   }
+  ]
+ },
+ {
+  "name": "Chef Sergey's Bakery",
+  "kind": "Bakery",
+  "street": "136 Ashman Circle",
+  "city": "Midland",
+  "state": "Michigan",
+  "web": "https://www.sergeysbakery.com/",
+  "lat": 43.62666,
+  "lon": -84.2281,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.sergeysbakery.com/our-story",
+    "says": "We are two families from Ukraine"
+   },
+   {
+    "by": "WCMU",
+    "url": "https://www.wcmu.org/local-regional-news/2025-01-21/home-and-hope-ukrainian-refugees-open-bakery-in-midland",
+    "says": "Ukrainian refugees open bakery in Midland"
+   }
+  ]
+ },
+ {
+  "name": "Borsch House",
+  "kind": "Counter service",
+  "street": "241 Division Street",
+  "city": "Altoona",
+  "state": "Wisconsin",
+  "web": "https://borschhouse.square.site/",
+  "lat": 44.80686,
+  "lon": -91.4337,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://borschhouse.square.site/",
+    "says": "A Taste of Ukraine"
+   },
+   {
+    "by": "WEAU",
+    "url": "https://www.weau.com/2025/08/21/ukrainian-refugees-follow-american-dream-with-restaurant/",
+    "says": "Ukrainian refugees"
+   }
+  ]
+ },
+ {
+  "name": "Taste of Ukraine",
+  "kind": "Bakery",
+  "street": "389 Dover Chester Road",
+  "city": "Randolph",
+  "state": "New Jersey",
+  "web": "https://www.tasteofukrainellc.com/",
+  "lat": 40.82253,
+  "lon": -74.62616,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.tasteofukrainellc.com/",
+    "says": "Delicious authentic Ukrainian food"
+   }
+  ]
+ },
+ {
+  "name": "The Golden Boar",
+  "kind": "Restaurant",
+  "street": "2158 East County Line Road",
+  "city": "Huntingdon Valley",
+  "state": "Pennsylvania",
+  "web": "https://www.goldenboarrestaurant.com/",
+  "lat": 40.17029,
+  "lon": -75.0736,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.goldenboarrestaurant.com/",
+    "says": "Authentic Ukrainian and Eastern European Food"
+   }
+  ]
+ },
+ {
+  "name": "European Dumplings Cafe",
+  "kind": "Restaurant",
+  "street": "2211 Northwest Military Highway",
+  "city": "Castle Hills",
+  "state": "Texas",
+  "web": "https://www.europeandumplings.com/",
+  "lat": 29.53344,
+  "lon": -98.52298,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.europeandumplings.com/",
+    "says": "Welcome to our Ukrainian restaurant"
+   }
+  ]
+ },
+ {
+  "name": "European Dumplings Cafe",
+  "kind": "Restaurant",
+  "street": "8065 Callaghan Road",
+  "city": "San Antonio",
+  "state": "Texas",
+  "web": "https://www.europeandumplings.com/",
+  "lat": 29.5123,
+  "lon": -98.55155,
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.europeandumplings.com/",
+    "says": "Welcome to our Ukrainian restaurant"
    }
   ]
  }
