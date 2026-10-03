@@ -141,13 +141,12 @@ Windows defaults to another encoding.
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко). When that is done, delete the footer paragraph in `template.html` that says the
   Ukrainian is a machine translation.
-- The places list has 100 places in 28 states and DC (researched October 3, 2026 in two passes,
-  state by state, from local press and the businesses' own sites). Not reached because the research
-  ran out of web searches: Oregon, Tennessee beyond Nashville and Knoxville,
-  Louisiana, Alabama, Mississippi, Arkansas, Oklahoma, Kansas (Wichita), Nebraska (Omaha, Lincoln),
-  the Dakotas, Iowa beyond Ames, Kansas City, Reno, Tucson, Anchorage and Indiana. Undecided:
-  Multicook-style prepared and frozen-food shops (held, see `held`). Just Right Cake in Wausau
-  reopened under a new Ukrainian owner in 2025; list it once it is confirmed open. `python scout.py`
-  gives OpenStreetMap leads. New places must pass rule 2.
+- The places list has 101 places in 29 states and DC, from three passes of state-by-state research
+  (October 3, 2026) in local press and the businesses' own sites. Every state was searched at least
+  once; the 21 without a listing turned up nothing that passes rule 2 (the near-misses are in `held`).
+  Worth rechecking: Hatta Ukrainian Cuisine (Wood Village, OR), whose own site failed to load; Just
+  Right Cake (Wausau, WI), reopened under a new Ukrainian owner in 2025, to list once confirmed open;
+  Mriya Bakery (Vancouver, WA). Undecided: Multicook-style prepared and frozen-food shops (held).
+  `python scout.py` gives OpenStreetMap leads. New places must pass rule 2.
 - Most pre-2022 history rests on one encyclopedia. A second independent source on the contested
   entries (Pereiaslav, the Holodomor, Crimea) would strengthen it.
