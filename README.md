@@ -5,7 +5,7 @@ A two-language (English and Ukrainian) page with five parts:
 - **History**: 30 entries from Kyivan Rus' to today, each linked to the source it was checked against.
 - **People**: stories of Ukrainians, in Ukraine and in the United States, each summarized from one published report and linked to it.
 - **Culture**: Ukraine's landscapes and landmarks in photos, its food with links to recipes, traditions, holidays, Ukrainian festivals in the US, and where to learn more.
-- **Eat and shop**: Ukrainian restaurants, bakeries and markets in the United States, on a map, each with the evidence it was listed on.
+- **Eat and shop**: Ukrainian restaurants, cafés, bakeries and markets in the United States, filtered by state and kind, on a map that zooms to each state, each with the evidence it was listed on.
 - **Give**: where to donate money, send supplies or volunteer, with what was verified about each group.
 
 The parts link to each other: a story about the Holodomor links to that timeline entry and back, a story about Veselka links to Veselka on the map. Every section and entry has its own address (`#give`, `#story-liubov-yarosh`), and `?lang=uk` opens the page in Ukrainian.

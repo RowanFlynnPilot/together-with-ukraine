@@ -52,6 +52,7 @@ def build():
             .replace('__THEME_NAV__', nav(themes)).replace('__STORIES__', people)
             .replace('__CULTURE_NAV__', nav(culture_nav)).replace('__CULTURE__', culture_html).replace('__HERO_CREDIT__', culture.hero_credit())
             .replace('__PLACES_SUMMARY__', both(summary_en, summary_uk)).replace('__PLACE_LIST__', places.render(back['place']))
+            .replace('__PLACE_PHOTOS__', places.photo_strip()).replace('__KIND_FILTER__', places.kind_filter()).replace('__PLACE_ICONS__', places.icons())
             .replace('__GIVE__', give_html)
             .replace('__RECORDS_EN__', records_en).replace('__RECORDS_UK__', records_uk)
             .replace('__GIVE_REVIEWED_EN__', give_en).replace('__GIVE_REVIEWED_UK__', give_uk)
@@ -85,6 +86,6 @@ if __name__ == '__main__':
     out.write_text(build(), encoding='utf-8')
     (out.parent / 'preview.png').write_bytes(flag_png())
     (out.parent / 'images').mkdir(exist_ok=True)
-    for photo in stories.photo_files() + culture.photo_files():
+    for photo in stories.photo_files() + culture.photo_files() + places.photo_files():
         (out.parent / 'images' / photo.name).write_bytes(photo.read_bytes())
     print(f'built {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)')
