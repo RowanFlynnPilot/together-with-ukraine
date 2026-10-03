@@ -19,7 +19,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='1' fill='%230057B7'/%3E%3Crect y='1' width='3' height='1' fill='%23FFD700'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400&display=swap">
 <!-- Without the script the tabs cannot switch, so show every section in turn. -->
-<noscript><style>section[role="tabpanel"][hidden] { display: block !important; } .wheat, .lang, .filter, #map { display: none; }</style></noscript>
+<noscript><style>section[role="tabpanel"][hidden] { display: block !important; } .wheat, .lang, .place-filters, .map-frame, .map-hint { display: none; }</style></noscript>
 <style>
 :root {
   --sky: #0057B7;
@@ -31,10 +31,8 @@
   --muted: #4A5B74;
   --line: #C3D2E6;
   --link: #0057B7;
-  --map-land: #DCE6F4;
-  --map-has: #9DBDE8;
-  --map-sel: #0057B7;
-  --map-edge: #FFFFFF;
+  --card: #FFFFFF;
+  --shadow: rgba(11, 31, 58, 0.14);
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -47,10 +45,8 @@
     --muted: #A8B8CE;
     --line: #2A4263;
     --link: #8DBEFF;
-    --map-land: #1B3050;
-    --map-has: #2F5C9C;
-    --map-sel: #8DBEFF;
-    --map-edge: #0A1626;
+    --card: #12233A;
+    --shadow: rgba(0, 0, 0, 0.45);
   }
 }
 :root[data-theme="dark"] {
@@ -60,10 +56,8 @@
   --muted: #A8B8CE;
   --line: #2A4263;
   --link: #8DBEFF;
-  --map-land: #1B3050;
-  --map-has: #2F5C9C;
-  --map-sel: #8DBEFF;
-  --map-edge: #0A1626;
+  --card: #12233A;
+  --shadow: rgba(0, 0, 0, 0.45);
 }
 *, *::before, *::after { box-sizing: inherit; }
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -178,37 +172,128 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 @media (max-width: 34rem) { .culture-photo { width: 6.5rem; margin-left: 1rem; } }
 
 /* Places */
-.places-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; }
-.map-col { position: sticky; top: 6.25rem; }
-#map { width: 100%; height: auto; display: block; }
-.state { fill: var(--map-land); stroke: var(--map-edge); stroke-width: 1; cursor: pointer; }
-.state.has { fill: var(--map-has); }
-.state.sel { fill: var(--map-sel); }
-.dot { fill: var(--wheat); stroke: #0B1F3A; stroke-width: 1.5; pointer-events: none; }
-.filter { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 1.25rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.icon { width: 1.25rem; height: 1.25rem; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Photos of listed places: a row on wide screens, a strip to swipe on narrow ones. */
+.place-photos { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 0.75rem; margin: 0 0 2rem; }
+.place-photo { margin: 0; min-width: 0; }
+.place-photo a.shot { position: relative; display: block; color: #FFFFFF; text-decoration: none; overflow: hidden; background: var(--wash); }
+.place-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.4s ease; }
+.place-photo a.shot:hover img { transform: scale(1.04); }
+.place-photo .shot-caption {
+  position: absolute; inset: auto 0 0 0; padding: 2.5rem 0.8rem 0.65rem; font-weight: 700; line-height: 1.25;
+  background: linear-gradient(transparent, rgba(11, 31, 58, 0.92));
+}
+.place-photo .credit { display: block; margin-top: 0.35rem; }
+@media (max-width: 54rem) {
+  .place-photos { grid-auto-columns: min(78%, 20rem); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.5rem; }
+  .place-photo { scroll-snap-align: start; }
+}
+
+/* Filters */
+.place-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin: 0 0 1.75rem; }
+.filter { display: flex; align-items: center; gap: 0.6rem; }
 .filter label { font-weight: 700; }
 select {
   font: inherit; color: var(--ink); background: var(--paper);
   border: 2px solid var(--ink); border-radius: 0; padding: 0.4rem 0.6rem; max-width: 100%;
 }
-.group-name { margin: 1.75rem 0 0.25rem; font-size: 1.125rem; color: var(--muted); font-weight: 700; }
-.state-group:first-child .group-name { margin-top: 0; }
-#place-list.filtered .group-name { display: none; }
-.place { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
-.place-name { font-weight: 700; margin: 0; }
-.place-meta { margin: 0; color: var(--muted); }
-.place-tags { margin: 0.1rem 0 0.15rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
-.tag { font-size: 0.8125rem; line-height: 1.4; padding: 0 0.45rem; border: 1px solid var(--line); background: var(--wash); color: var(--ink); }
-.place .src { margin-top: 0.15rem; }
-.place-links { margin: 0.15rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
-.note { background: var(--wash); padding: 1.1rem 1.25rem; margin: 1.75rem 0 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip {
+  font: inherit; font-size: 1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.85rem; border: 2px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer;
+}
+.chip:hover { border-color: var(--link); }
+.chip[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: #FFFFFF; }
+.chip:disabled { opacity: 0.4; cursor: default; border-color: var(--line); }
+.places-status { margin: 0; color: var(--muted); }
+.places-status:empty { display: none; }
+
+/* The map: a night-blue panel in both themes, with the places as points of wheat-colored light. */
+.places-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-template-areas: "list map"; gap: 2rem; align-items: start; }
+.list-col { grid-area: list; }
+.map-col { grid-area: map; position: sticky; top: 6.25rem; }
+.map-frame { position: relative; background: radial-gradient(ellipse at 50% 45%, #15365F, #0B1F3A 75%); border: 1px solid var(--line); padding: 0.75rem; overflow: hidden; }
+#map { width: 100%; height: auto; display: block; overflow: hidden; }
+.state { fill: #173459; stroke: #0B1F3A; stroke-width: 1; vector-effect: non-scaling-stroke; transition: fill 0.2s; }
+.state.has { fill: #2A5C9C; cursor: pointer; }
+.state.has:hover { fill: #3570BA; }
+.state.sel { fill: #3D7FD1; stroke: #FFD700; stroke-width: 2; }
+.dot { fill: #FFD700; stroke: #0B1F3A; stroke-width: 1.25; vector-effect: non-scaling-stroke; cursor: pointer; transition: opacity 0.3s; }
+.dot.dim { opacity: 0.35; }
+.dot.hot { fill: #FFFFFF; stroke: #FFD700; stroke-width: 3; }
+.map-label { position: absolute; left: 1.25rem; bottom: 1rem; margin: 0; color: #FFFFFF; pointer-events: none; text-shadow: 0 1px 6px #0B1F3A; }
+.map-label strong { display: block; font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.05; }
+.map-reset {
+  position: absolute; top: 1rem; left: 1rem; font: inherit; font-size: 0.9375rem; font-weight: 700;
+  background: var(--wheat); color: #0B1F3A; border: 0; padding: 0.35rem 0.8rem; cursor: pointer;
+}
+.map-reset::before { content: "← "; }
+.map-zoom { position: absolute; top: 1rem; right: 1rem; display: grid; gap: 2px; }
+.map-zoom button { width: 2.25rem; height: 2.25rem; font: inherit; font-size: 1.35rem; font-weight: 700; line-height: 1; background: rgba(255, 255, 255, 0.92); color: #0B1F3A; border: 0; cursor: pointer; }
+.map-zoom button:hover { background: var(--wheat); }
+#map { cursor: grab; }
+#map:active { cursor: grabbing; }
+.map-tip {
+  position: absolute; z-index: 1; transform: translate(-50%, calc(-100% - 12px)); max-width: 16rem;
+  background: #FFFFFF; color: #0B1F3A; padding: 0.35rem 0.65rem; font-size: 0.9375rem; line-height: 1.25;
+  pointer-events: none; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+.map-tip strong { display: block; }
+.map-tip.below { transform: translate(-50%, 12px); }
+.map-tip.below::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #FFFFFF; }
+.map-tip::after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #FFFFFF; }
+.map-hint { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.9375rem; }
+.note { background: var(--wash); padding: 1.1rem 1.25rem; margin: 1.25rem 0 0; }
 .note p { margin: 0; }
 .note p + p { margin-top: 0.6rem; }
+
+/* Listings */
+.group-name { display: flex; align-items: center; gap: 0.75rem; margin: 2rem 0 0.85rem; font-size: 1.3rem; }
+.group-name::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.state-group:first-of-type .group-name { margin-top: 0; }
+#place-list.filtered .group-name { display: none; }
+.cards { display: grid; gap: 0.9rem; }
+.place {
+  background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--sky);
+  padding: 0.95rem 1.15rem 1rem; transition: border-color 0.15s, box-shadow 0.15s;
+}
+.place:hover, .place.hot { border-left-color: var(--wheat); box-shadow: 0 8px 24px var(--shadow); }
+.place-kind { margin: 0; display: flex; align-items: center; gap: 0.45rem; color: var(--muted); font-size: 0.9375rem; }
+.place-kind .icon { color: var(--link); }
+.place-name { margin: 0.3rem 0 0.1rem; font-size: 1.35rem; line-height: 1.2; }
+.place-addr { margin: 0; color: var(--muted); }
+.place-tags { margin: 0.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag { font-size: 0.8125rem; font-weight: 700; line-height: 1.4; padding: 0.1rem 0.5rem; color: var(--ink); background: rgba(0, 87, 183, 0.12); border: 1px solid rgba(0, 87, 183, 0.35); }
+.tag-food { background: rgba(255, 215, 0, 0.2); border-color: rgba(214, 170, 0, 0.6); }
+.place-story { margin: 0.65rem 0 0; font-weight: 700; }
+.place-links { margin: 0.85rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.place-btn {
+  display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.9375rem; font-weight: 700; text-decoration: none;
+  padding: 0.3rem 0.8rem; border: 2px solid var(--link); color: var(--link);
+}
+.place-btn::after { content: "↗"; font-weight: 400; }
+.place-btn:hover { background: var(--link); color: var(--paper); }
+.why { margin: 0.85rem 0 0; padding-top: 0.6rem; border-top: 1px dashed var(--line); font-size: 0.875rem; color: var(--muted); }
+.why summary { display: flex; align-items: baseline; gap: 0.4rem; cursor: pointer; list-style: none; }
+.why summary::-webkit-details-marker { display: none; }
+.why summary::before { content: "✓"; color: var(--link); font-weight: 700; }
+.why summary::after { content: "▸"; margin-left: auto; transition: transform 0.15s; }
+.why[open] summary::after { transform: rotate(90deg); }
+.why ul { margin: 0.5rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.45rem; }
+.why li { padding-left: 0.7rem; border-left: 2px solid var(--wheat); color: var(--ink); }
+.why a { color: var(--muted); }
 @media (max-width: 54rem) {
-  /* One column: map, then the list, then the note. */
+  /* One column: the map, then the list, then the note. */
   .places-grid { display: flex; flex-direction: column; gap: 1.5rem; }
   .map-col { display: contents; }
+  .map-hint { margin-top: -0.9rem; }
   .note { order: 1; margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .place-photo img, .state, .dot, .why summary::after { transition: none; }
 }
 
 /* Give */
@@ -302,25 +387,39 @@ __CULTURE__
 
   <section id="places" role="tabpanel" aria-labelledby="tab-places" hidden>
     <h2>{{Ukrainian places to eat and shop||Українські заклади та крамниці}}</h2>
-    <p class="intro">__PLACES_SUMMARY__</p>
+    <p class="intro tight">__PLACES_SUMMARY__</p>
+__PLACE_PHOTOS__
+    <div class="place-filters">
+      <div class="filter">
+        <label for="state-select">{{State||Штат}}</label>
+        <select id="state-select"></select>
+      </div>
+      <span class="visually-hidden" id="kinds-label">{{Kind of place||Тип закладу}}</span>
+      <div class="chips" role="group" aria-labelledby="kinds-label">__KIND_FILTER__</div>
+      <p class="places-status" id="places-status" aria-live="polite"></p>
+    </div>
     <div class="places-grid">
       <div class="map-col">
-        <svg id="map" viewBox="0 0 975 610" role="img"></svg>
+        <div class="map-frame">
+          <svg id="map" viewBox="0 0 975 610" role="img"></svg>
+          <p class="map-label" id="map-label" hidden></p>
+          <button type="button" class="map-reset" hidden>{{All states||Усі штати}}</button>
+          <div class="map-zoom">
+            <button type="button" data-zoom="2"><span aria-hidden="true">+</span><span class="visually-hidden">{{Zoom in||Наблизити}}</span></button>
+            <button type="button" data-zoom="0.5"><span aria-hidden="true">−</span><span class="visually-hidden">{{Zoom out||Віддалити}}</span></button>
+          </div>
+          <div class="map-tip" hidden></div>
+        </div>
+        <p class="map-hint">{{Pick a lit-up state to zoom in, then a dot to open its listing. Use + and − to zoom closer.||Оберіть підсвічений штат, щоб наблизити його, а тоді крапку, щоб відкрити заклад. Кнопки + і − наближають і віддаляють мапу.}}</p>
         <div class="note">
           <p>{{Every place here serves Ukrainian food, sells Ukrainian goods or is owned by Ukrainians, as its own website or the press says. Each listing shows which, and links to where it says so. Places that could not be confirmed are left out. Check hours before you go.||Кожен заклад у цьому списку пропонує українську їжу, продає українські товари або належить українцям — так зазначено на його власному сайті чи в пресі. Біля кожного вказано, що саме, і є посилання на джерело. Заклади, які не вдалося підтвердити, до списку не потрапили. Перед візитом перевірте години роботи.}}</p>
           <p data-l="en">Nothing near you? <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> lists more than 200 Ukrainian companies that sell online.</p>
           <p data-l="uk" lang="uk">Поблизу нічого немає? На сайті <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> зібрано понад 200 українських компаній, які продають онлайн.</p>
         </div>
       </div>
-      <div>
-        <div class="filter">
-          <label for="state-select">{{State||Штат}}</label>
-          <select id="state-select"></select>
-        </div>
-        <div id="place-list">
+      <div class="list-col" id="place-list">
+__PLACE_ICONS__
 __PLACE_LIST__
-        </div>
-        <p id="places-empty" hidden></p>
       </div>
     </div>
   </section>
@@ -387,7 +486,7 @@ function reveal(target) {
   showTab(tabs.find(t => panelOf(t) === panel));
   history.replaceState(null, '', '#' + target.id);
   if (target === panel) return;
-  if (target.closest('.state-group')?.hidden) select('');
+  if (target.matches('.place')) showPlace(target);
   target.scrollIntoView();
   if (target.tabIndex === -1) target.focus({ preventScroll: true });
   target.classList.remove('flash');
@@ -421,22 +520,25 @@ window.addEventListener('hashchange', () => {
 });
 
 // Language. The text of both languages is already in the page; this switches which one shows
-// and redraws what the script writes itself: the state menu, the order of the states, the map labels.
+// and redraws what the script writes itself: the state menu, the order of the states, the map's words.
 const UK = JSON.parse(document.getElementById('places-uk').textContent);
+const pluralUk = (n, one, few, many) => n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? few : many;
 const TEXT = {
   en: {
     title: 'Together with Ukraine',
     stateName: name => name,
-    allStates: n => `All states (${n})`,
-    empty: name => `No places listed in ${name} yet. Pick a shaded state, or buy from Ukrainian brands online through the link beside the map.`,
-    map: 'Map of the United States with a dot for each listed place. Select a state to filter the list.',
+    allStates: 'All states',
+    count: n => `${n} ${n === 1 ? 'place' : 'places'}`,
+    showing: (n, total) => `Showing ${n} of ${total} places`,
+    map: 'Map of the United States with a dot for each listed place. Select a state to zoom in and filter the list.',
   },
   uk: {
     title: 'Разом з Україною',
     stateName: name => UK.states[name],
-    allStates: n => `Усі штати (${n})`,
-    empty: name => `${name}: у списку поки немає закладів. Оберіть зафарбований штат або купуйте в українських брендів онлайн за посиланням біля мапи.`,
-    map: 'Мапа Сполучених Штатів із позначкою для кожного закладу зі списку. Оберіть штат, щоб відфільтрувати список.',
+    allStates: 'Усі штати',
+    count: n => `${n} ${pluralUk(n, 'заклад', 'заклади', 'закладів')}`,
+    showing: (n, total) => `Показано ${n} із ${total}`,
+    map: 'Мапа Сполучених Штатів із позначкою для кожного закладу зі списку. Оберіть штат, щоб наблизити його й відфільтрувати список.',
   },
 };
 let lang = 'en';
@@ -461,7 +563,7 @@ for (const b of langButtons) b.addEventListener('click', () => {
   history.replaceState(null, '', url);
 });
 
-// Places. The list itself is in the page; the script filters it by state.
+// Places. The list itself is in the page; the script filters it by state and by kind of place.
 const topo = JSON.parse(document.getElementById('states-data').textContent);
 const stateNames = new Map(topo.objects.states.geometries.filter(g => Number(g.id) < 60).map(g => [g.id, g.properties.name]));
 const places = JSON.parse(document.getElementById('places-data').textContent);
@@ -469,29 +571,63 @@ const countByState = new Map();
 for (const p of places) countByState.set(p.state, (countByState.get(p.state) || 0) + 1);
 const list = document.getElementById('place-list');
 const groups = [...list.querySelectorAll('.state-group')];
-const empty = document.getElementById('places-empty');
+const cards = [...list.querySelectorAll('.place')];
+const chips = [...document.querySelectorAll('.chip')];
+const placesStatus = document.getElementById('places-status');
+const mapLabel = document.getElementById('map-label');
+const mapReset = document.querySelector('.map-reset');
 const stateSelect = document.getElementById('state-select');
 const nameOf = id => TEXT[lang].stateName(stateNames.get(id));
 const byName = (a, b) => nameOf(a).localeCompare(nameOf(b), lang);
+const matches = (card, state, group) => (!state || card.dataset.state === state) && (!group || card.dataset.group === group);
 let selected = '';
-let markSelected = () => {};  // replaced once the map is drawn
+let kind = '';
+let drawMap = () => {};  // replaced once the map is drawn
+let hot = () => {};      // replaced once the map is drawn
+function filterPlaces() {
+  const T = TEXT[lang];
+  for (const card of cards) card.hidden = !matches(card, selected, kind);
+  for (const g of groups) g.hidden = !g.querySelector('.place:not([hidden])');
+  list.classList.toggle('filtered', Boolean(selected));
+  for (const chip of chips) {
+    chip.setAttribute('aria-pressed', String(chip.dataset.kind === kind));
+    chip.disabled = !cards.some(card => matches(card, selected, chip.dataset.kind));
+  }
+  placesStatus.textContent = selected || kind ? T.showing(cards.filter(card => !card.hidden).length, cards.length) : '';
+  mapReset.hidden = mapLabel.hidden = !selected;
+  if (selected) {
+    const name = document.createElement('strong');
+    name.textContent = nameOf(selected);
+    mapLabel.replaceChildren(name, T.count(countByState.get(selected)));
+  }
+  drawMap();
+}
 function select(stateId) {
   selected = stateId;
   stateSelect.value = stateId;
-  list.classList.toggle('filtered', Boolean(stateId));
-  for (const g of groups) g.hidden = Boolean(stateId) && g.dataset.state !== stateId;
-  empty.hidden = !stateId || countByState.has(stateId);
-  if (!empty.hidden) empty.textContent = TEXT[lang].empty(nameOf(stateId));
-  markSelected(stateId);
+  if (!cards.some(card => matches(card, selected, kind))) kind = '';
+  filterPlaces();
+}
+// A link or a dot that leads to a listing the filters hide brings up that listing's state, every kind.
+function showPlace(card) {
+  if (!card.hidden) return;
+  kind = '';
+  select(selected ? card.dataset.state : '');
 }
 stateSelect.addEventListener('change', () => select(stateSelect.value));
+mapReset.addEventListener('click', () => select(''));
+for (const chip of chips) chip.addEventListener('click', () => { kind = chip.dataset.kind; filterPlaces(); });
+// Pointing at a listing lights up its dot on the map.
+list.addEventListener('mouseover', event => hot(event.target.closest('.place')));
+list.addEventListener('mouseleave', () => hot(null));
+list.addEventListener('focusin', event => hot(event.target.closest('.place')));
+list.addEventListener('focusout', () => hot(null));
 function placesLang() {
   const T = TEXT[lang];
   for (const g of [...groups].sort((a, b) => byName(a.dataset.state, b.dataset.state))) list.append(g);
-  stateSelect.replaceChildren(new Option(T.allStates(places.length), ''));
-  for (const id of [...stateNames.keys()].sort(byName)) {
-    const n = countByState.get(id);
-    stateSelect.append(new Option(n ? `${nameOf(id)} (${n})` : nameOf(id), id));
+  stateSelect.replaceChildren(new Option(T.allStates, ''));
+  for (const [id, n] of [...countByState].sort(([a], [b]) => byName(a, b))) {
+    stateSelect.append(new Option(`${nameOf(id)} (${n})`, id));
   }
   document.getElementById('map').setAttribute('aria-label', T.map);
   select(selected);
@@ -505,21 +641,107 @@ const start = findTarget(location.hash);
 if (start) reveal(start);
 
 // Map. Drawn last because it needs the two libraries above; everything else works without them.
+// Picking a state zooms the map to it; the dots keep their size on screen at any zoom.
+const W = 975, H = 610, DOT = 7, HIT = 13, GLOW = 3;
 const states = topojson.feature(topo, topo.objects.states).features.filter(s => Number(s.id) < 60);
-const projection = d3.geoAlbersUsa().fitSize([975, 610], { type: 'FeatureCollection', features: states });
+const projection = d3.geoAlbersUsa().fitSize([W, H], { type: 'FeatureCollection', features: states });
+const path = d3.geoPath(projection);
 const svg = d3.select('#map');
-const statePaths = svg.append('g').selectAll('path').data(states).join('path')
-  .attr('d', d3.geoPath(projection))
-  .attr('class', s => 'state' + (countByState.has(s.id) ? ' has' : ''))
-  .on('click', (event, s) => select(selected === s.id ? '' : s.id));
+const glow = svg.append('defs').append('filter').attr('id', 'glow').attr('x', '-1').attr('y', '-1').attr('width', '3').attr('height', '3');
+const blur = glow.append('feGaussianBlur').attr('stdDeviation', GLOW).attr('result', 'blur');
+glow.append('feMerge').selectAll('feMergeNode').data(['blur', 'SourceGraphic']).join('feMergeNode').attr('in', d => d);
+const layer = svg.append('g');
+const statePaths = layer.append('g').selectAll('path').data(states).join('path')
+  .attr('d', path)
+  .attr('class', s => 'state' + (countByState.has(s.id) ? ' has' : ''));
+statePaths.filter(s => countByState.has(s.id))
+  .on('click', (event, s) => { if (s.id !== selected) select(s.id); });
 const stateTitles = statePaths.append('title');
-svg.append('g').selectAll('circle').data(places).join('circle')
-  .attr('class', 'dot')
-  .attr('r', 6)
-  .attr('transform', p => `translate(${projection([p.lon, p.lat])})`);
-markSelected = stateId => statePaths.classed('sel', s => s.id === stateId);
+const at = p => projection([p.lon, p.lat]);
+const dots = layer.append('g').attr('filter', 'url(#glow)').attr('pointer-events', 'none')
+  .selectAll('circle').data(places).join('circle')
+  .attr('class', 'dot').attr('r', DOT).attr('cx', p => at(p)[0]).attr('cy', p => at(p)[1]);
+// Larger, invisible circles over the dots, so they are easy to point at.
+const hits = layer.append('g').attr('fill', 'transparent').style('cursor', 'pointer')
+  .selectAll('circle').data(places).join('circle')
+  .attr('r', HIT).attr('cx', p => at(p)[0]).attr('cy', p => at(p)[1])
+  .on('mouseenter', (event, p) => showTip(p, event.currentTarget))
+  .on('mouseleave', () => hideTip())
+  .on('click', (event, p) => {
+    const card = document.getElementById(p.id);
+    showPlace(card);
+    reveal(card);
+  });
+const frame = document.querySelector('.map-frame');
+const tip = document.querySelector('.map-tip');
+function showTip(p, el) {
+  const name = document.createElement('strong');
+  name.textContent = p.name;
+  tip.replaceChildren(name, p.city);
+  tip.hidden = false;
+  const f = frame.getBoundingClientRect(), d = el.getBoundingClientRect(), w = tip.offsetWidth / 2 + 6;
+  const x = d.left + d.width / 2 - f.left, y = d.top + d.height / 2 - f.top;
+  tip.classList.toggle('below', y < tip.offsetHeight + 24);
+  tip.style.left = `${Math.min(Math.max(x, w), f.width - w)}px`;
+  tip.style.top = `${y}px`;
+}
+const hideTip = () => { tip.hidden = true; };
+// Mouse and trackpad can drag, double-click and pinch (or Ctrl and the wheel) to zoom. Touch is left to the
+// page, so a finger on the map still scrolls it; the + and - buttons zoom on every device.
+const still = matchMedia('(prefers-reduced-motion: reduce)');
+const zoom = d3.zoom().scaleExtent([1, 40]).translateExtent([[0, 0], [W, H]])
+  .filter(event => !event.touches && !event.button && (event.type !== 'wheel' || event.ctrlKey))
+  .on('start', hideTip)
+  .on('zoom', ({ transform }) => {
+    layer.attr('transform', transform);
+    dots.attr('r', DOT / transform.k);
+    hits.attr('r', HIT / transform.k);
+    blur.attr('stdDeviation', GLOW / transform.k);
+  });
+svg.call(zoom);
+const moveMap = () => svg.transition().duration(still.matches ? 0 : 750);
+for (const b of document.querySelectorAll('[data-zoom]')) b.addEventListener('click', () => moveMap().call(zoom.scaleBy, Number(b.dataset.zoom)));
+let zoomed = '';
+// A state is framed around its places, widened to at least a third of the state each way so its shape still shows.
+function zoomTo(stateId) {
+  let k = 1, x = 0, y = 0;
+  const shape = states.find(s => s.id === stateId);
+  if (shape) {
+    const [[sx0, sy0], [sx1, sy1]] = path.bounds(shape);
+    const points = places.filter(p => p.state === stateId).map(at);
+    const span = (values, least) => {
+      const [lo, hi] = d3.extent(values), mid = (lo + hi) / 2, half = Math.max(hi - lo, least) / 2;
+      return [mid - half, mid + half];
+    };
+    const [x0, x1] = span(points.map(d => d[0]), (sx1 - sx0) / 3);
+    const [y0, y1] = span(points.map(d => d[1]), (sy1 - sy0) / 3);
+    k = Math.min(40, 0.8 / Math.max((x1 - x0) / W, (y1 - y0) / H));
+    x = W / 2 - k * (x0 + x1) / 2;
+    y = H / 2 - k * (y0 + y1) / 2;
+  }
+  moveMap().call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(k));
+}
+drawMap = () => {
+  if (selected !== zoomed) zoomTo(zoomed = selected);
+  statePaths.classed('sel', s => s.id === selected).filter(s => s.id === selected).raise();
+  const off = p => kind && p.group !== kind ? 'none' : null;
+  dots.attr('display', off).classed('dim', p => selected && p.state !== selected);
+  hits.attr('display', off);
+};
+let hotId = null;
+hot = card => {
+  const id = card ? card.id : null;
+  if (id === hotId) return;
+  hotId = id;
+  dots.classed('hot', p => p.id === id);
+  const hit = hits.filter(p => p.id === id);
+  if (id && !hit.empty() && hit.attr('display') !== 'none') {
+    dots.filter(p => p.id === id).raise();
+    showTip(hit.datum(), hit.node());
+  } else hideTip();
+};
 mapLang = () => stateTitles.text(s => nameOf(s.id));
-markSelected(selected);
+drawMap();
 mapLang();
 </script>
 </body>

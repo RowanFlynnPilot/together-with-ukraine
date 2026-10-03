@@ -37,7 +37,7 @@ python scout.py                                # leads for new places from OpenS
 | `culture.py` | The Culture tab: the header photo, the gallery, and the food, traditions, "Ukrainian, not Russian", holidays, events and resources sections. `REVIEWED` dates the events and resources. |
 | `photos.py` | Photo rules shared by stories and culture: accepted licenses, image sizes, the credit line, the license claim `check.py` looks for. |
 | `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, related entries elsewhere on the page, and optionally a `photo(...)`. |
-| `places.py` | Loads and validates `data/places.json`: checks each place's coordinates fall inside the state it names (point-in-polygon on the TopoJSON), and renders the list. |
+| `places.py` | Loads and validates `data/places.json`: checks each place's coordinates fall inside the state it names (point-in-polygon on the TopoJSON), and renders the listings as cards. Also holds the groups of kinds of place behind the filter buttons and icons, and `PHOTOS`, the openly licensed photos taken at listed places that run above the list. |
 | `give.py` | Organizations, each text an (English, Ukrainian) pair, each with a list of checks. US charities pull facts from `data/`. `REVIEWED` is the date of the last review by hand. A check can carry a fourth item, a phrase its page must contain. |
 | `i18n.py` | `both()`, the `{{..||..}}` marker filler, dates in both languages, Ukrainian plurals, slugs. |
 | `places_uk.py` | Ukrainian names for US states and kinds of place. |
@@ -48,7 +48,7 @@ python scout.py                                # leads for new places from OpenS
 | `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
-| `images/` | Photos for the stories, the header and the Culture tab, openly licensed (rule 7), saved at display size. Copied to `site/images/` by the build. |
+| `images/` | Photos for the stories, the header, the Culture tab and the places, openly licensed (rule 7), saved at display size. Copied to `site/images/` by the build. |
 | `.github/ISSUE_TEMPLATE/` | Forms for suggesting a place, story or group, or reporting a mistake. The footer links to them. |
 
 Both languages are in the built page. CSS shows the one matching `<html data-lang>`; the script
