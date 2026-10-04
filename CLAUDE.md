@@ -98,7 +98,9 @@ before the page draws, so it never flashes the other theme.
    letters. No photos of private people, which would add to what identifies them. Check a
    "public domain" claim before trusting it: a VOA photo was rejected because VOA also runs wire
    photos, and a Ukrainian stamp of Prymachenko's art because her paintings are still under
-   copyright. Save the Commons thumbnail (about 500 px) in `images/`; `check.py` confirms the
+   copyright. Save the Commons thumbnail in `images/` at about twice the largest size the page shows it, never
+   cropped (photos on cards about 720 px wide, History entries 480, tall documents beside the text 360,
+   panoramas 1000, era banners 1280); `check.py` confirms the
    Commons page still shows the license. Licenses accepted are listed in `photos.py`.
 8. **Culture.** Every sentence is supported by the sources it links to, and each Ukrainian claim
    rests on an authoritative source (UNESCO, the Encyclopedia of Ukraine, ukraine.ua, the Ukrainian

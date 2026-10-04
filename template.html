@@ -18,6 +18,9 @@
 <meta name="theme-color" content="#0057B7">
 <script>try { const theme = localStorage.getItem('theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch (error) { /* storage unavailable: the system theme applies */ }</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='1' fill='%230057B7'/%3E%3Crect y='1' width='3' height='1' fill='%23FFD700'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400&display=swap">
 <!-- Without the script the tabs cannot switch, so show every section in turn. -->
 <noscript><style>section[role="tabpanel"][hidden] { display: block !important; } .wheat, .lang, .place-filters, .map-frame, .map-hint { display: none; }</style></noscript>
@@ -720,9 +723,6 @@ __GIVE__
 <script type="application/json" id="places-data">__PLACES__</script>
 <script type="application/json" id="states-data">__STATES__</script>
 <script type="application/json" id="places-uk">__PLACES_UK__</script>
-<!-- The integrity hashes make the browser refuse these files if the CDN ever serves anything else. check.py confirms they still match. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" integrity="sha384-9dCJK6nh7skY14HrcvlLYlFga9/MehJjL9ONWRflmiXNRuf8p2jiF4Y5PR881PTq" crossorigin="anonymous"></script>
 <script>
 // Tabs. The address keeps the open section (#give) or entry (#story-...), so any of them can be linked to.
 const tabs = [...document.querySelectorAll('.tab')];
@@ -932,7 +932,12 @@ setLang([askedLang, savedLang].find(l => l === 'en' || l === 'uk') || (navigator
 const start = findTarget(location.hash);
 if (start) reveal(start);
 
-// Map. Drawn last because it needs the two libraries above; everything else works without them.
+</script>
+<!-- The integrity hashes make the browser refuse these files if the CDN ever serves anything else. check.py confirms they still match. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" integrity="sha384-9dCJK6nh7skY14HrcvlLYlFga9/MehJjL9ONWRflmiXNRuf8p2jiF4Y5PR881PTq" crossorigin="anonymous"></script>
+<script>
+// Map. Drawn once the two libraries above arrive; the rest of the page works before them, and without them.
 // Picking a state zooms the map to it; the dots keep their size on screen at any zoom.
 const W = 975, H = 610, DOT = 7, HIT = 13, GLOW = 3;
 const states = topojson.feature(topo, topo.objects.states).features.filter(s => Number(s.id) < 60);
