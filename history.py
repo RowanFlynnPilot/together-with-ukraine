@@ -3,7 +3,9 @@ Ukrainian text lives in history_uk.py, keyed by the English title; a missing tra
 check.py confirms the source links still load."""
 import html
 
+import photos
 from i18n import both, slug
+from photos import photo
 import history_uk as UK
 
 # The day the entries about the war as it stands were last brought up to date. check.py fails
@@ -126,20 +128,136 @@ def targets():
     return {title: (event_id(title), f'{year}: {title}', f'{UK.YEARS.get(year, year)}: {UK.EVENTS[title][0]}')
             for _, _, _, events in ERAS for year, title, _, _ in events}
 
+# Pictures from Wikimedia Commons (rule 7): one banner per era, keyed by era id, and one for some entries,
+# keyed by English title. An era without one opens on the cross-stitch pattern; an entry without one has none.
+ERA_PHOTOS = {
+ 'era-rus': photo('era-rus.jpg', ('Inside Saint Sophia Cathedral, Kyiv, with its 11th-century mosaics', 'Інтер’єр Софійського собору в Києві з мозаїками XI століття'), 'Galvm', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:Kyiv-Saint_Sophia_Cathedral-interior-11.jpg'),
+ 'era-cossacks': photo('era-cossacks.jpg', ('Mykola Ivasiuk, Bohdan Khmelnytsky’s Entry into Kyiv, National Art Museum of Ukraine', 'Микола Івасюк, «В’їзд Богдана Хмельницького до Києва», Національний художній музей України'), 'Mykola Ivasiuk', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Pic_I_V_Ivasiuk_Mykola_Bohdan_Khmelnytskys_Entry_to_Kyiv.jpg'),
+ 'era-soviet': photo('era-soviet.jpg', ('A 100-hryvnia note of the Ukrainian People’s Republic, 1918, designed by Heorhii Narbut', 'Банкнота 100 гривень Української Народної Республіки, 1918 рік, автор — Георгій Нарбут'), 'Heorhii Narbut', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Ukrainian_100_hryvnia%27s_note_of_the_People%27s_repub.jlic_of_Ukraine_%281918%29_front_side.jpg'),
+ 'era-independent': photo('era-independent.jpg', ('Wheat fields under a blue sky in Lviv region', 'Пшеничні поля під синім небом на Львівщині'), 'Raimond Spekking', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:Wheat_fields_in_Ukraine-5966-98.jpg'),
+ 'era-invasion': photo('era-invasion.jpg', ('The wrecked An-225 Mriya in its hangar at Hostomel, April 2022', 'Зруйнована «Мрія» Ан-225 в ангарі в Гостомелі, квітень 2022 року'), 'Oleksandr Ratushniak', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:Antonov_Airport_after_Russian_invasion_of_Ukraine_and_Mriya_%28cropped%29.jpg'),
+}
+EVENT_PHOTOS = {
+ 'Oleh takes Kyiv': photo('event-882.jpg', ('Oleh receives tribute, a miniature from the 15th-century Radziwiłł Chronicle', 'Олег отримує данину, мініатюра з Радзивіллівського літопису XV століття'), 'Unknown author', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Oleg_in_Radzivill.jpg'),
+ 'Volodymyr the Great adopts Christianity': photo('event-988.jpg', ('The monument to Volodymyr the Great in Kyiv, unveiled in 1853', 'Пам’ятник Володимирові Великому в Києві, відкритий 1853 року'), 'Алексей Косенко', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D0%BD%D0%B8%D0%BA_%D0%BA%D0%BD%D1%8F%D0%B7%D1%8E_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D1%83_%D0%B7%D0%B8%D0%BC%D0%BE%D0%B9.jpg'),
+ 'Saint Sophia rises in Kyiv': photo('event-1037.jpg', ('The Virgin Orans, the 11th-century mosaic in the apse of Saint Sophia', 'Оранта, мозаїка XI століття в апсиді Софійського собору'), 'Unknown artist', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Oranta-Kyiv.jpg'),
+ 'Mongol armies sack Kyiv': photo('event-1240.jpg', ('Batu’s army before Kyiv, an illustration from Mykola Arkas’s History of Ukraine-Rus’, 1912', 'Військо Батия під Києвом, ілюстрація з «Історії України-Русі» Миколи Аркаса, 1912 рік'), 'From Mykola Arkas, History of Ukraine-Rus’ (1912)', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:%D0%86%D1%81%D1%82%D0%BE%D1%80%D1%96%D1%8F_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B8-%D0%A0%D1%83%D1%81%D1%96._1912._%D0%91%D0%B0%D1%82%D0%B8%D0%B9_%D0%BF%D1%96%D0%B4_%D0%9A%D0%B8%D1%97%D0%B2%D0%BE%D0%BC.jpg'),
+ 'The Union of Lublin': photo('event-1569.jpg', ('Jan Matejko, The Union of Lublin, 1869, Lublin Museum', 'Ян Матейко, «Люблінська унія», 1869 рік, Люблінський музей'), 'Jan Matejko', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Lublin_Museum_2018_P12_Jan_Matejko_Union_of_Lublin.jpg'),
+ 'Khmelnytsky’s uprising': photo('event-1648.jpg', ('Bohdan Khmelnytsky, an engraving by Willem Hondius, 1651, Rijksmuseum', 'Богдан Хмельницький, гравюра Віллема Гондіуса, 1651 рік, Рейксмузеум'), 'Willem Hondius (Rijksmuseum)', 'CC0',
+       'https://commons.wikimedia.org/wiki/File:Portrait_of_Hetman_Bohdan_Khmelnytsky_%28Willem_Hondius%2C_engraving%29.jpeg'),
+ 'Poltava and Orlyk’s constitution': photo('event-1710.jpg', ('The first page of Pylyp Orlyk’s constitution, 1710, National Archives of Sweden', 'Перша сторінка Конституції Пилипа Орлика, 1710 рік, Національний архів Швеції'), 'National Archives of Sweden', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Filip_Orliks_konstitution_front_1-crop.tif'),
+ 'Shevchenko publishes Kobzar': photo('event-1840.jpg', ('The title page of Shevchenko’s Kobzar, 1840', 'Титульна сторінка «Кобзаря» Шевченка, 1840 рік'), 'Taras Shevchenko', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:1840_-_Kobzar_-_page_3_-_page_1_%28Title%29_-.jpg'),
+ 'The Ems decree': photo('event-1876.jpg', ('A plaque in Bad Ems, Germany, on the house where the decree was signed', 'Пам’ятна дошка в Бад-Емсі, Німеччина, на будинку, де підписали указ'), 'Silin2005', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Ems_Ukaz_plaque_in_Bad_Ems.JPG'),
+ 'The Ukrainian People’s Republic declares independence': photo('event-1918.jpg', ('The Fourth Universal of the Central Rada, January 22, 1918', 'IV Універсал Української Центральної Ради, 22 січня 1918 року'), 'Ukrainian Central Rada', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:IV_%D0%A3%D0%BD%D1%96%D0%B2%D0%B5%D1%80%D1%81%D0%B0%D0%BB_%D0%A3%D0%A6%D0%A0.jpg'),
+ 'The Holodomor': photo('event-1932.jpg', ('Candles and ears of wheat on Holodomor Remembrance Day in Lviv, 2013', 'Свічки та колоски на День пам’яті жертв Голодомору у Львові, 2013 рік'), 'DixonD', 'CC BY-SA 3.0',
+       'https://commons.wikimedia.org/wiki/File:Holodomor_Remembrance_Day_2013_in_Lviv_18.JPG'),
+ 'Nazi occupation': photo('event-1941.jpg', ('The Babyn Yar ravine in Kyiv, 2020', 'Урочище Бабин Яр у Києві, 2020 рік'), 'Педагог Світлана', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:%D0%91%D0%B0%D0%B1%D0%B8%D0%BD_%D0%AF%D1%80%2C_%D1%83%D1%80%D0%BE%D1%87%D0%B8%D1%89%D0%B5%2C_%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D1%82%D0%B0_%D0%9F%D0%BE%D0%B4%D1%96%D0%BB%D1%8C%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%D0%B8%2C_%D0%BC.%D0%9A%D0%B8%D1%97%D0%B2.jpg'),
+ 'The Crimean Tatars are deported': photo('event-1944.jpg', ('The Khan’s Palace in Bakhchysarai, Crimea, 2013', 'Ханський палац у Бахчисараї, Крим, 2013 рік'), 'Fluid70', 'CC BY-SA 3.0',
+       'https://commons.wikimedia.org/wiki/File:Bakhchisaray_Palace%2C_Panorama%2C_2013.jpg'),
+ 'Crimea is transferred to Soviet Ukraine': photo('event-1954.jpg', ('The transfer decree as printed in the Soviet Vedomosti, March 1954', 'Указ про передачу, надрукований у радянських «Відомостях», березень 1954 року'), 'Presidium of the Supreme Soviet of the USSR', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:The_transfer_of_Crimea.jpg'),
+ 'Chornobyl': photo('event-1986.jpg', ('The Chornobyl plant and the Prypiat River from the International Space Station, 2018', 'Чорнобильська АЕС і річка Прип’ять з Міжнародної космічної станції, 2018 рік'), 'NASA', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:ISS-57_Chernobyl_Nuclear_Power_Plant%2C_Ukraine.jpg'),
+ 'Independence': photo('event-1991.jpg', ('The Act of Declaration of Independence of Ukraine, August 24, 1991', 'Акт проголошення незалежності України, 24 серпня 1991 року'), 'Verkhovna Rada of the Ukrainian SSR', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Declaration_of_Independence_of_Ukraine%2C_1991.jpg'),
+ 'The Budapest Memorandum': photo('event-1994.jpg', ('An empty missile silo at the Museum of the Strategic Missile Forces in Ukraine', 'Порожня ракетна шахта в Музеї ракетних військ стратегічного призначення'), 'Vladimir Zinin', 'CC BY-SA 3.0',
+       'https://commons.wikimedia.org/wiki/File:Missile_silo_at_the_Strategic_Missile_Forces_Museum.JPG'),
+ 'The Revolution of Dignity': photo('event-2014-maidan.jpg', ('A barricade on Hrushevskoho Street, Kyiv, February 2014', 'Барикада на вулиці Грушевського в Києві, лютий 2014 року'), 'Аимаина хикари', 'CC0',
+       'https://commons.wikimedia.org/wiki/File:%D0%91%D0%B0%D1%80%D1%80%D0%B8%D0%BA%D0%B0%D0%B4%D0%B0_%D0%BD%D0%B0_%D0%B3%D1%80%D1%83%D1%88%D0%B5.jpg'),
+ 'Russia seizes Crimea and starts a war in Donbas': photo('event-2014-map.jpg', ('Map of the war in Ukraine as of September 2014', 'Мапа війни в Україні станом на вересень 2014 року'), 'Niele', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:2014_Russo-ukrainian-conflict_map.svg'),
+ 'Ukraine retakes ground in the east and south': photo('event-2022.jpg', ('Map of the Kherson counteroffensive, 2022', 'Мапа Херсонського контрнаступу, 2022 рік'), 'Rr016', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:2022_Kherson_Counteroffensive.png'),
+ 'An arrest warrant for Putin': photo('event-2023-icc.jpg', ('The International Criminal Court in The Hague', 'Міжнародний кримінальний суд у Гаазі'), 'Choinowski', 'CC BY-SA 4.0',
+       'https://commons.wikimedia.org/wiki/File:International_Criminal_Court_2022.jpg'),
+ 'The Kakhovka dam is destroyed': photo('event-2023-kakhovka.jpg', ('The Kakhovka Reservoir from space, full in June 2022 and drained on June 18, 2023', 'Каховське водосховище з космосу: повне в червні 2022 року і спорожніле 18 червня 2023 року'), 'NASA Earth Observatory (Lauren Dauphin), Landsat data from the US Geological Survey', 'Public domain',
+       'https://commons.wikimedia.org/wiki/File:Ukrainereservoir_oli2_2023169_lrg.jpg'),
+ 'Membership talks, and a strike into Russia': photo('event-2024.jpg', ('Map of the Ukrainian incursion into Russia’s Kursk region, August 2024', 'Мапа операції ЗСУ в Курській області Росії, серпень 2024 року'), 'Ecrusized', 'CC0',
+       'https://commons.wikimedia.org/wiki/File:August_2024_Kursk_Oblast_incursion.svg'),
+ 'The war continues': photo('event-2026.jpg', ('Storm clouds over a sunflower field in Volyn region', 'Грозові хмари над соняшниковим полем на Волині'), 'Domalchuk', 'CC BY 4.0',
+       'https://commons.wikimedia.org/wiki/File:Cumulonimbus_storm_clouds_over_sunflower_field_Ukraine.jpg'),
+}
+
+def _check_photos():
+    era_ids = {era_id for era_id, _, _, _ in ERAS}
+    titles = {title for _, _, _, events in ERAS for _, title, _, _ in events}
+    for key, p in ERA_PHOTOS.items():
+        if key not in era_ids: raise ValueError(f'ERA_PHOTOS: no era {key!r}')
+        photos.validate(p, key)
+    for key, p in EVENT_PHOTOS.items():
+        if key not in titles: raise ValueError(f'EVENT_PHOTOS: no entry {key!r}')
+        photos.validate(p, key)
+_check_photos()
+
+def photo_files():
+    return [photos.IMAGES / p['file'] for p in [*ERA_PHOTOS.values(), *EVENT_PHOTOS.values()]]
+
+def claims():
+    """(url, phrase, what) for check.py: each picture's Commons page must still show its license."""
+    return [photos.claim(p, f"history picture {p['file']}: license") for p in [*ERA_PHOTOS.values(), *EVENT_PHOTOS.values()]]
+
+def era_nav():
+    """The eras as a ribbon of links, oldest first."""
+    links = []
+    for era_id, name, span, _ in ERAS:
+        name_uk, span_uk = UK.ERAS[name]
+        links.append(f'      <a class="era-link" href="#{era_id}"><span class="era-link-span">{both(span, span_uk)}</span><span class="era-link-name">{both(name, name_uk)}</span></a>')
+    return '\n'.join(links)
+
+def _sources(sources):
+    """The sources on one line, opening to the links. Each label is 'Outlet, article'; the line names the outlets."""
+    e = html.escape
+    outlets = ', '.join(dict.fromkeys(label.split(',')[0] for label, _ in sources))
+    summary = both(('Sources: ' if len(sources) > 1 else 'Source: ') + outlets, ('Джерела: ' if len(sources) > 1 else 'Джерело: ') + outlets)
+    links = ''.join(f'<li><a href="{e(url)}" target="_blank" rel="noopener">{e(label)}</a></li>' for label, url in sources)
+    return f'<details class="why"><summary>{summary}</summary><ul>{links}</ul></details>'
+
 def render(story_links):
-    """Returns the timeline HTML in both languages, the entry count, and the era list for the jump links.
-    story_links maps an event id to [(story id, English label, Ukrainian label)]."""
-    e = html.escape; out = []; n = 0; eras = []
-    for era_id, name, span, events in ERAS:
-        name_uk, span_uk = UK.ERAS[name]; eras.append((era_id, name, name_uk))
-        out.append(f'    <div class="era" id="{era_id}">\n      <h3>{both(name, name_uk)} {both(span, span_uk, cls="era-range")}</h3>\n      <ol class="events">')
+    """The timeline HTML in both languages. story_links maps an event id to [(story id, English label, Ukrainian label)]."""
+    out = []
+    for number, (era_id, name, span, events) in enumerate(ERAS, 1):
+        name_uk, span_uk = UK.ERAS[name]
+        p = ERA_PHOTOS.get(era_id)
+        picture = f'{photos.img(p)}<p class="credit">{photos.credit(p)}</p>' if p else ''
+        out.append(f'''    <div class="era" id="{era_id}">
+      <header class="era-head{'' if p else ' c-ornament'}">{picture}
+        <div class="era-title">
+          <p class="era-num">{both(f"Chapter {number}", f"Розділ {number}")}</p>
+          <h3>{both(name, name_uk)}</h3>
+          <p class="era-range">{both(span, span_uk)}</p>
+        </div>
+      </header>
+      <ol class="events">''')
         for year, title, text, sources in events:
             title_uk, text_uk = UK.EVENTS[title]
-            links = '; '.join(f'<a href="{e(url)}" target="_blank" rel="noopener">{e(label)}</a>' for label, url in sources)
-            label = both('Sources', 'Джерела') if len(sources) > 1 else both('Source', 'Джерело')
-            stories = ''.join(f'<p class="src story-link"><a href="#{sid}">{both("A story from this time: " + en, "Історія з цього часу: " + uk)}</a></p>'
+            p = EVENT_PHOTOS.get(title)
+            # A panorama runs across the card; a tall picture, such as a document page, sits narrower beside the text.
+            shape = '' if not p else ' wide' if p['size'][0] > 1.9 * p['size'][1] else ' tall' if p['size'][1] > 1.15 * p['size'][0] else ''
+            figure = f'<figure class="event-fig{shape}">{photos.img(p)}<figcaption class="credit">{photos.credit(p)}</figcaption></figure>' if p else ''
+            stories = ''.join(f'<p class="event-story"><a href="#{sid}">{both("A story from this time: " + en, "Історія з цього часу: " + uk)}</a></p>'
                               for sid, en, uk in story_links.get(event_id(title), []))
-            out.append(f'        <li class="event" id="{event_id(title)}" tabindex="-1"><span class="year">{both(year, UK.YEARS.get(year, year))}</span><div><h4>{both(title, title_uk)}</h4><p>{both(text, text_uk)}</p><p class="src">{label}: {links}</p>{stories}</div></li>')
-            n += 1
+            out.append(f'''        <li class="event" id="{event_id(title)}" tabindex="-1">
+          <p class="event-year">{both(year, UK.YEARS.get(year, year))}</p>
+          <div class="event-card">{figure}
+            <h4>{both(title, title_uk)}</h4>
+            <p>{both(text, text_uk)}</p>{stories}
+            {_sources(sources)}
+          </div>
+        </li>''')
         out.append('      </ol>\n    </div>')
-    return '\n'.join(out), n, eras
+    return '\n'.join(out)

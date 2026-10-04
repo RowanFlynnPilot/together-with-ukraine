@@ -77,7 +77,7 @@ def page_text(response):
 def web_report():
     """Returns (problems, refused, link count, phrase count). refused lists each refused url with the phrases it should carry."""
     page = build.build()
-    claims = places.claims() + give.claims() + stories.claims() + culture.claims()
+    claims = places.claims() + give.claims() + stories.claims() + culture.claims() + history.claims()
     urls = {html.unescape(u) for u in re.findall(r'(?:href|src)="(https?://[^"]+)"', page) if not u.startswith(NOT_SOURCES)}
     urls |= {url for url, _, _ in claims}
     integrity = dict(re.findall(r'<script src="([^"]+)" integrity="([^"]+)"', page))

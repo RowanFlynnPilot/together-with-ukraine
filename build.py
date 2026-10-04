@@ -37,7 +37,7 @@ def build():
         if name not in places_uk.STATES: raise ValueError(f'no Ukrainian name for state: {name}')
 
     targets, back = cross_links()
-    timeline, _, eras = history.render(back['history'])
+    timeline = history.render(back['history'])
     people, _, themes = stories.render(targets)
     culture_html, culture_nav = culture.render(targets)
     give_html, _ = give.render(back['give'])
@@ -48,7 +48,7 @@ def build():
 
     template = (ROOT / 'template.html').read_text(encoding='utf-8')
     page = (fill_markers(template)
-            .replace('__ERA_NAV__', nav(eras)).replace('__HISTORY__', timeline)
+            .replace('__ERA_NAV__', history.era_nav()).replace('__HISTORY__', timeline)
             .replace('__THEME_NAV__', nav(themes)).replace('__STORIES__', people)
             .replace('__CULTURE_NAV__', nav(culture_nav)).replace('__CULTURE__', culture_html).replace('__HERO_CREDIT__', culture.hero_credit())
             .replace('__PLACES_SUMMARY__', both(summary_en, summary_uk)).replace('__PLACE_LIST__', places.render(back['place']))
@@ -86,6 +86,6 @@ if __name__ == '__main__':
     out.write_text(build(), encoding='utf-8')
     (out.parent / 'preview.png').write_bytes(flag_png())
     (out.parent / 'images').mkdir(exist_ok=True)
-    for photo in stories.photo_files() + culture.photo_files() + places.photo_files():
+    for photo in stories.photo_files() + culture.photo_files() + places.photo_files() + history.photo_files():
         (out.parent / 'images' / photo.name).write_bytes(photo.read_bytes())
     print(f'built {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)')

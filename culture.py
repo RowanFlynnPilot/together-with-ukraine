@@ -597,7 +597,7 @@ def _media(x):
     badge = f'<span class="badge">{both("UNESCO " + UNESCO_YEAR[x["key"]], "ЮНЕСКО " + UNESCO_YEAR[x["key"]])}</span>' if x['key'] in UNESCO_YEAR else ''
     if x.get('photo'):
         return f'<figure class="c-media">{badge}{photos.img(x["photo"])}<figcaption class="credit">{photos.credit(x["photo"])}</figcaption></figure>'
-    return f'<div class="c-media c-ornament" aria-hidden="true">{badge}<span lang="uk">{html.escape(x["name"][1])}</span></div>'
+    return f'<div class="c-media c-ornament" aria-hidden="true">{badge}<span class="c-ornament-name" lang="uk">{html.escape(x["name"][1])}</span></div>'
 
 def _head(x):
     """The entry's name, with its Ukrainian name under it on the English page."""
