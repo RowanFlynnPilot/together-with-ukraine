@@ -34,7 +34,7 @@ def us(ein):
     checks = [(f'IRS-recognized since {year}', f'визнана Податковою службою США (IRS) з {year} року', f'https://projects.propublica.org/nonprofits/organizations/{ein}')]
     if r['revenue']:
         m = r['revenue'] / 1e6
-        checks.append((f'${m:.1f} million revenue on its {r["latest_year"]} tax filing', f'дохід за податковою декларацією {r["latest_year"]} року — {num_uk(m)} млн доларів', None))
+        checks.append((f'${m:.1f} million in revenue on its {r["latest_year"]} tax filing', f'дохід за податковою декларацією {r["latest_year"]} року — {num_uk(m)} млн доларів', None))
     else:
         checks.append(caveat('no tax filing data published yet', 'даних податкової декларації ще не оприлюднено', None))
     cn_url = f'https://www.charitynavigator.org/ein/{ein}'
@@ -88,7 +88,7 @@ GROUPS = [
   ('US-registered charities. Gifts are generally tax-deductible for US donors.',
    'Благодійні організації, зареєстровані у США. Американські жертводавці зазвичай можуть відняти такі пожертви від оподатковуваного доходу.'), [
   us_org(same('Razom for Ukraine'), '464604398',
-      ('Founded in 2014; razom means “together.” Delivers medical and humanitarian aid in Ukraine and speaks up for Ukraine in the United States.',
+      ('Founded in 2014. Its name, razom, means “together.” Delivers medical and humanitarian aid in Ukraine and speaks up for Ukraine in the United States.',
        'Заснована 2014 року. Доставляє медичну й гуманітарну допомогу в Україну та обстоює інтереси України у Сполучених Штатах.'),
       [(*EIN_MATCHES, RAZOM_FAQ), ('publishes its financials', 'публікує фінансову звітність', 'https://www.razomforukraine.org/about-us/financials/', '990')],
       give_at('razomforukraine.org'), 'https://www.razomforukraine.org/donate/'),
@@ -147,7 +147,7 @@ GROUPS = [
       [('stated on Nova Ukraine’s own site', 'зазначено на сайті Nova Ukraine', 'https://novaukraine.org/donate-technology-and-equipment/')],
       ('Donate a Chromebook', 'Передати Chromebook'), 'https://novaukraine.org/donate-technology-and-equipment/'),
   org(('Bulk aid shipments, through Meest', 'Великі вантажі допомоги — через Meest'),
-      ('Shipping company. For loads of 200 pounds or more', 'Транспортна компанія. Для вантажів від 200 фунтів (100 кг)'),
+      ('Shipping company. For loads of 200 pounds or more', 'Транспортна компанія. Для вантажів від 200 фунтів (близько 90 кг)'),
       ('Meest ships humanitarian cargo from the US by sea or air, free of duties. The recipient in Ukraine must be a registered organization, not an individual.',
        'Meest доставляє гуманітарні вантажі зі США морем або літаком без мита. Отримувачем в Україні має бути зареєстрована організація, а не приватна особа.'),
       [('terms and prices stated on Meest’s own site', 'умови й ціни зазначено на сайті Meest', 'https://us.meest.com/humanitarian-aid-packages-for-ukraine'), caveat('a commercial carrier, not a charity', 'це комерційний перевізник, а не благодійна організація', None)],
@@ -160,7 +160,7 @@ GROUPS = [
  ]),
  (('Give your time', 'Допомогти часом'), None, [
   us_org(same('ENGin'), '883527494',
-      ('Pairs you with someone in Ukraine for a weekly video chat in English. You help them practice and learn about each other’s countries.',
+      ('Pairs you with someone in Ukraine for a weekly video chat in English. You help them practice, and you both learn about each other’s countries.',
        'Знайде вам співрозмовника в Україні для щотижневих відеорозмов англійською. Ви допомагаєте практикувати мову, і обоє дізнаєтеся більше про країни одне одного.'),
       [('says on its own site that it is a registered 501(c)(3)', 'на власному сайті зазначає, що є зареєстрованою організацією 501(c)(3)', 'https://www.enginprogram.org/faqs-for-volunteers', '501(c)(3)')],
       ('Volunteer with ENGin', 'Стати волонтером ENGin'), 'https://www.enginprogram.org/volunteer'),
