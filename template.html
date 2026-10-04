@@ -137,6 +137,10 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .era-link:hover { background: var(--wash); }
 .era-link-span { color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 .era-link-name { font-weight: 700; line-height: 1.2; }
+@media (max-width: 44rem) {
+  .era-ribbon { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 9rem; overflow-x: auto; scroll-snap-type: x mandatory; margin-bottom: 2rem; padding-bottom: 0.35rem; }
+  .era-link { scroll-snap-align: start; }
+}
 
 /* Each era opens like a chapter: its name over a picture, or over the cross-stitch pattern. */
 .era { margin: 0 0 4.5rem; }
@@ -177,9 +181,16 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 }
 
 /* People */
-.chip-nav { gap: 0.5rem; }
-.chip-nav a { padding: 0.35rem 0.85rem; border: 2px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1rem; }
+/* Rows that scroll sideways on a phone keep a thin, quiet scrollbar where the browser shows one. */
+.chip-nav, .era-ribbon, .overview, .place-photos { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+/* Jump links within a tab: chips that wrap on a wide screen and run in one row to swipe on a phone. */
+.chip-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 2.5rem; }
+.chip-nav a { display: inline-block; padding: 0.35rem 0.85rem; border: 2px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1rem; white-space: nowrap; }
 .chip-nav a:hover { border-color: var(--link); }
+@media (max-width: 44rem) {
+  .chip-nav { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; margin-bottom: 2rem; padding-bottom: 0.35rem; }
+  .chip-nav a { flex: none; scroll-snap-align: start; }
+}
 .theme { margin: 0 0 4.5rem; }
 .stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
 .story { display: flex; flex-direction: column; gap: 0.6rem; padding: 1.15rem 1.25rem 1.2rem; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--sky); }
@@ -420,7 +431,7 @@ select {
 .place-btn::after { content: "↗"; font-weight: 400; }
 .place-btn:hover { background: var(--link); color: var(--paper); }
 .why { margin: 0.85rem 0 0; padding-top: 0.6rem; border-top: 1px dashed var(--line); font-size: 0.875rem; color: var(--muted); }
-.why summary { display: flex; align-items: baseline; gap: 0.4rem; cursor: pointer; list-style: none; }
+.why summary { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0; cursor: pointer; list-style: none; }
 .why summary::-webkit-details-marker { display: none; }
 .why summary::before { content: "✓"; color: var(--link); font-weight: 700; }
 .why summary::after { content: "▸"; margin-left: auto; transition: transform 0.15s; }
@@ -542,7 +553,7 @@ __OVERVIEW__
   <section id="culture" role="tabpanel" aria-labelledby="tab-culture">
     <h2>{{Ukrainian culture||Українська культура}}</h2>
     <p class="intro tight">{{Landscapes and landmarks, food, traditions and festivals that are Ukrainian in their own right. Every entry links to its sources, recipes stay on their authors’ sites, and every photo is openly licensed.||Краєвиди й пам’ятки, кухня, традиції та фестивалі, які є українськими за своєю суттю. Кожен запис має посилання на джерела, рецепти залишаються на сайтах їхніх авторів, а всі фото — з відкритими ліцензіями.}}</p>
-    <nav class="era-nav chip-nav" aria-label="Jump to a section">
+    <nav class="chip-nav" aria-label="Jump to a section">
 __CULTURE_NAV__
     </nav>
 
@@ -562,7 +573,7 @@ __HISTORY__
   <section id="stories" role="tabpanel" aria-labelledby="tab-stories" hidden>
     <h2>{{Stories of Ukrainians||Історії українців}}</h2>
     <p class="intro tight">{{People in Ukraine, Ukrainians who made a home in the United States, and people who lived through the history in the History tab, as reported by news organizations, UN agencies and museums. Each summary is ours and says only what the report says. Follow the link to read the story as it was published.||Люди в Україні, українці, які знайшли дім у Сполучених Штатах, і ті, хто пережив події з розділу «Історія», — так, як про них розповіли журналісти, агенції ООН і музеї. Кожен виклад написали ми, і в ньому лише те, що є у джерелі. Перейдіть за посиланням, щоб прочитати історію так, як її опублікували.}}</p>
-    <nav class="era-nav chip-nav" aria-label="Jump to a theme">
+    <nav class="chip-nav" aria-label="Jump to a theme">
 __THEME_NAV__
     </nav>
 
@@ -612,7 +623,7 @@ __PLACE_LIST__
     <h2>{{Give money, supplies or time||Допомогти грошима, речами або часом}}</h2>
     <p class="intro">{{Every group here was reviewed on __GIVE_REVIEWED_EN__, and each entry shows what was checked. US charities had to appear in IRS records; their figures and Charity Navigator ratings are as of __RECORDS_EN__. Ukrainian groups had to publish reports or audits, or be confirmed by an independent source. The checks show that a group is registered and accounts for its money. They do not measure its results. Each button opens the group’s own website. No money passes through this page.||Усі організації в цьому списку перевірено __GIVE_REVIEWED_UK__, і біля кожної зазначено, що саме перевіряли. Американські благодійні організації мають бути в реєстрі Податкової служби США (IRS); їхні фінансові дані та оцінки Charity Navigator наведено станом на __RECORDS_UK__. Українські мають публікувати звіти чи аудити або мати підтвердження з незалежного джерела. Перевірка показує, що організація зареєстрована і звітує про кошти. Вона не оцінює результатів її роботи. Кожна кнопка відкриває сайт самої організації. Через цю сторінку гроші не проходять.}}</p>
 
-    <nav class="era-nav chip-nav" aria-label="Jump to a group">
+    <nav class="chip-nav" aria-label="Jump to a group">
 __GIVE_NAV__
     </nav>
 
