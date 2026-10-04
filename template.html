@@ -77,19 +77,28 @@ a { color: var(--link); }
 .wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
 
 /* The flag: sky over wheat */
-/* The photo sits under a deep blue wash, so white text stays readable and the band still reads as the flag's blue. */
+/* The photo sits under a blue wash, so white text stays readable and the band still reads as the flag's blue.
+   The wash is deepest on the left, behind the text, and lets the Lavra show on the right. */
 .sky {
-  background: linear-gradient(rgba(0, 72, 156, 0.78), rgba(0, 87, 183, 0.88)), url("images/hero-lavra.jpg") center 35% / cover, var(--sky);
+  background: linear-gradient(90deg, rgba(0, 60, 135, 0.94) 0%, rgba(0, 72, 156, 0.84) 45%, rgba(0, 87, 183, 0.5) 100%), url("images/hero-lavra.jpg") center 35% / cover, var(--sky);
   color: #FFFFFF; padding: 1.25rem 0 1.25rem;
 }
 .topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.75rem; }
 .flag { display: block; width: 3rem; height: 2rem; box-shadow: 0 0 0 2px #FFFFFF; }
-.lang { display: flex; gap: 0.25rem; }
-.hero-credit { margin: 2rem 0 0; font-size: 0.8125rem; color: rgba(255, 255, 255, 0.88); text-align: right; }
+.lang { display: flex; border: 2px solid #FFFFFF; }
+.hero-credit { margin: 1.5rem 0 0; font-size: 0.8125rem; color: rgba(255, 255, 255, 0.88); text-align: right; }
 .hero-credit a { color: inherit; }
-.lang button { font: inherit; font-size: 1rem; color: #FFFFFF; background: transparent; border: 2px solid transparent; padding: 0.3rem 0.7rem; cursor: pointer; }
-.lang button[aria-pressed="true"] { border-color: #FFFFFF; font-weight: 700; }
-.lang button[aria-pressed="false"] { text-decoration: underline; }
+.lang button { font: inherit; font-size: 1rem; color: #FFFFFF; background: transparent; border: 0; padding: 0.35rem 0.85rem; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: #FFFFFF; color: var(--sky); font-weight: 700; }
+.lang button[aria-pressed="false"]:hover { background: rgba(255, 255, 255, 0.15); }
+/* What is here: one link per tab, with its count. */
+.overview { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.5rem; margin: 2rem 0 0; max-width: 56rem; }
+.overview-link { display: grid; align-content: start; gap: 0.15rem; padding: 0.7rem 0.85rem 0.75rem; background: rgba(11, 31, 58, 0.45); border-top: 3px solid var(--wheat); color: #FFFFFF; text-decoration: none; }
+.overview-link:hover { background: rgba(11, 31, 58, 0.7); }
+.overview-num { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; line-height: 1; color: var(--wheat); font-variant-numeric: tabular-nums; }
+.overview-label { font-size: 0.9375rem; line-height: 1.25; }
+/* On a narrow screen the five sit in one row to swipe, so the tabs stay near the top. */
+@media (max-width: 44rem) { .overview { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 8.25rem; overflow-x: auto; scroll-snap-type: x mandatory; margin-top: 1.5rem; padding-bottom: 0.35rem; } .overview-link { scroll-snap-align: start; } }
 .title { margin: 0; font-weight: 700; }
 .title-uk { display: block; font-size: clamp(2.75rem, 10vw, 7rem); line-height: 0.95; letter-spacing: -0.01em; }
 .title-en { display: block; margin-top: 1rem; font-size: clamp(1.25rem, 2.6vw, 1.75rem); font-weight: 400; }
@@ -466,13 +475,35 @@ select {
 .check-note li::before { content: counter(step); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--sky); color: #FFFFFF; font-weight: 700; }
 @media (max-width: 54rem) { .orgs { grid-template-columns: minmax(0, 1fr); } }
 
-footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var(--muted); font-size: 1rem; }
-footer p { margin: 0 0 0.4rem; max-width: 46rem; }
+/* Footer: the flag as a stripe, then who made the page and how it is checked. */
+footer { margin-top: 2rem; color: var(--muted); font-size: 1rem; background: var(--wash); }
+.footer-stripe { height: 10px; background: linear-gradient(var(--sky) 50%, var(--wheat) 50%); }
+.footer-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.7fr) minmax(0, 1.6fr); gap: 2rem 2.5rem; padding-top: 2.25rem; padding-bottom: 1.75rem; }
+footer p { margin: 0; }
+.footer-brand { display: grid; align-content: start; gap: 0.75rem; }
+.footer-brand .flag { width: 2.4rem; height: 1.6rem; box-shadow: none; }
+.footer-title { color: var(--ink); font-weight: 700; font-size: 1.3rem; line-height: 1.2; }
+.footer-title span { display: block; }
+.footer-title [data-l="en"] { font-size: 1rem; font-weight: 400; color: var(--muted); }
+.footer-btn { justify-self: start; padding: 0.5rem 0.9rem; background: var(--sky); color: #FFFFFF; font-weight: 700; text-decoration: none; }
+.footer-btn::after { content: " ↗"; font-weight: 400; }
+.footer-btn:hover { background: var(--flag-ink); color: var(--wheat); }
+.footer-head { margin: 0 0 0.6rem !important; color: var(--ink); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.footer-nav ul, .footer-checked ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.45rem; }
+.footer-nav a { color: var(--ink); text-decoration: none; font-weight: 700; }
+.footer-nav a:hover { color: var(--link); text-decoration: underline; }
+.footer-checked li { position: relative; padding-left: 1.4rem; line-height: 1.45; }
+.footer-checked li::before { content: "✓"; position: absolute; left: 0; color: var(--link); font-weight: 700; }
+.footer-checked a { color: inherit; }
+.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; padding-top: 1rem; padding-bottom: 2rem; border-top: 1px solid var(--line); font-size: 0.9375rem; }
+.footer-bottom a { color: var(--link); font-weight: 700; margin-left: auto; }
+@media (max-width: 54rem) { .footer-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .footer-checked { grid-column: 1 / -1; } }
+@media (max-width: 34rem) { .footer-grid { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
 
-<header>
+<header id="top">
   <div class="sky">
     <div class="wrap">
       <div class="topbar">
@@ -487,6 +518,10 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
         <span class="title-en" data-l="en">Together with Ukraine</span>
       </h1>
       <p class="lede">{{Discover Ukraine’s culture and food, read how the country got here and the stories of its people, eat and shop at Ukrainian places in the United States, and give to the people defending it.||Відкрийте культуру й кухню України, дізнайтеся, який шлях пройшла країна, прочитайте історії її людей, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто її захищає.}}</p>
+      <nav class="overview" aria-labelledby="overview-label">
+        <span class="visually-hidden" id="overview-label">{{What is here||Що тут є}}</span>
+__OVERVIEW__
+      </nav>
       <p class="hero-credit">{{The Kyiv Pechersk Lavra in morning mist||Києво-Печерська лавра в ранковому тумані}} · __HERO_CREDIT__</p>
     </div>
   </div>
@@ -601,12 +636,38 @@ __GIVE__
 </main>
 
 <footer>
-  <div class="wrap">
-    <p>{{Places were found through OpenStreetMap (© OpenStreetMap contributors, Open Database License) and each was checked against its own website or local press on __PLACES_REVIEWED_EN__.||Заклади знайдено через OpenStreetMap (© учасники OpenStreetMap, Open Database License); кожен перевірено за його власним сайтом або місцевою пресою __PLACES_REVIEWED_UK__.}}</p>
-    <p>{{Organizations checked __GIVE_REVIEWED_EN__ against IRS records, Charity Navigator and their own published reports. The history is a short overview. Most entries draw on the Internet Encyclopedia of Ukraine, published by the Canadian Institute of Ukrainian Studies. The stories are short summaries; the reports they come from belong to their publishers.||Організації перевірено __GIVE_REVIEWED_UK__ за реєстром IRS, Charity Navigator та їхніми власними звітами. Історичний розділ — це стислий огляд. Більшість записів спирається на Internet Encyclopedia of Ukraine, яку видає Канадський інститут українських студій. Історії людей — це короткі виклади; оригінальні матеріали належать їхнім видавцям.}}</p>
-    <p data-l="en">Found a mistake, or know a place, group or story that belongs here? <a href="https://github.com/RowanFlynnPilot/together-with-ukraine/issues/new/choose" target="_blank" rel="noopener">Say so on GitHub</a>.</p>
-    <p data-l="uk" lang="uk">Помітили помилку або знаєте заклад, організацію чи історію, які варто додати? <a href="https://github.com/RowanFlynnPilot/together-with-ukraine/issues/new/choose" target="_blank" rel="noopener">Напишіть на GitHub</a>.</p>
+  <div class="footer-stripe" aria-hidden="true"></div>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <svg class="flag" viewBox="0 0 3 2" aria-hidden="true" focusable="false"><rect width="3" height="1" fill="#0057B7"/><rect y="1" width="3" height="1" fill="#FFD700"/></svg>
+      <p class="footer-title"><span lang="uk">Разом з Україною</span><span data-l="en">Together with Ukraine</span></p>
+      <p>{{Found a mistake, or know a place, group or story that belongs here?||Помітили помилку або знаєте заклад, організацію чи історію, які варто додати?}}</p>
+      <a class="footer-btn" href="https://github.com/RowanFlynnPilot/together-with-ukraine/issues/new/choose" target="_blank" rel="noopener">{{Suggest or correct on GitHub||Запропонувати чи виправити на GitHub}}</a>
+    </div>
+    <nav class="footer-nav" aria-labelledby="footer-nav-label">
+      <p class="footer-head" id="footer-nav-label">{{Sections||Розділи}}</p>
+      <ul>
+        <li><a href="#culture">{{Culture||Культура}}</a></li>
+        <li><a href="#history">{{History||Історія}}</a></li>
+        <li><a href="#stories">{{People||Люди}}</a></li>
+        <li><a href="#places">{{Eat and shop||Заклади}}</a></li>
+        <li><a href="#give">{{Give||Допомогти}}</a></li>
+      </ul>
+    </nav>
+    <div class="footer-checked">
+      <p class="footer-head">{{How it is checked||Як це перевірено}}</p>
+      <ul>
+        <li>{{Places were found through OpenStreetMap (© OpenStreetMap contributors, Open Database License) and each was checked against its own website or local press on __PLACES_REVIEWED_EN__.||Заклади знайдено через OpenStreetMap (© учасники OpenStreetMap, Open Database License); кожен перевірено за його власним сайтом або місцевою пресою __PLACES_REVIEWED_UK__.}}</li>
+        <li>{{Organizations checked __GIVE_REVIEWED_EN__ against IRS records, Charity Navigator and their own published reports.||Організації перевірено __GIVE_REVIEWED_UK__ за реєстром IRS, Charity Navigator та їхніми власними звітами.}}</li>
+        <li>{{The history is a short overview. Most entries draw on the Internet Encyclopedia of Ukraine, published by the Canadian Institute of Ukrainian Studies. The entries about the war are current as of __AS_OF_EN__.||Історичний розділ — це стислий огляд. Більшість записів спирається на Internet Encyclopedia of Ukraine, яку видає Канадський інститут українських студій. Записи про війну актуальні станом на __AS_OF_UK__.}}</li>
+        <li>{{The stories are short summaries; the reports they come from belong to their publishers.||Історії людей — це короткі виклади; оригінальні матеріали належать їхнім видавцям.}}</li>
+        <li>{{Every picture is openly licensed or in the public domain, from Wikimedia Commons, and credited beside it.||Усі зображення мають відкриті ліцензії або є суспільним надбанням, походять із Вікісховища й підписані поруч.}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
     <p data-l="uk" lang="uk">Український текст перекладено автоматично, і його ще має перевірити носій мови.</p>
+    <a href="#top">{{Back to top ↑||Угору ↑}}</a>
   </div>
 </footer>
 

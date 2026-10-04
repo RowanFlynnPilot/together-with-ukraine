@@ -11,8 +11,10 @@ Live: https://rowanflynnpilot.github.io/together-with-ukraine/ — the repo name
 One static page, English and Ukrainian, with five tabs: Ukrainian culture (a photo gallery, food with
 recipes, traditions, holidays, US festivals and resources), a sourced history timeline, stories of
 Ukrainian people summarized from published reports, a map of Ukrainian places to eat and shop in
-the US, and a list of vetted ways to give money, supplies or time. The page opens on Culture. The header carries the flag
-and a photo of the Kyiv Pechersk Lavra under a blue wash. Stories link to the timeline entry,
+the US, and a list of vetted ways to give money, supplies or time. The page opens on Culture. The header carries the flag,
+a photo of the Kyiv Pechersk Lavra under a blue wash, and a row of links to the tabs with their
+counts, which `build.py` counts from the content. The footer says how each part is checked, with
+the review dates. Stories link to the timeline entry,
 place or organization they involve, and those link back. Every tab and entry has its own address
 (`#give`, `#event-the-holodomor`, `#story-…`, `#place-…`, `#org-…`); `?lang=uk` forces Ukrainian.
 
