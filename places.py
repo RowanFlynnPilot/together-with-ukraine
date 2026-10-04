@@ -16,7 +16,7 @@ DATA = pathlib.Path(__file__).parent / 'data'
 OWN_SITE = 'own website'
 DC = 'District of Columbia'
 # Why a place counts as Ukrainian (rule 2), shown on each listing. Its evidence must say so.
-UKRAINIAN = {'food': ('Ukrainian food', 'Українська їжа'), 'goods': ('Ukrainian goods', 'Українські товари'), 'owner': ('Ukrainian-owned', 'Власники з України')}
+UKRAINIAN = {'food': ('Ukrainian food', 'Українська їжа'), 'goods': ('Ukrainian goods', 'Українські товари'), 'owner': ('Ukrainian-owned', 'Належить українцям')}
 # The kinds of place, grouped for the filter buttons and the icon on each listing.
 GROUPS = {
     'restaurant': (('Restaurants', 'Ресторани'), {'Restaurant', 'Counter service'}),
@@ -107,11 +107,15 @@ def _load():
 PLACES = _load()
 STATES_WITH_PLACES = {p['state'] for p in PLACES}
 
+def shown(name):
+    """A business name as the page shows it: with a typographic apostrophe, like the rest of the page."""
+    return name.replace("'", '’')
+
 def targets():
     """(name, city) -> (element id, English label, Ukrainian label), for links from other sections."""
     out = {}
     for p in PLACES:
-        out.setdefault((p['name'], p['city']), (p['id'], f"{p['name']}, {p['city']}", f"{p['name']}, {p['city']}"))
+        out.setdefault((p['name'], p['city']), (p['id'], f"{shown(p['name'])}, {p['city']}", f"{shown(p['name'])}, {p['city']}"))
     return out
 
 W = 'https://commons.wikimedia.org/wiki/File:'
@@ -125,7 +129,7 @@ PHOTOS = [
      photo('place-veselka-deruny.jpg', ('Potato pancakes at Veselka', 'Деруни у «Веселці»'),
            'Antanana', 'CC0', W + 'Veselka-Deruny-20250309_191355.jpg')),
     ('place-kramarczuk-s-sausage-company-minneapolis',
-     photo('place-kramarczuks.jpg', ('The Kramarczuk’s storefront in Minneapolis', 'Вітрина Kramarczuk’s у Мінеаполісі'),
+     photo('place-kramarczuks.jpg', ('Kramarczuk’s storefront in Minneapolis', 'Вітрина Kramarczuk’s у Міннеаполісі'),
            'Mx. Granger', 'CC0', W + 'Kramarczuk_Deli.jpg')),
     ('place-veselka-144-2nd-avenue-new-york',
      photo('place-veselka-plate.jpg', ('Varenyky and a meatless stuffed cabbage roll at Veselka', 'Вареники й пісний голубець у «Веселці»'),
@@ -145,7 +149,7 @@ def photo_strip():
     for place_id, p in PHOTOS:
         place = BY_ID[place_id]
         figures.append(f'''      <figure class="place-photo">
-        <a class="shot" href="#{place_id}">{photos.img(p)}<span class="shot-caption">{e(place['name'])}, {e(place['city'])}</span></a>
+        <a class="shot" href="#{place_id}">{photos.img(p)}<span class="shot-caption">{e(shown(place['name']))}, {e(place['city'])}</span></a>
         <figcaption class="credit">{photos.credit(p)}</figcaption>
       </figure>''')
     return '    <div class="place-photos">\n' + '\n'.join(figures) + '\n    </div>'
@@ -162,7 +166,7 @@ def summary():
 
 def map_data():
     """What the map script needs: where to draw each dot, its state and group, and the listing it opens."""
-    return [{'id': p['id'], 'name': p['name'], 'city': p['city'], 'group': p['group'], 'lon': p['lon'], 'lat': p['lat'], 'state': p['state_id']} for p in PLACES]
+    return [{'id': p['id'], 'name': shown(p['name']), 'city': p['city'], 'group': p['group'], 'lon': p['lon'], 'lat': p['lat'], 'state': p['state_id']} for p in PLACES]
 
 def icons():
     """The icons as SVG symbols, drawn once and used by each listing and filter button."""
@@ -205,14 +209,14 @@ def render(story_links):
             address = ', '.join(e(x) for x in (p['street'], p['city']) if x)
             query = quote(', '.join((p['name'], p['street'], p['city'], p['state'])))
             links = []
-            whose = f'<span class="visually-hidden">: {e(p["name"])}</span>'  # these links repeat on every card; screen readers hear whose
+            whose = f'<span class="visually-hidden">: {e(shown(p["name"]))}</span>'  # these links repeat on every card; screen readers hear whose
             if p['web']: links.append(f'<a class="place-btn" href="{e(p["web"])}" target="_blank" rel="noopener">{both("Website", "Сайт")}{whose}</a>')
-            links.append(f'<a class="place-btn" href="https://www.google.com/maps/search/?api=1&amp;query={query}" target="_blank" rel="noopener">{both("Map", "Мапа")}{whose}</a>')
+            links.append(f'<a class="place-btn" href="https://www.google.com/maps/search/?api=1&amp;query={query}" target="_blank" rel="noopener">Google Maps{whose}</a>')
             story = ''.join(f'\n    <p class="place-story"><a href="#{story_id}">{both("Story: " + en, "Історія: " + uk)}</a></p>'
                             for story_id, en, uk in story_links.get(target_ids[p['name'], p['city']], []))
             out.append(f"""  <article class="place" id="{p['id']}" tabindex="-1" data-state="{p['state_id']}" data-group="{p['group']}">
     <p class="place-kind">{_icon(p['group'])}{both(p['kind'], places_uk.KINDS[p['kind']])}</p>
-    <h4 class="place-name">{e(p['name'])}</h4>
+    <h4 class="place-name">{e(shown(p['name']))}</h4>
     <p class="place-addr">{address}</p>
     <p class="place-tags">{''.join(both(*UKRAINIAN[t], cls='tag tag-' + t) for t in p['ukrainian'])}</p>{story}
     <p class="place-links">{''.join(links)}</p>
