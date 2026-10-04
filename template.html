@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Together with Ukraine</title>
-<meta name="description" content="Ukraine’s history, the stories of its people, its culture and food, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<meta name="description" content="Ukraine’s culture and food, its history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
 <link rel="canonical" href="https://rowanflynnpilot.github.io/together-with-ukraine/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Together with Ukraine · Разом з Україною">
-<meta property="og:description" content="Ukraine’s history, the stories of its people, its culture and food, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<meta property="og:description" content="Ukraine’s culture and food, its history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
 <meta property="og:url" content="https://rowanflynnpilot.github.io/together-with-ukraine/">
 <meta property="og:image" content="https://rowanflynnpilot.github.io/together-with-ukraine/preview.png">
 <meta property="og:image:width" content="1200">
@@ -118,20 +118,53 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .story-link a { font-weight: 700; }
 
 /* History */
-.era-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin: 0 0 2.5rem; }
-.era-nav a { display: inline-block; padding: 0.25rem 0; }
-.era { margin: 0 0 3rem; max-width: 46rem; }
-.era-range { color: var(--muted); font-weight: 400; margin-left: 0.5rem; }
-.events { list-style: none; margin: 1.25rem 0 0; padding: 0 0 0 1.5rem; border-left: 2px dashed var(--line); }
-.event { display: grid; grid-template-columns: 7.75rem 1fr; column-gap: 1.25rem; padding: 0.9rem 0; }
-.year { font-weight: 700; color: var(--link); font-variant-numeric: tabular-nums; }
-.event h4 { margin: 0 0 0.25rem; font-size: 1.125rem; }
-.event p { margin: 0; }
-.src { margin: 0.35rem 0 0; font-size: 0.9375rem; color: var(--muted); }
-.src a { color: inherit; }
-@media (max-width: 34rem) {
-  .event { grid-template-columns: 1fr; }
-  .events { padding-left: 1rem; }
+/* The eras as a ribbon, shading from the flag's blue to its yellow as the centuries pass. */
+.era-ribbon { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); gap: 0.4rem; margin: 0 0 3rem; }
+.era-link { display: grid; gap: 0.1rem; padding: 0.65rem 0.8rem 0.7rem; background: var(--card); border: 1px solid var(--line); border-top: 6px solid var(--sky); color: var(--ink); text-decoration: none; }
+.era-link:nth-child(2) { border-top-color: #3D7FD1; }
+.era-link:nth-child(3) { border-top-color: #7FA6C9; }
+.era-link:nth-child(4) { border-top-color: #D9C25A; }
+.era-link:nth-child(5) { border-top-color: var(--wheat); }
+.era-link:hover { background: var(--wash); }
+.era-link-span { color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.era-link-name { font-weight: 700; line-height: 1.2; }
+
+/* Each era opens like a chapter: its name over a picture, or over the cross-stitch pattern. */
+.era { margin: 0 0 4.5rem; }
+.era-head { position: relative; display: flex; align-items: flex-end; min-height: clamp(12rem, 28vw, 19rem); margin: 0 0 2rem; overflow: hidden; color: #FFFFFF; background-color: #0B1F3A; }
+.era-head.c-ornament { min-height: 11rem; }
+.era-head img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.era-head::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 31, 58, 0.1) 30%, rgba(11, 31, 58, 0.9)); }
+.era-head.c-ornament::after { background: linear-gradient(90deg, rgba(11, 31, 58, 0.95) 35%, rgba(11, 31, 58, 0.55)); }
+.era-title { position: relative; z-index: 1; padding: 1.4rem 1.6rem 1.5rem; }
+.era-num { margin: 0; color: var(--wheat); font-size: 0.875rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.era-head h3 { margin: 0.15rem 0 0.2rem; font-size: clamp(1.9rem, 4.5vw, 3rem); line-height: 1.05; }
+.era-range { margin: 0; color: rgba(255, 255, 255, 0.88); font-size: 1.15rem; }
+.era-head .credit { position: absolute; z-index: 1; top: 0.6rem; right: 0.75rem; max-width: 60%; margin: 0; color: rgba(255, 255, 255, 0.8); font-size: 0.75rem; text-align: right; text-shadow: 0 1px 4px #0B1F3A; }
+
+/* The entries on a line that runs from blue to yellow, each year on its left. */
+.events { position: relative; list-style: none; margin: 0; padding: 0; }
+.events::before { content: ""; position: absolute; top: 0.5rem; bottom: 0.5rem; left: 7.6rem; width: 2px; background: linear-gradient(var(--sky), var(--wheat)); }
+.event { position: relative; display: grid; grid-template-columns: 6.4rem minmax(0, 1fr); column-gap: 2.4rem; padding: 0 0 1.4rem; }
+.event::before { content: ""; position: absolute; top: 1.05rem; left: calc(7.6rem - 6px); width: 14px; height: 14px; border-radius: 50%; background: var(--wheat); box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--sky); }
+.event-year { margin: 0.7rem 0 0; text-align: right; color: var(--link); font-size: 1.35rem; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.event-card { display: flow-root; padding: 1rem 1.2rem; background: var(--card); border: 1px solid var(--line); }
+.event-card h4 { margin: 0 0 0.35rem; font-size: 1.25rem; line-height: 1.25; }
+.event-card p { margin: 0; }
+.event-fig { float: right; width: 38%; max-width: 15rem; margin: 0.2rem 0 0.75rem 1.2rem; }
+.event-fig img { display: block; width: 100%; height: auto; background: var(--wash); }
+.event-fig.wide { float: none; width: 100%; max-width: none; margin: 0 0 0.85rem; }
+.event-fig.tall { width: 27%; max-width: 10.5rem; }
+.event-fig .credit { display: block; margin-top: 0.3rem; }
+.event-card p.event-story { margin-top: 0.65rem; font-weight: 700; }
+.event-card .why { clear: both; }
+@media (max-width: 40rem) {
+  .events::before { left: 0.4rem; }
+  .event { grid-template-columns: minmax(0, 1fr); padding-left: 1.6rem; }
+  .event::before { top: 0.3rem; left: -0.05rem; }
+  .event-year { margin: 0 0 0.4rem; text-align: left; font-size: 1.2rem; }
+  .event-fig { float: none; width: 100%; max-width: none; margin: 0 0 0.8rem; }
+  .event-fig.tall { width: 60%; }
 }
 
 /* People */
@@ -196,7 +229,7 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 /* Traditions are objects and art: show the whole piece, not a crop. */
 #culture-traditions .c-media img { object-fit: contain; }
 .c-media.c-ornament { aspect-ratio: 4 / 3; display: grid; place-items: center; }
-.c-ornament span { background: #0B1F3A; color: #FFD700; border: 2px solid #FFD700; padding: 0.35rem 1rem; font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 700; text-align: center; max-width: 85%; }
+.c-ornament-name { background: #0B1F3A; color: #FFD700; border: 2px solid #FFD700; padding: 0.35rem 1rem; font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 700; text-align: center; max-width: 85%; }
 .badge { position: absolute; top: 0.75rem; left: 0.75rem; z-index: 1; background: var(--wheat); color: #0B1F3A; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.04em; padding: 0.15rem 0.55rem; }
 .c-body { display: flex; flex-direction: column; gap: 0.55rem; flex: 1; padding: 0.9rem 1.1rem 1rem; }
 .c-name { margin: 0; font-size: 1.35rem; line-height: 1.2; }
@@ -422,7 +455,7 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
         <span class="title-uk" lang="uk">Разом з Україною</span>
         <span class="title-en" data-l="en">Together with Ukraine</span>
       </h1>
-      <p class="lede">{{Read how Ukraine got here and the stories of its people, discover its culture and food, eat and shop at Ukrainian places in the United States, and give to the people defending the country.||Дізнайтеся, який шлях пройшла Україна, прочитайте історії її людей, відкрийте її культуру й кухню, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто захищає країну.}}</p>
+      <p class="lede">{{Discover Ukraine’s culture and food, read how the country got here and the stories of its people, eat and shop at Ukrainian places in the United States, and give to the people defending it.||Відкрийте культуру й кухню України, дізнайтеся, який шлях пройшла країна, прочитайте історії її людей, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто її захищає.}}</p>
       <p class="hero-credit">{{The Kyiv Pechersk Lavra in morning mist||Києво-Печерська лавра в ранковому тумані}} · __HERO_CREDIT__</p>
     </div>
   </div>
@@ -430,9 +463,9 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
 <!-- Outside the header so it can stay stuck to the top while the page scrolls. -->
 <div class="wheat">
   <div class="wrap tabs" role="tablist" aria-label="Sections">
-    <button class="tab" role="tab" id="tab-history" aria-controls="history" aria-selected="true">{{History||Історія}}</button>
+    <button class="tab" role="tab" id="tab-culture" aria-controls="culture" aria-selected="true">{{Culture||Культура}}</button>
+    <button class="tab" role="tab" id="tab-history" aria-controls="history" aria-selected="false" tabindex="-1">{{History||Історія}}</button>
     <button class="tab" role="tab" id="tab-stories" aria-controls="stories" aria-selected="false" tabindex="-1">{{People||Люди}}</button>
-    <button class="tab" role="tab" id="tab-culture" aria-controls="culture" aria-selected="false" tabindex="-1">{{Culture||Культура}}</button>
     <button class="tab" role="tab" id="tab-places" aria-controls="places" aria-selected="false" tabindex="-1">{{Eat and shop||Заклади}}</button>
     <button class="tab" role="tab" id="tab-give" aria-controls="give" aria-selected="false" tabindex="-1">{{Give||Допомогти}}</button>
   </div>
@@ -440,10 +473,20 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
 
 <main class="wrap">
 
-  <section id="history" role="tabpanel" aria-labelledby="tab-history">
+  <section id="culture" role="tabpanel" aria-labelledby="tab-culture">
+    <h2>{{Ukrainian culture||Українська культура}}</h2>
+    <p class="intro tight">{{Landscapes and landmarks, food, traditions and festivals that are Ukrainian in their own right. Every entry links to its sources, recipes stay on their authors’ sites, and every photo is openly licensed.||Краєвиди й пам’ятки, кухня, традиції та фестивалі, які є українськими за своєю суттю. Кожен запис має посилання на джерела, рецепти залишаються на сайтах їхніх авторів, а всі фото — з відкритими ліцензіями.}}</p>
+    <nav class="era-nav culture-nav" aria-label="Jump to a section">
+__CULTURE_NAV__
+    </nav>
+
+__CULTURE__
+  </section>
+
+  <section id="history" role="tabpanel" aria-labelledby="tab-history" hidden>
     <h2>{{Eleven centuries, briefly||Одинадцять століть коротко}}</h2>
     <p class="intro tight">{{Ukraine has been a medieval state, a land divided among empires, a Soviet republic and an independent country. Every entry links to the source it was checked against.||Україна була середньовічною державою, землею, поділеною між імперіями, радянською республікою і незалежною країною. До кожного запису додано джерело, за яким його перевірено.}}</p>
-    <nav class="era-nav" aria-label="Jump to an era">
+    <nav class="era-ribbon" aria-label="Jump to an era">
 __ERA_NAV__
     </nav>
 
@@ -452,22 +495,12 @@ __HISTORY__
 
   <section id="stories" role="tabpanel" aria-labelledby="tab-stories" hidden>
     <h2>{{Stories of Ukrainians||Історії українців}}</h2>
-    <p class="intro tight">{{People in Ukraine, Ukrainians who made a home in the United States, and people who lived through the history in the first tab, as reported by news organizations, UN agencies and museums. Each summary is ours and says only what the report says. Follow the link to read the story as it was published.||Люди в Україні, українці, які знайшли дім у Сполучених Штатах, і ті, хто пережив події з розділу «Історія», — так, як про них розповіли журналісти, агенції ООН і музеї. Кожен виклад написали ми, і в ньому лише те, що є у джерелі. Перейдіть за посиланням, щоб прочитати історію так, як її опублікували.}}</p>
+    <p class="intro tight">{{People in Ukraine, Ukrainians who made a home in the United States, and people who lived through the history in the History tab, as reported by news organizations, UN agencies and museums. Each summary is ours and says only what the report says. Follow the link to read the story as it was published.||Люди в Україні, українці, які знайшли дім у Сполучених Штатах, і ті, хто пережив події з розділу «Історія», — так, як про них розповіли журналісти, агенції ООН і музеї. Кожен виклад написали ми, і в ньому лише те, що є у джерелі. Перейдіть за посиланням, щоб прочитати історію так, як її опублікували.}}</p>
     <nav class="era-nav" aria-label="Jump to a theme">
 __THEME_NAV__
     </nav>
 
 __STORIES__
-  </section>
-
-  <section id="culture" role="tabpanel" aria-labelledby="tab-culture" hidden>
-    <h2>{{Ukrainian culture||Українська культура}}</h2>
-    <p class="intro tight">{{Landscapes and landmarks, food, traditions and festivals that are Ukrainian in their own right. Every entry links to its sources, recipes stay on their authors’ sites, and every photo is openly licensed.||Краєвиди й пам’ятки, кухня, традиції та фестивалі, які є українськими за своєю суттю. Кожен запис має посилання на джерела, рецепти залишаються на сайтах їхніх авторів, а всі фото — з відкритими ліцензіями.}}</p>
-    <nav class="era-nav culture-nav" aria-label="Jump to a section">
-__CULTURE_NAV__
-    </nav>
-
-__CULTURE__
   </section>
 
   <section id="places" role="tabpanel" aria-labelledby="tab-places" hidden>

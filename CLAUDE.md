@@ -8,10 +8,10 @@ Live: https://rowanflynnpilot.github.io/together-with-ukraine/ — the repo name
 
 ## What it is
 
-One static page, English and Ukrainian, with five tabs: a sourced history timeline, stories of
-Ukrainian people summarized from published reports, Ukrainian culture (a photo gallery, food with
-recipes, traditions, holidays, US festivals and resources), a map of Ukrainian places to eat and shop
-in the US, and a list of vetted ways to give money, supplies or time. The header carries the flag
+One static page, English and Ukrainian, with five tabs: Ukrainian culture (a photo gallery, food with
+recipes, traditions, holidays, US festivals and resources), a sourced history timeline, stories of
+Ukrainian people summarized from published reports, a map of Ukrainian places to eat and shop in
+the US, and a list of vetted ways to give money, supplies or time. The page opens on Culture. The header carries the flag
 and a photo of the Kyiv Pechersk Lavra under a blue wash. Stories link to the timeline entry,
 place or organization they involve, and those link back. Every tab and entry has its own address
 (`#give`, `#event-the-holodomor`, `#story-…`, `#place-…`, `#org-…`); `?lang=uk` forces Ukrainian.
@@ -33,7 +33,7 @@ python scout.py                                # leads for new places from OpenS
 |---|---|
 | `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter and the map. `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
 | `build.py` | Assembles the page and resolves the links between sections. No network. Stops on a missing translation, a link to an anchor that does not exist, or two elements with the same id. |
-| `history.py` / `history_uk.py` | Timeline entries with their sources / the Ukrainian text, keyed by English title. `AS_OF` dates the entries about the war today. |
+| `history.py` / `history_uk.py` | Timeline entries with their sources / the Ukrainian text, keyed by English title. `AS_OF` dates the entries about the war today. `ERA_PHOTOS` (a banner per era) and `EVENT_PHOTOS` (a picture beside some entries) hold the timeline's pictures. |
 | `culture.py` | The Culture tab: the header photo, the gallery, and the food, traditions, "Ukrainian, not Russian", holidays, events and resources sections. `REVIEWED` dates the events and resources. `UNESCO_YEAR` (the badge), `RELABELS` (the label each museum dropped and the one it uses now) and `RESOURCE_KINDS` shape how entries look; the build checks each against the entry's own text. An entry without a photo shows its Ukrainian name on a cross-stitch pattern. |
 | `photos.py` | Photo rules shared by stories and culture: accepted licenses, image sizes, the credit line, the license claim `check.py` looks for. |
 | `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, related entries elsewhere on the page, and optionally a `photo(...)`. |
@@ -48,7 +48,7 @@ python scout.py                                # leads for new places from OpenS
 | `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
-| `images/` | Photos for the stories, the header, the Culture tab and the places, openly licensed (rule 7), saved at display size. Copied to `site/images/` by the build. |
+| `images/` | Pictures for the stories, the header, the Culture and History tabs and the places, openly licensed or public domain (rule 7), saved at display size. Copied to `site/images/` by the build. |
 | `.github/ISSUE_TEMPLATE/` | Forms for suggesting a place, story or group, or reporting a mistake. The footer links to them. |
 
 Both languages are in the built page. CSS shows the one matching `<html data-lang>`; the script
