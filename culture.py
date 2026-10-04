@@ -582,7 +582,7 @@ def _recipes(x):
     for i, lang in enumerate(('en', 'uk')):
         attrs = 'data-l="en"' if lang == 'en' else 'data-l="uk" lang="uk"'
         label = (('Recipe', 'Recipes'), ('Рецепт', 'Рецепти'))[i][len(x['recipes']) > 1]
-        buttons = ''.join(f'<a class="recipe-btn" href="{e(url)}" target="_blank" rel="noopener">{e(by)} <span class="recipe-lang">{names[item_lang][i]}</span></a>'
+        buttons = ''.join(f'<a class="recipe-btn" href="{e(url)}" target="_blank" rel="noopener">{e(by)} <span class="recipe-lang">{names[item_lang][i]}</span><span class="visually-hidden">: {e(x["name"][i])}</span></a>'
                           for item_lang, by, url, _ in sorted(x['recipes'], key=lambda r: r[0] != lang))
         out.append(f'<div class="recipes" {attrs}><span class="recipes-label">{label}</span>{buttons}</div>')
     return ''.join(out)
@@ -651,7 +651,7 @@ def _resource(x, section_id, targets):
           <p class="c-kind"><span class="c-kind-icon">{_icon(kind)}</span>{both(*label)} · {both(*x['where'])}</p>
           <h4 class="c-name">{both(*x['name'])}</h4>
           <p class="c-about">{both(*x['about'])}</p>
-          <p class="c-actions"><a class="place-btn" href="{html.escape(x['url'])}" target="_blank" rel="noopener">{both('Website', 'Сайт')}</a></p>
+          <p class="c-actions"><a class="place-btn" href="{html.escape(x['url'])}" target="_blank" rel="noopener">{both('Website', 'Сайт')}<span class="visually-hidden">: {both(*x['name'])}</span></a></p>
           {_sources(x)}
         </article>"""
 

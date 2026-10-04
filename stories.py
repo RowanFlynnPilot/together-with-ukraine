@@ -277,7 +277,7 @@ def _card(s, theme_id, targets):
           </header>{credit}
           <h4 class="story-title">{both(*s['title'])}</h4>
           <p class="story-text" id="{s['id']}-text">{both(*s['text'])}</p>
-          <button type="button" class="story-more" aria-expanded="false" aria-controls="{s['id']}-text" hidden><span class="more">{both('Read more', 'Читати далі')}</span><span class="less">{both('Show less', 'Згорнути')}</span></button>
+          <button type="button" class="story-more" aria-expanded="false" aria-controls="{s['id']}-text" hidden><span class="more">{both('Read more', 'Читати далі')}</span><span class="less">{both('Show less', 'Згорнути')}</span><span class="visually-hidden">: {both(*s['person'])}</span></button>
           {_read(s)}{related_html}
         </article>'''
 

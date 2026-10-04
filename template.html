@@ -126,6 +126,12 @@ a { color: var(--link); }
   border: 0; padding: 1.6rem 0.5rem; cursor: pointer;
 }
 .tab[aria-selected="true"] { background: var(--flag-ink); color: var(--wheat); }
+/* The usual yellow ring vanishes on the yellow bar and the navy tab, so tabs draw focus inside themselves. */
+.tab:focus-visible { outline: 3px solid var(--flag-ink); outline-offset: -6px; box-shadow: none; }
+.tab[aria-selected="true"]:focus-visible { outline-color: var(--wheat); }
+.skip-link { position: absolute; z-index: 10; top: 0.5rem; left: 0.5rem; padding: 0.6rem 1rem; background: var(--wheat); color: #0B1F3A; font-weight: 700; transform: translateY(-200%); }
+.skip-link:focus { transform: none; }
+main:focus { outline: none; }
 @media (max-width: 34rem) { .tab { padding: 1rem 0.1rem; font-size: 0.9375rem; line-height: 1.2; } }
 
 main.wrap { padding-top: 3rem; padding-bottom: 4rem; }
@@ -134,7 +140,7 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .intro { max-width: 40rem; margin: 0 0 2.5rem; color: var(--muted); }
 .intro.tight { margin-bottom: 1rem; }
 /* Anything a link can jump to clears the sticky tab bar, and briefly lights up when reached. */
-[role="tabpanel"], .era, .event, .theme, .story, .place, .org, .culture-section, .culture-item { scroll-margin-top: 6.5rem; }
+#content, [role="tabpanel"], .era, .event, .theme, .story, .place, .org, .culture-section, .culture-item { scroll-margin-top: 6.5rem; }
 .event:focus, .story:focus, .place:focus, .org:focus, .culture-item:focus { outline: none; }
 .flash { animation: flash 2.5s ease-out; }
 @keyframes flash { from { background: var(--wash); box-shadow: 0 0 0 0.6rem var(--wash); } to { background: transparent; box-shadow: 0 0 0 0.6rem transparent; } }
@@ -529,6 +535,7 @@ footer p { margin: 0; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#content">{{Skip to the content||Перейти до змісту}}</a>
 
 <header id="top">
   <div class="sky">
@@ -561,22 +568,24 @@ __OVERVIEW__
   </div>
 </header>
 <!-- Outside the header so it can stay stuck to the top while the page scrolls. -->
-<div class="wheat">
-  <div class="wrap tabs" role="tablist" aria-label="Sections">
+<nav class="wheat" aria-labelledby="tabs-label">
+  <span class="visually-hidden" id="tabs-label">{{Page sections||Розділи сторінки}}</span>
+  <div class="wrap tabs" role="tablist" aria-labelledby="tabs-label">
     <button class="tab" role="tab" id="tab-culture" aria-controls="culture" aria-selected="true">{{Culture||Культура}}</button>
     <button class="tab" role="tab" id="tab-history" aria-controls="history" aria-selected="false" tabindex="-1">{{History||Історія}}</button>
     <button class="tab" role="tab" id="tab-stories" aria-controls="stories" aria-selected="false" tabindex="-1">{{People||Люди}}</button>
     <button class="tab" role="tab" id="tab-places" aria-controls="places" aria-selected="false" tabindex="-1">{{Eat and shop||Заклади}}</button>
     <button class="tab" role="tab" id="tab-give" aria-controls="give" aria-selected="false" tabindex="-1">{{Give||Допомогти}}</button>
   </div>
-</div>
+</nav>
 
-<main class="wrap">
+<main class="wrap" id="content" tabindex="-1">
 
   <section id="culture" role="tabpanel" aria-labelledby="tab-culture">
     <h2>{{Ukrainian culture||Українська культура}}</h2>
     <p class="intro tight">{{Landscapes and landmarks, food, traditions and festivals that are Ukrainian in their own right. Every entry links to its sources, recipes stay on their authors’ sites, and every photo is openly licensed.||Краєвиди й пам’ятки, кухня, традиції та фестивалі, які є українськими за своєю суттю. Кожен запис має посилання на джерела, рецепти залишаються на сайтах їхніх авторів, а всі фото — з відкритими ліцензіями.}}</p>
-    <nav class="chip-nav" aria-label="Jump to a section">
+    <nav class="chip-nav" aria-labelledby="culture-nav-label">
+      <span class="visually-hidden" id="culture-nav-label">{{Jump to a section||Перейти до розділу}}</span>
 __CULTURE_NAV__
     </nav>
 
@@ -586,7 +595,8 @@ __CULTURE__
   <section id="history" role="tabpanel" aria-labelledby="tab-history" hidden>
     <h2>{{Eleven centuries, briefly||Одинадцять століть коротко}}</h2>
     <p class="intro tight">{{Ukraine has been a medieval state, a land divided among empires, a Soviet republic and an independent country. Every entry links to the source it was checked against.||Україна була середньовічною державою, землею, поділеною між імперіями, радянською республікою і незалежною країною. До кожного запису додано джерело, за яким його перевірено.}}</p>
-    <nav class="era-ribbon" aria-label="Jump to an era">
+    <nav class="era-ribbon" aria-labelledby="era-nav-label">
+      <span class="visually-hidden" id="era-nav-label">{{Jump to an era||Перейти до доби}}</span>
 __ERA_NAV__
     </nav>
 
@@ -596,7 +606,8 @@ __HISTORY__
   <section id="stories" role="tabpanel" aria-labelledby="tab-stories" hidden>
     <h2>{{Stories of Ukrainians||Історії українців}}</h2>
     <p class="intro tight">{{People in Ukraine, Ukrainians who made a home in the United States, and people who lived through the history in the History tab, as reported by news organizations, UN agencies and museums. Each summary is ours and says only what the report says. Follow the link to read the story as it was published.||Люди в Україні, українці, які знайшли дім у Сполучених Штатах, і ті, хто пережив події з розділу «Історія», — так, як про них розповіли журналісти, агенції ООН і музеї. Кожен виклад написали ми, і в ньому лише те, що є у джерелі. Перейдіть за посиланням, щоб прочитати історію так, як її опублікували.}}</p>
-    <nav class="chip-nav" aria-label="Jump to a theme">
+    <nav class="chip-nav" aria-labelledby="theme-nav-label">
+      <span class="visually-hidden" id="theme-nav-label">{{Jump to a theme||Перейти до теми}}</span>
 __THEME_NAV__
     </nav>
 
@@ -646,7 +657,8 @@ __PLACE_LIST__
     <h2>{{Give money, supplies or time||Допомогти грошима, речами або часом}}</h2>
     <p class="intro">{{Every group here was reviewed on __GIVE_REVIEWED_EN__, and each entry shows what was checked. US charities had to appear in IRS records; their figures and Charity Navigator ratings are as of __RECORDS_EN__. Ukrainian groups had to publish reports or audits, or be confirmed by an independent source. The checks show that a group is registered and accounts for its money. They do not measure its results. Each button opens the group’s own website. No money passes through this page.||Усі організації в цьому списку перевірено __GIVE_REVIEWED_UK__, і біля кожної зазначено, що саме перевіряли. Американські благодійні організації мають бути в реєстрі Податкової служби США (IRS); їхні фінансові дані та оцінки Charity Navigator наведено станом на __RECORDS_UK__. Українські мають публікувати звіти чи аудити або мати підтвердження з незалежного джерела. Перевірка показує, що організація зареєстрована і звітує про кошти. Вона не оцінює результатів її роботи. Кожна кнопка відкриває сайт самої організації. Через цю сторінку гроші не проходять.}}</p>
 
-    <nav class="chip-nav" aria-label="Jump to a group">
+    <nav class="chip-nav" aria-labelledby="give-nav-label">
+      <span class="visually-hidden" id="give-nav-label">{{Jump to a group||Перейти до групи}}</span>
 __GIVE_NAV__
     </nav>
 
