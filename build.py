@@ -38,7 +38,7 @@ def build():
 
     targets, back = cross_links()
     timeline = history.render(back['history'])
-    people, _, themes = stories.render(targets)
+    people, themes = stories.render(targets)
     culture_html, culture_nav = culture.render(targets)
     give_html, _ = give.render(back['give'])
     records_en, records_uk = dates(read_json('checked.json')['records'])

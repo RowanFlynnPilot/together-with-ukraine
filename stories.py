@@ -225,44 +225,74 @@ def claims():
     return ([(url, phrase, f'story of {s["person"][0]}: {outlet}') for s in STORIES for _, outlet, _, url, phrase in s['sources']]
             + [photos.claim(s['photo'], f'photo of {s["person"][0]}: license') for s in STORIES if s['photo']])
 
-def _photo(s):
-    p = s['photo']
-    if not p: return ''
-    return f'\n          <figure class="story-photo">{photos.img(p)}<figcaption>{photos.credit(p)}</figcaption></figure>'
+# Line icons, 24 by 24, drawn with the stroke. A story without a photo shows its theme's icon in place of a face.
+ICONS = {
+    'theme-home': 'M3 11 12 4l9 7M5.5 9.5V20h13V9.5M10 20v-5.5h4V20',
+    'theme-us': 'M4 8h16v11H4ZM9 8V5.5h6V8M4 13h16',
+    'theme-culture': 'M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5ZM12 6.5v13',
+    'theme-recovery': 'M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z',
+    'theme-history': 'M6.5 3.5h11M6.5 20.5h11M8 3.5c0 4.5 4 5.5 4 8.5s-4 4-4 8.5M16 3.5c0 4.5-4 5.5-4 8.5s4 4 4 8.5',
+    'history': 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7.5V12l3 2',
+    'place': 'M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+    'give': 'M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z',
+}
+if missing := {theme_id for theme_id, _, _, _ in THEMES} - set(ICONS): raise ValueError(f'themes without an icon: {sorted(missing)}')
+
+def _icon(name):
+    return f'<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="{ICONS[name]}"/></svg>'
 
 def related():
     """(story id, English name, Ukrainian name, kind, key) for every link from a story to another section."""
     return [(s['id'], *s['person'], kind, key) for s in STORIES for kind, key in s['related']]
 
-def _sources(s, lang):
-    """The source links for one language: sources in that language first, others marked with their language."""
-    e = html.escape; i = 0 if lang == 'en' else 1
-    ordered = sorted(s['sources'], key=lambda src: src[0] != lang)
-    parts = []
-    for src_lang, outlet, date, url, _ in ordered:
-        note = '' if src_lang == lang else f' ({LANGUAGE_NAMES[src_lang][i]})'
-        parts.append(f'<a href="{e(url)}" target="_blank" rel="noopener">{e(outlet)}, {dates(date)[i]}</a>{note}')
-    label = ('Read the full story', 'Повна історія')[i]
-    attrs = 'data-l="en"' if lang == 'en' else 'data-l="uk" lang="uk"'
-    return f'<span {attrs}>{label}: {"; ".join(parts)}</span>'
+def _read(s):
+    """Buttons to the published story, one per source: sources in the reader's language first, others marked."""
+    e = html.escape; out = []
+    for i, lang in enumerate(('en', 'uk')):
+        attrs = 'data-l="en"' if lang == 'en' else 'data-l="uk" lang="uk"'
+        buttons = []
+        for src_lang, outlet, date, url, _ in sorted(s['sources'], key=lambda src: src[0] != lang):
+            note = '' if src_lang == lang else f' · {LANGUAGE_NAMES[src_lang][i]}'
+            buttons.append(f'<a class="read-btn" href="{e(url)}" target="_blank" rel="noopener"><span class="read-outlet">{e(outlet)}</span><span class="read-date">{dates(date)[i]}{note}</span></a>')
+        out.append(f'<div class="story-read" {attrs}><span class="story-read-label">{("Read the full story", "Повна історія")[i]}</span>{"".join(buttons)}</div>')
+    return ''.join(out)
+
+def _card(s, theme_id, targets):
+    p = s['photo']
+    avatar = photos.img(p) if p else _icon(theme_id)
+    credit = f'\n          <p class="credit story-credit">{photos.credit(p)}</p>' if p else ''
+    chips = []
+    for kind, key in s['related']:
+        target_id, en, uk = targets[kind, key]
+        label_en, label_uk = RELATED_LABELS[kind]
+        chips.append(f'<a class="rel-chip" href="#{target_id}">{_icon(kind)}<span><span class="rel-kind">{both(label_en, label_uk)}</span> {both(en, uk)}</span></a>')
+    related_html = f'\n          <p class="story-related">{"".join(chips)}</p>' if chips else ''
+    return f'''        <article class="story" id="{s['id']}" tabindex="-1">
+          <header class="story-head">
+            <div class="story-avatar{' has-photo' if p else ''}">{avatar}</div>
+            <div>
+              <p class="story-who">{both(*s['person'])}</p>
+              <p class="story-where">{both(*s['context'])}</p>
+            </div>
+          </header>{credit}
+          <h4 class="story-title">{both(*s['title'])}</h4>
+          <p class="story-text" id="{s['id']}-text">{both(*s['text'])}</p>
+          <button type="button" class="story-more" aria-expanded="false" aria-controls="{s['id']}-text" hidden><span class="more">{both('Read more', 'Читати далі')}</span><span class="less">{both('Show less', 'Згорнути')}</span></button>
+          {_read(s)}{related_html}
+        </article>'''
 
 def render(targets):
-    """targets maps (kind, key) to (element id, English label, Ukrainian label)."""
+    """The tab's HTML and its jump links. targets maps (kind, key) to (element id, English label, Ukrainian label)."""
     out = []
-    for theme_id, title, intro, stories in THEMES:
-        out.append(f'    <div class="theme" id="{theme_id}">\n      <h3>{both(*title)}</h3>\n      <p class="cause-intro">{both(*intro)}</p>\n      <div class="stories">')
-        for s in stories:
-            links = []
-            for kind, key in s['related']:
-                target_id, en, uk = targets[kind, key]
-                label_en, label_uk = RELATED_LABELS[kind]
-                links.append(f'<a href="#{target_id}">{both(f"{label_en}: {en}", f"{label_uk}: {uk}")}</a>')
-            related_html = f'\n          <p class="src story-related">{" · ".join(links)}</p>' if links else ''
-            out.append(f'''        <article class="story" id="{s['id']}" tabindex="-1">{_photo(s)}
-          <p class="story-who">{both(*s['person'])} · {both(*s['context'])}</p>
-          <h4>{both(*s['title'])}</h4>
-          <p>{both(*s['text'])}</p>
-          <p class="src">{_sources(s, 'en')}{_sources(s, 'uk')}.</p>{related_html}
-        </article>''')
-        out.append('      </div>\n    </div>')
-    return '\n'.join(out), len(STORIES), [(theme_id, *title) for theme_id, title, _, _ in THEMES]
+    for number, (theme_id, title, intro, stories) in enumerate(THEMES, 1):
+        out.append(f'''    <section class="theme" id="{theme_id}" aria-labelledby="{theme_id}-title">
+      <header class="section-head">
+        <p class="section-num" aria-hidden="true">{number:02d}</p>
+        <h3 id="{theme_id}-title">{both(*title)}</h3>
+        <p class="section-intro">{both(*intro)}</p>
+      </header>
+      <div class="stories">
+''' + '\n'.join(_card(s, theme_id, targets) for s in stories) + '''
+      </div>
+    </section>''')
+    return '\n'.join(out), [(theme_id, *title) for theme_id, title, _, _ in THEMES]
