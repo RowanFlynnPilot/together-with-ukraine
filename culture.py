@@ -5,10 +5,10 @@ Rule 8 in CLAUDE.md sets the standard: every sentence is supported by the source
 each Ukrainian claim rests on an authoritative source, recipes are linked, never copied, and events
 come from their organizers' own pages. Each text is an (English, Ukrainian) pair. Each source is
 (language, by, date or None, url, phrase); check.py confirms the phrase is still on the page."""
-import datetime, html
+import datetime, html, re
 
 import photos
-from i18n import both, dates
+from i18n import MONTHS_EN, both, dates
 from photos import photo
 
 # The day the events and resources below were last checked by hand. check.py fails once it is a year old.
@@ -75,17 +75,20 @@ DISHES = [
         'Голубці — це листя свіжої або квашеної капусти, загорнуте навколо начинки з гречки, пшона, рису чи м’яса. Вони — частина українського святвечірнього столу, а 2023 року пісні голубці з картоплею, страву лемківської кухні, внесли до Національного переліку нематеріальної культурної спадщини України.'),
        [(*EOU_FOODS, 'filled with buckwheat or millet grits'), (*UA_CHRISTMAS, 'integral element of Ukrainian Christmas food'),
         ('uk', 'Українська правда. Життя', '2026-08-24', 'https://life.pravda.com.ua/society/borshch-shpachki-chiberek-ta-inshi-stravi-nematerialnoji-spadshchini-ukrajini-317090/', 'традиційна страва лемківської кухні')],
+       photo=photo('dish-holubtsi.jpg', ('Homemade holubtsi with sour cream', 'Домашні голубці зі сметаною'), 'Berser25', 'CC BY-SA 4.0', W + '%D0%93%D0%BE%D0%BB%D1%83%D0%B1%D1%86%D1%96_%D0%B7_%D1%81%D0%BC%D0%B5%D1%82%D0%B0%D0%BD%D0%BE%D1%8E.jpg'),
        recipes=[('en', KLOP, KLOP_EN + 'lent-friendly-authentic-ukrainian-stuffed-cabbage-rolls-with-potato-filling/', 'Stuffed cabbage rolls or holubtsi'),
                 ('uk', KLOP_UK, KLOP_UA + 'idealno-do-postu-reczept-golubcziv-z-kartopli/', 'Рецепт голубців з картоплі')]),
  entry('deruny', ('Deruny', 'Деруни'),
        ('Deruny are potato pancakes, served with sour cream or cheese. Deruny made with onion were also among the dishes families put on the table for the Christmas Eve supper.',
         'Деруни — це картопляні оладки, які подають зі сметаною або сиром. Деруни з цибулею також були серед страв, які родини ставили на стіл на Святвечір.'),
        [(*UA_CHRISTMAS, 'Deruny (potato pancakes) prepared with onions'), (*EOU_FOODS, 'Potato pancakes are served with cheese or sour cream')],
+       photo=photo('dish-deruny.jpg', ('Deruny filled with meat, with sour cream, in Zaporizhzhia', 'Деруни з м’ясом і сметаною в Запоріжжі'), 'Brücke-Osteuropa', 'Public domain', W + 'Deruny_Potato_Pancakes.JPG'),
        recipes=[('uk', KLOP_UK, KLOP_UA + 'kartoplyani-deruny-u-blenderi-reczept-vid-yevgena-klopotenka/', 'Картопляні деруни в блендері')]),
  entry('pampushky', ('Pampushky', 'Пампушки'),
        ('Pampushky are garlic buns, the usual companion of borshch: Ukraine’s official site says borshch is usually served with them, and UNESCO’s description of Ukrainian borscht says it is typically served with bread or garlic buns.',
         'Пампушки — це булочки з часником, звичний супутник борщу: офіційний сайт України пише, що борщ зазвичай подають із ними, а в описі ЮНЕСКО сказано, що український борщ зазвичай подають із хлібом або часниковими булочками.'),
        [(*UA_CUISINE, 'garlic fritters called pampushky'), ('en', 'UNESCO', '2022-07-01', UNESCO_BORSHCH, 'served with bread or garlic buns')],
+       photo=photo('dish-pampushky.jpg', ('Pampushky with dill in Donetsk, 2012', 'Пампушки з кропом у Донецьку, 2012 рік'), 'MOs810', 'CC BY-SA 3.0', W + 'Pampuchy_Donetsk.JPG'),
        recipes=[('en', 'Anna Voloshyna', 'https://www.annavoloshyna.com/recipes/garlic-and-dill-pampushky', 'Ukrainian Garlic Pampushky'),
                 ('uk', KLOP_UK, KLOP_UA + 'pampushky-z-chasnykom/', 'пампушки з часником та кропом')]),
  entry('kutia', ('Kutia', 'Кутя'),
@@ -99,6 +102,7 @@ DISHES = [
        ('Uzvar is a drink of dried fruit, most often apples, pears, apricots and prunes, made into a fragrant decoction and sometimes sweetened with honey. It is an important part of the Christmas Eve supper.',
         'Узвар — це запашний відвар із сухофруктів, найчастіше яблук, груш, абрикосів і чорносливу, іноді з медом. Це важлива частина святвечірньої вечері.'),
        [(*UA_CUISINE, 'Uzvar is a healthy and refreshing beverage'), (*UA_CHRISTMAS, 'a rich and fragrant decoction of dried pears')],
+       photo=photo('dish-uzvar.jpg', ('A glass of uzvar', 'Склянка узвару'), 'Ijon', 'CC BY-SA 4.0', W + 'Ukrainian_uzvar_2.jpg'),
        recipes=[('en', KLOP, KLOP_EN + 'mulled-uzvar-dried-fruit-drink/', 'Mulled uzvar (dried fruit drink)'),
                 ('uk', KLOP_UK, KLOP_UA + 'uzvar-iz-suhofruktiv-reczept-tradyczijnogo-ukrayinskogo-napoyu/', 'рецепт традиційного українського напою')]),
  entry('paska', ('Paska', 'Паска'),
@@ -126,6 +130,7 @@ DISHES = [
        ('Kapusniak is a soup made with sauerkraut, which gives it its sour taste. In the Luhansk region, Pavlivskyi kapusniak, cooked with fish and served on holidays and when a whole village works together, is on the regional list of intangible cultural heritage.',
         'Капусняк — це суп із квашеною капустою, яка надає йому кислинки. На Луганщині павлівський капусняк, який варять із рибою й подають на свята та під час толоки, коли працює все село, внесено до регіонального переліку нематеріальної культурної спадщини.'),
        [(*EOU_FOODS, 'used to make cabbage soup'), ('en', 'ukraine.ua', '2023-02-23', 'https://ukraine.ua/regions-of-ukraine/luhansk-region/', 'Pavlivskyi kapusniak')],
+       photo=photo('dish-kapusniak.jpg', ('Kapusniak in a clay bowl', 'Капусняк у глиняній мисці'), 'Lisenok111', 'CC BY-SA 4.0', W + '%D0%9A%D0%B0%D0%BF%D1%83%D1%81%D1%82%D0%BD%D1%8F%D0%BA.jpg'),
        recipes=[('uk', KLOP_UK, KLOP_UA + 'avtentychnyj-reczept-z-cherkashhyny-kapusnyak-zi-svynyachymy-rebramy-vid-yevgena-klopotenka/', 'Капусняк зі свинячими ребрами')]),
  entry('lviv-syrnyk', ('Lviv syrnyk', 'Львівський сирник'),
        ('Lviv syrnyk is a cheesecake made from fresh cottage cheese, the local speciality of Lviv and the most popular cheesecake in western Ukraine.',
@@ -173,25 +178,30 @@ TRADITIONS = [
        [('en', 'NPR', '2022-12-06', 'https://www.npr.org/2022/12/06/1140741769/ukraine-christmas-carol-carnegie-hall', 'Ukrainian composer Mykola Leontovych wrote Shchedryk'),
         ('en', 'Carnegie Hall', '2022-11-29', 'https://www.carnegiehall.org/Explore/Articles/2022/11/29/Carol-of-the-Bells', 'Carnegie Hall debut on October 5, 1922'),
         ('en', 'Encyclopedia of Ukraine, “Leontovych, Mykola”', None, EOU + 'L%5CE%5CLeontovychMykola.htm', 'shot by a Cheka agent')],
-       related=('history', 'The Ukrainian People’s Republic declares independence')),
+       related=('history', 'The Ukrainian People’s Republic declares independence'),
+       photo=photo('tradition-shchedryk.jpg', ('The Ukrainian chorus in a Bain News Service photograph dated September 26, 1922', 'Український хор на світлині агентства Bain News Service, датованій 26 вересня 1922 року'), 'Bain News Service', 'Public domain', W + 'Ukraine_Chorus_LCCN2014715188.jpg')),
  entry('hopak', ('Hopak', 'Гопак'),
        ('The hopak is an original Ukrainian folk dance whose name comes from hopaty, to leap and stamp one’s feet. It arose as a men’s dance at the Zaporozhian Sich in the 16th century and later became a dance for couples, full of leaps, squats and turns. It is the culminating dance in the repertoire of almost every Ukrainian dance ensemble.',
         'Гопак — самобутній український народний танець, назва якого походить від слова «гопати», тобто стрибати й притупувати. Він виник у XVI столітті на Запорозькій Січі як чоловічий танець, а згодом став парним, сповненим стрибків, присядок і обертів. Він — кульмінація репертуару майже всіх українських танцювальних ансамблів.'),
        [('en', 'Encyclopedia of Ukraine, “Hopak”', None, EOU + 'H%5CO%5CHopakIT.htm', 'An original Ukrainian folk dance')],
-       related=('history', 'The Zaporozhian Sich is destroyed')),
+       related=('history', 'The Zaporozhian Sich is destroyed'),
+       photo=photo('tradition-hopak.jpg', ('Hopak, a folk painting from the late 18th century', '«Гопак», народна картина кінця XVIII століття'), 'Unknown artist', 'Public domain', W + 'Gopak.jpg')),
  entry('trembita', ('Trembita', 'Трембіта'),
        ('The trembita is a wooden horn of the Ukrainian Carpathians, made from hollowed halves of spruce bound with birch bark and one to three meters long. Its sound carries more than 10 kilometers, and herders in isolated mountain areas used set signals on it to announce a death, a funeral or a wedding.',
         'Трембіта — дерев’яний духовий інструмент українських Карпат завдовжки від одного до трьох метрів, зроблений із видовбаних половинок смереки й обмотаний березовою корою. Її звук чути за понад 10 кілометрів, і пастухи в ізольованих гірських місцевостях умовленими сигналами сповіщали нею про смерть, похорон чи весілля.'),
-       [('en', 'Encyclopedia of Ukraine, “Trembita”', None, EOU + 'T%5CR%5CTrembitaIT.htm', 'found mainly in the Carpathian Mountains')]),
+       [('en', 'Encyclopedia of Ukraine, “Trembita”', None, EOU + 'T%5CR%5CTrembitaIT.htm', 'found mainly in the Carpathian Mountains')],
+       photo=photo('tradition-trembita.jpg', ('Hutsuls with a trembita, an engraving published around 1900', 'Гуцули з трембітою, гравюра, видана близько 1900 року'), 'Unknown author', 'Public domain', W + 'Huzulen_03.jpg')),
  entry('cossack-songs', ('Cossack songs of the Dnipropetrovsk region', 'Козацькі пісні Дніпропетровщини'),
        ('Communities in the Dnipropetrovsk region sing Cossack songs about the tragedy of war and the personal relationships of Cossack soldiers: one singer starts, a second comes in with an upper voice, and the rest follow in middle and lower voices. Many of the singers are in their 70s and 80s, and in 2016 UNESCO placed the tradition on its list of heritage in need of urgent safeguarding.',
         'Громади Дніпропетровщини співають козацькі пісні про трагедію війни та особисті стосунки козаків: один співак заводить, другий підхоплює верхнім голосом, а решта — середніми й нижніми. Багатьом виконавцям по 70 і 80 років, і 2016 року ЮНЕСКО внесла цю традицію до Списку нематеріальної культурної спадщини, що потребує термінової охорони.'),
-       [('en', 'UNESCO', None, UNESCO + 'USL/cossack-s-songs-of-dnipropetrovsk-region-01194', 'Cossack songs are sung by communities')]),
+       [('en', 'UNESCO', None, UNESCO + 'USL/cossack-s-songs-of-dnipropetrovsk-region-01194', 'Cossack songs are sung by communities')],
+       photo=photo('tradition-cossack-songs.jpg', ('Kozak-banduryst (Cossack Mamai), a folk painting from the early 19th century, National Art Museum of Ukraine', 'Козак-бандурист (Козак Мамай), народна картина початку XIX століття, Національний художній музей України'), 'Unknown author', 'Public domain', W + 'Cossack_Mamay_1st_half_of_19th_c_(4).jpg')),
  entry('ornek', ('Örnek, the Crimean Tatar ornament', 'Орнек — кримськотатарський орнамент'),
        ('Örnek is the Crimean Tatar ornament, a system of about thirty-five symbols used in embroidery, weaving, pottery, jewelry and wood carving: a rose stands for a married woman, a tulip for a young man and an almond for an unmarried girl. UNESCO inscribed it on its Representative List in 2021 on Ukraine’s nomination, describing it as a Ukrainian system of symbols.',
         'Орнек — кримськотатарський орнамент, система з приблизно тридцяти п’яти символів, які використовують у вишивці, ткацтві, гончарстві, ювелірному мистецтві та різьбленні по дереву: троянда означає заміжню жінку, тюльпан — юнака, мигдаль — незаміжню дівчину. 2021 року ЮНЕСКО внесла орнек до Репрезентативного списку за номінацією України, назвавши його українською системою символів.'),
        [('en', 'UNESCO', None, UNESCO + 'RL/ornek-a-crimean-tatar-ornament-and-knowledge-about-it-01601', 'is a Ukrainian system of symbols')],
-       related=('history', 'The Crimean Tatars are deported')),
+       related=('history', 'The Crimean Tatars are deported'),
+       photo=photo('tradition-ornek.jpg', ('An ornament drawing by Adaviye Efendiyeva, 1920', 'Малюнок Адавіє Ефендієвої, 1920 рік'), 'Adavie Efendiyeva', 'Public domain', W + 'Adaviye_Efendiyeva_01.JPG')),
 ]
 
 CORRECTIONS = [
@@ -199,22 +209,26 @@ CORRECTIONS = [
        ('In 2022, after an outcry from Ukrainians on social media, the National Gallery in London renamed an Edgar Degas pastel from Russian Dancers to Ukrainian Dancers. The gallery now says the dancers, drawn around 1899, are almost certainly Ukrainian rather than Russian. They wear blue and yellow ribbons in their hair.',
         '2022 року, після обурення українців у соцмережах, Лондонська національна галерея перейменувала пастель Едгара Дега з «Російських танцівниць» на «Українських танцівниць». Галерея тепер пише, що танцівниці, яких Дега намалював близько 1899 року, майже напевно українки, а не росіянки. У їхньому волоссі — сині й жовті стрічки.'),
        [('en', 'National Gallery, London', None, 'https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-ukrainian-dancers', 'almost certainly Ukrainian rather than Russian'),
-        ('en', 'Smithsonian Magazine', '2022-04-11', 'https://www.smithsonianmag.com/smart-news/londons-national-gallery-renames-degas-russian-dancers-to-ukrainian-dancers-180979868/', 'Russian Dancers to Ukrainian Dancers')]),
+        ('en', 'Smithsonian Magazine', '2022-04-11', 'https://www.smithsonianmag.com/smart-news/londons-national-gallery-renames-degas-russian-dancers-to-ukrainian-dancers-180979868/', 'Russian Dancers to Ukrainian Dancers')],
+       photo=photo('fix-degas-ng.jpg', ('Edgar Degas, Ukrainian Dancers, about 1899, National Gallery, London', 'Едгар Дега, «Українські танцівниці», близько 1899 року, Лондонська національна галерея'), 'Edgar Degas', 'Public domain', W + 'Edgar_Degas_-_Ukrainian_Dancers_-_c._1899.png')),
  entry('met-degas', ('The Met’s Dancers in Ukrainian Dress', '«Танцівниці в українському вбранні» в Метрополітен-музеї'),
        ('In 2023 the Metropolitan Museum of Art in New York renamed its own Degas pastel from Russian Dancers to Dancers in Ukrainian Dress.',
         '2023 року нью-йоркський Метрополітен-музей перейменував свою пастель Дега з «Російських танцівниць» на «Танцівниць в українському вбранні».'),
        [('en', 'The Metropolitan Museum of Art', None, 'https://www.metmuseum.org/art/collection/search/459097', 'traditional Ukrainian folk dress undertaken by Degas'),
-        ('en', 'Smithsonian Magazine', '2023-03-23', 'https://www.smithsonianmag.com/smart-news/new-yorks-metropolitan-museum-of-art-latest-to-rename-ukrainian-works-and-artists-180981859/', 'officially renamed the piece Dancers in Ukrainian Dress')]),
+        ('en', 'Smithsonian Magazine', '2023-03-23', 'https://www.smithsonianmag.com/smart-news/new-yorks-metropolitan-museum-of-art-latest-to-rename-ukrainian-works-and-artists-180981859/', 'officially renamed the piece Dancers in Ukrainian Dress')],
+       photo=photo('fix-degas-met.jpg', ('Edgar Degas, Dancers in Ukrainian Dress, 1899, The Metropolitan Museum of Art', 'Едгар Дега, «Танцівниці в українському вбранні», 1899 рік, Метрополітен-музей'), 'Edgar Degas', 'CC0', W + 'Russian_Dancers_MET_DT3112.jpg')),
  entry('met-kuindzhi-repin', ('Kuindzhi and Repin, Ukrainian at The Met', 'Куїнджі та Рєпін — українці в Метрополітен-музеї'),
        ('The Met also stopped listing the painters Arkhyp Kuindzhi and Illia Repin as Russian: both now appear as Ukrainian, Kuindzhi born in Mariupol and Repin in Chuhuiv. The Met’s entry for Kuindzhi’s Red Sunset notes that the Kuindzhi Art Museum in Mariupol was destroyed in a Russian airstrike in March 2022.',
         'Метрополітен-музей також перестав називати художників Архипа Куїнджі та Іллю Рєпіна росіянами: тепер обидва значаться українцями — Куїнджі народився в Маріуполі, а Рєпін у Чугуєві. В описі картини Куїнджі «Червоний захід сонця» зазначено, що в березні 2022 року Художній музей Куїнджі в Маріуполі зруйнував російський авіаудар.'),
        [('en', 'The Metropolitan Museum of Art', None, 'https://www.metmuseum.org/art/collection/search/436833', 'Kuindzhi Art Museum in Mariupol'),
         ('en', 'The Metropolitan Museum of Art', None, 'https://www.metmuseum.org/art/collection/search/437441', 'rural Ukrainian town of Chuhuiv'),
-        ('en', 'The Guardian', '2023-03-19', 'https://www.theguardian.com/us-news/2023/mar/19/metropolitan-museum-art-reclassifies-russian-art-ukrainian', 'now categorized as Ukrainian')]),
+        ('en', 'The Guardian', '2023-03-19', 'https://www.theguardian.com/us-news/2023/mar/19/metropolitan-museum-art-reclassifies-russian-art-ukrainian', 'now categorized as Ukrainian')],
+       photo=photo('fix-kuindzhi.jpg', ('Arkhyp Kuindzhi, Red Sunset, 1905–8, The Metropolitan Museum of Art', 'Архип Куїнджі, «Червоний захід сонця», 1905–1908, Метрополітен-музей'), 'Arkhyp Kuindzhi', 'Public domain', W + 'Red_Sunset_on_the_Dnieper_MET_DT2557.jpg')),
  entry('stedelijk-malevich', ('Malevich at the Stedelijk Museum, Amsterdam', 'Малевич у музеї Стеделейк, Амстердам'),
        ('By March 2023 the Stedelijk Museum in Amsterdam had stopped describing Kazimir Malevich, a leading figure of Suprematism, as Russian. It now says he was born in Ukraine to parents of Polish origin.',
         'Станом на березень 2023 року амстердамський музей Стеделейк уже не називав росіянином Казимира Малевича, одну з провідних постатей супрематизму. Тепер музей пише, що він народився в Україні в родині польського походження.'),
-       [('en', 'The Art Newspaper', '2023-03-01', 'https://www.theartnewspaper.com/2023/03/01/russian-or-ukrainian-museums-update-kazimir-malevichs-nationality', 'born in Ukraine to parents of Polish origin')]),
+       [('en', 'The Art Newspaper', '2023-03-01', 'https://www.theartnewspaper.com/2023/03/01/russian-or-ukrainian-museums-update-kazimir-malevichs-nationality', 'born in Ukraine to parents of Polish origin')],
+       photo=photo('fix-malevich.jpg', ('Kazimir Malevich, Hieratic Suprematist Cross, Stedelijk Museum Amsterdam', 'Казимир Малевич, «Ієратичний супрематичний хрест», музей Стеделейк, Амстердам'), 'Kazimir Malevich', 'Public domain', W + 'Malevitj.jpg')),
 ]
 
 HOLIDAYS = [
@@ -456,6 +470,40 @@ SECTIONS = [  # id, title, introduction, entries
  ('culture-resources', ('Museums and ways to learn more', 'Музеї та де дізнатися більше'), None, RESOURCES),
 ]
 
+# How entries are shown. The build checks each against the entry's own text, so nothing here says more than its sources.
+# The year UNESCO listed an entry, shown as a badge; the entry's text must name UNESCO and the year.
+UNESCO_YEAR = {'borshch': '2022', 'petrykivka': '2013', 'kosiv-ceramics': '2019', 'pysanka': '2024', 'kobzars': '2024', 'cossack-songs': '2016', 'ornek': '2021'}
+# The label each museum dropped and the one it uses now, each (English, Ukrainian); the English must be in the entry's text.
+RELABELS = {
+    'national-gallery-degas': (('Russian Dancers', 'Російські танцівниці'), ('Ukrainian Dancers', 'Українські танцівниці')),
+    'met-degas': (('Russian Dancers', 'Російські танцівниці'), ('Dancers in Ukrainian Dress', 'Танцівниці в українському вбранні')),
+    'met-kuindzhi-repin': (('Russian', 'Росіяни'), ('Ukrainian', 'Українці')),
+    'stedelijk-malevich': (('Russian', 'Росіянин'), ('Born in Ukraine to parents of Polish origin', 'Народився в Україні в родині польського походження')),
+}
+# What each resource is for, with its label and icon.
+RESOURCE_KINDS = {
+    'visit': (('Visit', 'Відвідати'), ['ukrainian-museum-nyc', 'ukrainian-national-museum-chicago', 'uima-chicago', 'ukrainian-museum-archives-cleveland', 'uhec-somerset', 'ukrainian-institute-of-america']),
+    'learn': (('Learn', 'Навчатися'), ['ukrainian-lessons', 'duolingo-ukrainian', 'harvard-ukrainian-summer-institute', 'ui-speaking-club', 'ukraine-history-culture-course']),
+    'read': (('Read', 'Читати'), ['harvard-library-ukrainian-literature', 'ukrainer', 'encyclopedia-of-ukraine']),
+}
+KIND_OF_RESOURCE = {key: kind for kind, (_, keys) in RESOURCE_KINDS.items() for key in keys}
+# Line icons, 24 by 24, drawn with the stroke: a building with columns, a speech bubble, an open book, a map pin.
+ICONS = {
+    'visit': 'M3 21h18M4 9.5h16M12 3 4 7.5h16ZM6.5 9.5v8.5M10 9.5v8.5M14 9.5v8.5M17.5 9.5v8.5M3.5 18h17',
+    'learn': 'M4 5h16v10H9l-5 4ZM8 9h8M8 12h5',
+    'read': 'M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5ZM12 6.5v13',
+    'pin': 'M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+}
+MONTHS_SHORT = (['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                ['Січ', 'Лют', 'Бер', 'Квіт', 'Трав', 'Черв', 'Лип', 'Серп', 'Вер', 'Жовт', 'Лист', 'Груд'])
+
+def leaf(text):
+    """(month index, day or days or None) from an English date such as 'Night of June 23–24' or 'Mid-May (May 15–17 in 2026)'."""
+    month = re.search('|'.join(MONTHS_EN), text)
+    if not month: raise ValueError(f'no month in the date {text!r}')
+    day = re.search(r'\b(\d{1,2}(?:–\d{1,2})?)\b(?!\d)', text[month.start():])
+    return MONTHS_EN.index(month.group()), day.group(1) if day else None
+
 def _validate():
     keys = set()
     photos.validate(HERO, 'header photo')
@@ -473,6 +521,16 @@ def _validate():
             if x.get('photo'): photos.validate(x['photo'], where)
             if x['key'] in keys: raise ValueError(f'two Culture entries have the key {x["key"]}')
             keys.add(x['key'])
+    for key, year in UNESCO_YEAR.items():
+        x = next((x for _, _, _, entries in SECTIONS for x in entries if x['key'] == key), None)
+        if not x or 'UNESCO' not in x['about'][0] or year not in x['about'][0]: raise ValueError(f'UNESCO_YEAR: {key} does not say UNESCO listed it in {year}')
+    if set(RELABELS) != {x['key'] for x in CORRECTIONS}: raise ValueError('RELABELS needs exactly one entry per correction')
+    for x in CORRECTIONS:
+        for en, _ in RELABELS[x['key']]:
+            if en.casefold() not in x['about'][0].casefold(): raise ValueError(f"RELABELS: {x['key']} does not say {en!r}")
+    if set(KIND_OF_RESOURCE) != {x['key'] for x in RESOURCES} or len(KIND_OF_RESOURCE) != len(RESOURCES): raise ValueError('RESOURCE_KINDS needs every resource exactly once')
+    for x in HOLIDAYS: leaf(x['date'][0])
+    for x in EVENTS: leaf(x['when'][0])
 _validate()
 
 def photo_files():
@@ -493,66 +551,147 @@ def claims():
 def hero_credit():
     return photos.credit(HERO)
 
-def _links(items, label, lang):
-    """Links for one language, items in that language first and others marked with their language."""
-    e = html.escape; i = 0 if lang == 'en' else 1
-    other = {'en': ('in English', 'англійською'), 'uk': ('in Ukrainian', 'українською')}
-    parts = []
-    for item_lang, by, date, url in sorted(items, key=lambda x: x[0] != lang):
-        when = f', {dates(date)[i]}' if date else ''
-        note = '' if item_lang == lang else f' ({other[item_lang][i]})'
-        parts.append(f'<a href="{e(url)}" target="_blank" rel="noopener">{e(by)}{when}</a>{note}')
-    attrs = 'data-l="en"' if lang == 'en' else 'data-l="uk" lang="uk"'
-    return f'<span {attrs}>{label[i]}: {"; ".join(parts)}</span>'
+def _icon(name):
+    return f'<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="{ICONS[name]}"/></svg>'
 
-def _entry(x, section_id, targets):
+def _sources(x):
+    """The sources on one line, opening to the links with their dates; sources in the reader's language come first."""
     e = html.escape
-    sources = [(lang, by, date, url) for lang, by, date, url, _ in x['sources']]
-    lines = []
-    if 'recipes' in x:
-        lines.append(_links([(lang, by, None, url) for lang, by, url, _ in x['recipes']], ('Recipe', 'Рецепт'), 'en') + _links([(lang, by, None, url) for lang, by, url, _ in x['recipes']], ('Recipe', 'Рецепт'), 'uk'))
-    if 'url' in x:
-        lines.append(f'<a href="{e(x["url"])}" target="_blank" rel="noopener">{both("Website", "Сайт")}</a>')
-    if x.get('related'):
-        target_id, en, uk = targets[x['related']]
-        lines.append(f'<a href="#{target_id}">{both("In the timeline: " + en, "В історії: " + uk)}</a>')
-    label = ('Sources', 'Джерела') if len(sources) > 1 else ('Source', 'Джерело')
-    lines.append(_links(sources, label, 'en') + _links(sources, label, 'uk'))
-    meta = ' · '.join(both(*x[f]) for f in ('date', 'where', 'when') if f in x)
-    figure = f'<figure class="culture-photo">{photos.img(x["photo"])}<figcaption>{photos.credit(x["photo"])}</figcaption></figure>' if x.get('photo') else ''
-    return (f'''        <article class="culture-item" id="{section_id}-{x['key']}" tabindex="-1">{figure}
-          <h4>{both(*x['name'])}</h4>''' + (f'\n          <p class="culture-meta">{meta}</p>' if meta else '') + f'''
-          <p>{both(*x['about'])}</p>
-          {''.join(f'<p class="src">{line}</p>' for line in lines)}
-        </article>''')
+    own = lambda by, label: label if by == 'own website' else by
+    items = [(lang, by, date, url) for lang, by, date, url, _ in x['sources']]
+    names = lambda i: list(dict.fromkeys(own(by, ('its own website', 'власний сайт')[i]) for _, by, _, _ in items))
+    other = {'en': ('in English', 'англійською'), 'uk': ('in Ukrainian', 'українською')}
+    summary, lists = [], []
+    for i, lang in enumerate(('en', 'uk')):
+        n = names(i)
+        label = (('Source', 'Sources'), ('Джерело', 'Джерела'))[i][len(n) > 1]
+        attrs = 'data-l="en"' if lang == 'en' else 'data-l="uk" lang="uk"'
+        summary.append(f'<span {attrs}>{label}: {e(", ".join(n))}</span>')
+        links = []
+        for item_lang, by, date, url in sorted(items, key=lambda x: x[0] != lang):
+            when = f', {dates(date)[i]}' if date else ''
+            note = '' if item_lang == lang else f' <span class="src-lang">({other[item_lang][i]})</span>'
+            links.append(f'<li><a href="{e(url)}" target="_blank" rel="noopener">{e(own(by, ("its website", "сайт")[i]))}{when}</a>{note}</li>')
+        lists.append(f'<ul {attrs}>{"".join(links)}</ul>')
+    return f'<details class="why"><summary>{"".join(summary)}</summary>{"".join(lists)}</details>'
+
+def _recipes(x):
+    """Recipe buttons, each naming its author and language; recipes in the reader's language come first."""
+    e = html.escape; out = []
+    names = {'en': ('English', 'англійською'), 'uk': ('Ukrainian', 'українською')}
+    for i, lang in enumerate(('en', 'uk')):
+        attrs = 'data-l="en"' if lang == 'en' else 'data-l="uk" lang="uk"'
+        label = (('Recipe', 'Recipes'), ('Рецепт', 'Рецепти'))[i][len(x['recipes']) > 1]
+        buttons = ''.join(f'<a class="recipe-btn" href="{e(url)}" target="_blank" rel="noopener">{e(by)} <span class="recipe-lang">{names[item_lang][i]}</span></a>'
+                          for item_lang, by, url, _ in sorted(x['recipes'], key=lambda r: r[0] != lang))
+        out.append(f'<div class="recipes" {attrs}><span class="recipes-label">{label}</span>{buttons}</div>')
+    return ''.join(out)
+
+def _timeline(x, targets):
+    if not x.get('related'): return ''
+    target_id, en, uk = targets[x['related']]
+    return f'<p class="c-link"><a href="#{target_id}">{both("In the timeline: " + en, "В історії: " + uk)}</a></p>'
+
+def _media(x):
+    """The entry's photo with its credit, or, without one, its Ukrainian name on an embroidery pattern."""
+    badge = f'<span class="badge">{both("UNESCO " + UNESCO_YEAR[x["key"]], "ЮНЕСКО " + UNESCO_YEAR[x["key"]])}</span>' if x['key'] in UNESCO_YEAR else ''
+    if x.get('photo'):
+        return f'<figure class="c-media">{badge}{photos.img(x["photo"])}<figcaption class="credit">{photos.credit(x["photo"])}</figcaption></figure>'
+    return f'<div class="c-media c-ornament" aria-hidden="true">{badge}<span lang="uk">{html.escape(x["name"][1])}</span></div>'
+
+def _head(x):
+    """The entry's name, with its Ukrainian name under it on the English page."""
+    native = f'<p class="c-native" data-l="en" lang="uk">{html.escape(x["name"][1])}</p>' if x['name'][1] != x['name'][0] else ''
+    return f'<h4 class="c-name">{both(*x["name"])}</h4>{native}'
+
+def _card(x, section_id, targets):
+    """A dish or a tradition: picture, name, text, recipes, sources."""
+    return f"""        <article class="culture-item c-card" id="{section_id}-{x['key']}" tabindex="-1">
+          {_media(x)}
+          <div class="c-body">
+            {_head(x)}
+            <p class="c-about">{both(*x['about'])}</p>
+            {_recipes(x) if 'recipes' in x else ''}{_timeline(x, targets)}
+            {_sources(x)}
+          </div>
+        </article>"""
+
+def _correction(x, section_id, targets):
+    """A museum's correction: the work, the label it dropped and the one it uses now."""
+    (old_en, old_uk), (new_en, new_uk) = RELABELS[x['key']]
+    figure = f'<figure class="fix-art">{photos.img(x["photo"])}<figcaption class="credit">{photos.credit(x["photo"])}</figcaption></figure>' if x.get('photo') else ''
+    return f"""        <article class="culture-item fix" id="{section_id}-{x['key']}" tabindex="-1">
+          {figure}
+          <div class="fix-body">
+            <h4 class="c-name">{both(*x['name'])}</h4>
+            <p class="relabel"><span class="visually-hidden">{both('Was:', 'Було:')}</span><s>{both(old_en, old_uk)}</s><span class="relabel-arrow" aria-hidden="true">→</span><span class="visually-hidden">{both('now:', 'тепер:')}</span><strong>{both(new_en, new_uk)}</strong></p>
+            <p class="c-about">{both(*x['about'])}</p>
+            {_sources(x)}
+          </div>
+        </article>"""
+
+def _dated(x, section_id, targets, field):
+    """A holiday or a festival, under a calendar leaf."""
+    month, day = leaf(x[field][0])
+    where = f'<p class="c-where">{_icon("pin")}{both(*x["where"])}</p>' if 'where' in x else ''
+    return f"""        <article class="culture-item c-dated" id="{section_id}-{x['key']}" tabindex="-1">
+          <div class="leaf" aria-hidden="true"><span class="leaf-month">{both(MONTHS_SHORT[0][month], MONTHS_SHORT[1][month])}</span>{f'<span class="leaf-day">{day}</span>' if day else '<span class="leaf-day c-ornament"></span>'}</div>
+          <div class="c-body">
+            <h4 class="c-name">{both(*x['name'])}</h4>
+            <p class="c-when">{both(*x[field])}</p>{where}
+            <p class="c-about">{both(*x['about'])}</p>{_timeline(x, targets)}
+            {_sources(x)}
+          </div>
+        </article>"""
+
+def _resource(x, section_id, targets):
+    kind = KIND_OF_RESOURCE[x['key']]
+    label = RESOURCE_KINDS[kind][0]
+    return f"""        <article class="culture-item c-resource" id="{section_id}-{x['key']}" tabindex="-1">
+          <p class="c-kind"><span class="c-kind-icon">{_icon(kind)}</span>{both(*label)} · {both(*x['where'])}</p>
+          <h4 class="c-name">{both(*x['name'])}</h4>
+          <p class="c-about">{both(*x['about'])}</p>
+          <p class="c-actions"><a class="place-btn" href="{html.escape(x['url'])}" target="_blank" rel="noopener">{both('Website', 'Сайт')}</a></p>
+          {_sources(x)}
+        </article>"""
+
+# How each section lays out its entries: the renderer, the grid's class, and the order of the entries.
+LAYOUTS = {
+    'culture-food': (_card, 'c-grid', None),
+    'culture-traditions': (_card, 'c-grid', None),
+    'culture-corrections': (_correction, 'fix-list', None),
+    'culture-holidays': (lambda x, s, t: _dated(x, s, t, 'date'), 'c-grid dated-grid', lambda x: leaf(x['date'][0])[0]),
+    'culture-events': (lambda x, s, t: _dated(x, s, t, 'when'), 'c-grid dated-grid', lambda x: leaf(x['when'][0])[0]),
+    'culture-resources': (_resource, 'c-grid', lambda x: list(RESOURCE_KINDS).index(KIND_OF_RESOURCE[x['key']])),
+}
+
+def _section(number, section_id, title, intro, body, cls=''):
+    intro_html = f'\n        <p class="section-intro">{both(*intro)}</p>' if intro else ''
+    return f'''    <section class="culture-section{cls}" id="{section_id}" aria-labelledby="{section_id}-title">
+      <header class="section-head">
+        <p class="section-num" aria-hidden="true">{number:02d}</p>
+        <h3 id="{section_id}-title">{both(*title)}</h3>{intro_html}
+      </header>
+{body}
+    </section>'''
 
 def render(targets):
     """The tab's HTML and its jump links. targets maps (kind, key) to (element id, English label, Ukrainian label)."""
-    e = html.escape
-    figures = []
-    for v in GALLERY:
+    tiles = []
+    for i, v in enumerate(GALLERY):
         p = v['photo']; link = ''
         if v['related']:
             target_id, en, uk = targets[v['related']]
-            link = f'<a class="gallery-link" href="#{target_id}">{both("In the timeline: " + en, "В історії: " + uk)}</a>'
-        figures.append(f'''        <figure class="gallery-item">{photos.img(p)}
-          <figcaption><span class="gallery-caption">{both(*p['alt'])}</span>{link}<span class="credit">{photos.credit(p)}</span></figcaption>
+            link = f'<a class="tile-link" href="#{target_id}">{both("In the timeline: " + en, "В історії: " + uk)}</a>'
+        tiles.append(f'''        <figure class="tile{' tile-wide' if i == 5 else ''}">{photos.img(p, 'eager' if i == 0 else 'lazy')}
+          <figcaption><span class="tile-caption">{both(*p['alt'])}</span>{link}<span class="credit">{photos.credit(p)}</span></figcaption>
         </figure>''')
-    out = [f'''    <div class="culture-section" id="culture-gallery">
-      <h3>{both("Ukraine’s beauty", "Краса України")}</h3>
-      <div class="gallery">
-{chr(10).join(figures)}
-      </div>
-    </div>''']
+    out = [_section(1, 'culture-gallery', ("Ukraine’s beauty", 'Краса України'), None, f'      <div class="bento">\n{chr(10).join(tiles)}\n      </div>')]
     nav = [('culture-gallery', "Ukraine’s beauty", 'Краса України')]
     for section_id, title, intro, entries in SECTIONS:
-        if not entries: continue
+        render_one, grid, order = LAYOUTS[section_id]
+        items = sorted(entries, key=order) if order else entries
+        body = f'      <div class="{grid}">\n' + '\n'.join(render_one(x, section_id, targets) for x in items) + '\n      </div>'
+        out.append(_section(len(nav) + 1, section_id, title, intro, body, ' culture-fixes' if section_id == 'culture-corrections' else ''))
         nav.append((section_id, *title))
-        intro_html = f'\n      <p class="cause-intro">{both(*intro)}</p>' if intro else ''
-        out.append(f'''    <div class="culture-section" id="{section_id}">
-      <h3>{both(*title)}</h3>{intro_html}
-      <div class="culture-grid">
-{chr(10).join(_entry(x, section_id, targets) for x in entries)}
-      </div>
-    </div>''')
     return '\n'.join(out), nav

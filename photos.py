@@ -52,8 +52,8 @@ def credit(p):
     author = f'<a href="{e(p["page"])}" target="_blank" rel="noopener">{e(p["author"])}</a>'
     license_en = f'<a href="{e(deed)}" target="_blank" rel="noopener">{e(p["license"])}</a>' if deed else 'public domain'
     license_uk = f'<a href="{e(deed)}" target="_blank" rel="noopener">{e(p["license"])}</a>' if deed else 'суспільне надбання'
-    return (f'<span data-l="en">Photo: {author}, {license_en}, via Wikimedia Commons</span>'
-            f'<span data-l="uk" lang="uk">Фото: {author}, {license_uk}, з Вікісховища</span>')
+    return (f'<span data-l="en">Image: {author}, {license_en}, via Wikimedia Commons</span>'
+            f'<span data-l="uk" lang="uk">Зображення: {author}, {license_uk}, з Вікісховища</span>')
 
 def img(p, loading='lazy'):
     e = html.escape; width, height = p['size']
