@@ -431,25 +431,40 @@ select {
 }
 
 /* Give */
-.cause { margin: 0 0 2.75rem; }
-.cause-intro { margin: 0.35rem 0 0; max-width: 42rem; color: var(--muted); }
-.check-note { max-width: 46rem; margin-top: 0; }
-.check-note ul { margin: 0.6rem 0 0; padding-left: 1.2rem; }
-.check-note li + li { margin-top: 0.4rem; }
-.org { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 2rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
-.org-text { max-width: 42rem; }
-.org-name { margin: 0; font-size: 1.25rem; font-weight: 700; }
-.org-kind { margin: 0; color: var(--muted); }
-.org-what { margin: 0.35rem 0 0; }
+.cause { margin: 0 0 4.5rem; }
+.orgs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.org { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.15rem 1.25rem 1.25rem; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--sky); }
+.org-head { display: flex; align-items: center; gap: 0.85rem; }
+.org-icon { flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--sky); color: var(--wheat); }
+.org-icon .icon { width: 1.45rem; height: 1.45rem; }
+.org-name { margin: 0; font-size: 1.35rem; line-height: 1.2; }
+.org-kind { margin: 0.15rem 0 0; color: var(--muted); font-size: 0.9375rem; line-height: 1.3; }
+.org-stars { margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9375rem; font-weight: 700; }
+.stars { color: var(--wheat); font-size: 1.15rem; letter-spacing: 0.08em; text-shadow: 0 0 1px #8A6D00; }
+.org-what { margin: 0; }
+.org-checks { padding: 0.75rem 0.9rem; background: var(--wash); border-left: 3px solid var(--sky); }
+.org-checks-label { margin: 0 0 0.4rem; color: var(--muted); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.org-checks ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.35rem; font-size: 0.9375rem; line-height: 1.35; }
+.org-checks li { position: relative; padding-left: 1.6rem; }
+.org-checks li::before { position: absolute; left: 0; top: 0.05rem; display: grid; place-items: center; width: 1.15rem; height: 1.15rem; border-radius: 50%; font-size: 0.75rem; font-weight: 700; line-height: 1; }
+.org-checks li.ok::before { content: "✓"; background: var(--sky); color: #FFFFFF; }
+.org-checks li.caveat::before { content: "!"; background: var(--wheat); color: #0B1F3A; }
+.org-checks a { color: inherit; text-decoration-color: var(--muted); }
+.org .story-related { margin: 0; }
 .give-link {
-  display: inline-block; background: var(--sky); color: #FFFFFF; font-weight: 700;
-  text-decoration: none; padding: 0.7rem 1.1rem; white-space: nowrap;
+  margin-top: auto; align-self: stretch; text-align: center;
+  display: block; background: var(--sky); color: #FFFFFF; font-weight: 700;
+  text-decoration: none; padding: 0.75rem 1.1rem;
 }
-.give-link:hover { background: var(--flag-ink); color: var(--wheat); }
-@media (max-width: 44rem) {
-  .org { grid-template-columns: 1fr; }
-  .give-link { justify-self: start; }
-}
+.give-link::after { content: " ↗"; font-weight: 400; }
+.give-link:hover { background: var(--wheat); color: #0B1F3A; }
+/* Check any group yourself: numbered steps. */
+.check-note { max-width: 46rem; margin-top: 0; padding: 1.4rem 1.5rem; border-left: 4px solid var(--wheat); }
+.check-note h3 { margin: 0 0 0.75rem; }
+.check-note ul { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 0.7rem; }
+.check-note li { position: relative; padding-left: 2.4rem; counter-increment: step; }
+.check-note li::before { content: counter(step); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--sky); color: #FFFFFF; font-weight: 700; }
+@media (max-width: 54rem) { .orgs { grid-template-columns: minmax(0, 1fr); } }
 
 footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var(--muted); font-size: 1rem; }
 footer p { margin: 0 0 0.4rem; max-width: 46rem; }
@@ -561,6 +576,10 @@ __PLACE_LIST__
   <section id="give" role="tabpanel" aria-labelledby="tab-give" hidden>
     <h2>{{Give money, supplies or time||Допомогти грошима, речами або часом}}</h2>
     <p class="intro">{{Every group here was reviewed on __GIVE_REVIEWED_EN__, and each entry shows what was checked. US charities had to appear in IRS records; their figures and Charity Navigator ratings are as of __RECORDS_EN__. Ukrainian groups had to publish reports or audits, or be confirmed by an independent source. The checks show that a group is registered and accounts for its money. They do not measure its results. Each button opens the group’s own website. No money passes through this page.||Усі організації в цьому списку перевірено __GIVE_REVIEWED_UK__, і біля кожної зазначено, що саме перевіряли. Американські благодійні організації мають бути в реєстрі Податкової служби США (IRS); їхні фінансові дані та оцінки Charity Navigator наведено станом на __RECORDS_UK__. Українські мають публікувати звіти чи аудити або мати підтвердження з незалежного джерела. Перевірка показує, що організація зареєстрована і звітує про кошти. Вона не оцінює результатів її роботи. Кожна кнопка відкриває сайт самої організації. Через цю сторінку гроші не проходять.}}</p>
+
+    <nav class="era-nav chip-nav" aria-label="Jump to a group">
+__GIVE_NAV__
+    </nav>
 
 __GIVE__
 

@@ -18,7 +18,11 @@ CN = json.loads((DATA / 'charity_navigator.json').read_text(encoding='utf-8'))
 REVIEWED = '2026-10-03'
 EINS = []  # every US charity on the page, filled as the entries below are built
 CLAIMS = []  # (url, phrase, what) for check.py, filled as the entries below are built
-READ_VIA_SEARCH = ('its site blocks automated checks, so it was read through search', 'сайт блокує автоматичні перевірки, тому його читали через пошук', None)
+class Caveat(tuple):
+    """A check that found something missing or worth knowing. The page marks it differently from a confirmation."""
+def caveat(*check): return Caveat(check)
+
+READ_VIA_SEARCH = caveat('its site blocks automated checks, so it was read through search', 'сайт блокує автоматичні перевірки, тому його читали через пошук', None)
 EIN_MATCHES = ('EIN on its own site matches', 'EIN на сайті організації збігається')
 
 def num_uk(x): return f'{x:.1f}'.replace('.', ',')
@@ -32,7 +36,7 @@ def us(ein):
         m = r['revenue'] / 1e6
         checks.append((f'${m:.1f} million revenue on its {r["latest_year"]} tax filing', f'дохід за податковою декларацією {r["latest_year"]} року — {num_uk(m)} млн доларів', None))
     else:
-        checks.append(('no tax filing data published yet', 'даних податкової декларації ще не оприлюднено', None))
+        checks.append(caveat('no tax filing data published yet', 'даних податкової декларації ще не оприлюднено', None))
     cn_url = f'https://www.charitynavigator.org/ein/{ein}'
     if c['stars']:
         ratio = c['program_ratio']
@@ -40,16 +44,16 @@ def us(ein):
         checks.append((f'Charity Navigator: {c["stars"]} of 4 stars, with {ratio:.1f}% of spending going to programs over three years',
                        f'Charity Navigator: {c["stars"]} {stars_uk} з 4; на програми йде {num_uk(ratio)} % витрат (середнє за три роки)', cn_url))
     else:
-        checks.append(('not yet rated by Charity Navigator', 'Charity Navigator ще не оцінював', cn_url))
+        checks.append(caveat('not yet rated by Charity Navigator', 'Charity Navigator ще не оцінював', cn_url))
     kind = (f'US 501(c)(3), EIN {shown}, {r["city"]}, {r["state"]}', f'Благодійна організація США 501(c)(3), EIN {shown}, {r["city"]}, {r["state"]}')
     return kind, checks
 
-def org(name, kind, what, checks, action, url): return dict(name=name, kind=kind, what=what, checks=checks, action=action, url=url)
+def org(name, kind, what, checks, action, url, ein=None): return dict(name=name, kind=kind, what=what, checks=checks, action=action, url=url, ein=ein)
 def us_org(name, ein, what, extra_checks, action, url):
     kind, checks = us(ein)
     for check in extra_checks:
         if check[:2] == EIN_MATCHES: CLAIMS.append((check[2], f'{ein[:2]}-{ein[2:]}', f'{name[0]}: EIN on its own site'))
-    return org(name, kind, what, checks + extra_checks, action, url)
+    return org(name, kind, what, checks + extra_checks, action, url, ein)
 def give_at(domain): return (f'Give at {domain}', f'Пожертвувати на {domain}')
 def same(name): return (name, name)
 
@@ -127,7 +131,7 @@ GROUPS = [
       [('publishes its registration documents', 'публікує реєстраційні документи', 'https://uanimals.org/en/documents/'),
        ('annual reports give income and spending, with 98.5 million hryvnias raised in 2025', 'у річних звітах наведено доходи й витрати; 2025 року зібрано 98,5 млн гривень', 'https://uanimals.org/en/yearly-reports/'),
        ('publishes monthly reports', 'публікує щомісячні звіти', 'https://uanimals.org/en/monthly-reports/'),
-       ('no outside audit found', 'зовнішнього аудиту не знайдено', None)],
+       caveat('no outside audit found', 'зовнішнього аудиту не знайдено', None)],
       give_at('uanimals.org'), 'https://uanimals.org/en/how-to-help/'),
  ]),
  (('Send supplies', 'Надіслати речі'),
@@ -146,12 +150,12 @@ GROUPS = [
       ('Shipping company. For loads of 200 pounds or more', 'Транспортна компанія. Для вантажів від 200 фунтів (100 кг)'),
       ('Meest ships humanitarian cargo from the US by sea or air, free of duties. The recipient in Ukraine must be a registered organization, not an individual.',
        'Meest доставляє гуманітарні вантажі зі США морем або літаком без мита. Отримувачем в Україні має бути зареєстрована організація, а не приватна особа.'),
-      [('terms and prices stated on Meest’s own site', 'умови й ціни зазначено на сайті Meest', 'https://us.meest.com/humanitarian-aid-packages-for-ukraine'), ('a commercial carrier, not a charity', 'це комерційний перевізник, а не благодійна організація', None)],
+      [('terms and prices stated on Meest’s own site', 'умови й ціни зазначено на сайті Meest', 'https://us.meest.com/humanitarian-aid-packages-for-ukraine'), caveat('a commercial carrier, not a charity', 'це комерційний перевізник, а не благодійна організація', None)],
       ('See Meest’s terms', 'Умови Meest'), 'https://us.meest.com/humanitarian-aid-packages-for-ukraine'),
   org(('Parcels to people in Ukraine, through Nova Post', 'Посилки людям в Україні — через «Нову пошту»'),
       ('Shipping company with US branches', 'Транспортна компанія з відділеннями у США'),
       ('Nova Post ships parcels from the US to Ukraine and quotes humanitarian shipments on request.', '«Нова пошта» доставляє посилки зі США в Україну, а вартість гуманітарних відправлень розраховує на запит.'),
-      [('stated on Nova Post’s own US site', 'зазначено на американському сайті «Нової пошти»', 'https://novapost.com/en-us/international/send-to-ukraine-parcel'), ('a commercial carrier, not a charity', 'це комерційний перевізник, а не благодійна організація', None)],
+      [('stated on Nova Post’s own US site', 'зазначено на американському сайті «Нової пошти»', 'https://novapost.com/en-us/international/send-to-ukraine-parcel'), caveat('a commercial carrier, not a charity', 'це комерційний перевізник, а не благодійна організація', None)],
       ('Ship with Nova Post', 'Надіслати «Новою поштою»'), 'https://novapost.com/en-us/international/send-to-ukraine-parcel'),
  ]),
  (('Give your time', 'Допомогти часом'), None, [
@@ -173,6 +177,19 @@ GROUPS = [
 ]
 
 def org_id(o): return 'org-' + slug(o['name'][0])
+def group_id(title): return 'give-' + slug(title[0])
+
+# Line icons, 24 by 24, drawn with the stroke, one per group: a shield, a medical cross, a heart, a paw, a box, a clock.
+ICONS = {
+    'Defense': 'M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6Z',
+    'Medical and humanitarian aid': 'M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6Z',
+    'Wounded and rehabilitation': 'M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z',
+    'Animals': 'M8 8a1.6 2 0 1 1-3.2 0 1.6 2 0 1 1 3.2 0ZM11.6 6a1.6 2 0 1 1-3.2 0 1.6 2 0 1 1 3.2 0ZM15.6 6a1.6 2 0 1 1-3.2 0 1.6 2 0 1 1 3.2 0ZM19.2 8a1.6 2 0 1 1-3.2 0 1.6 2 0 1 1 3.2 0ZM12 11.5c-3 0-6 4.5-6 6.5 0 1.6 1.3 2.5 3 2.2 1.2-.2 2-.7 3-.7s1.8.5 3 .7c1.7.3 3-.6 3-2.2 0-2-3-6.5-6-6.5Z',
+    'Send supplies': 'M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5ZM3.5 7.5 12 12l8.5-4.5M12 12v9',
+    'Give your time': 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7.5V12l3 2',
+}
+if {title[0] for title, _, _ in GROUPS} != set(ICONS): raise ValueError('every group of organizations needs exactly one icon')
+
 
 def targets():
     """English name -> (element id, English label, Ukrainian label), for links from other sections."""
@@ -182,27 +199,54 @@ def claims():
     """(url, phrase, what) for check.py: phrases each check's page must still contain."""
     return CLAIMS + [(check[2], check[3], f'{o["name"][0]}: {check[0]}') for _, _, orgs in GROUPS for o in orgs for check in o['checks'] if len(check) == 4]
 
+def _icon(title):
+    return f'<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="{ICONS[title]}"/></svg>'
+
+def _stars(o):
+    """A US charity's Charity Navigator stars, drawn, when it has a rating."""
+    stars = o['ein'] and CN[o['ein']]['stars']
+    if not stars: return ''
+    n = int(stars)
+    return (f'<p class="org-stars"><span class="stars" aria-hidden="true">{"★" * n}{"☆" * (4 - n)}</span>'
+            f'{both(f"Charity Navigator: {n} of 4 stars", f"Charity Navigator: {n} з 4 зірок")}</p>')
+
+def _checks(o):
+    """What was checked, one line each: a check mark for what was confirmed, an exclamation mark for what was missing or worth knowing."""
+    e = html.escape; items = []
+    for check in o['checks']:
+        en, uk, url = check[:3]
+        text = f'<a href="{e(url)}" target="_blank" rel="noopener">{both(en, uk)}</a>' if url else both(en, uk)
+        items.append(f'<li class="{"caveat" if isinstance(check, Caveat) else "ok"}">{text}</li>')
+    return f'<div class="org-checks"><p class="org-checks-label">{both("What we checked", "Що ми перевірили")}</p><ul>{"".join(items)}</ul></div>'
+
 def render(story_links):
-    """story_links maps an org id to [(story id, English label, Ukrainian label)]."""
-    e = html.escape; out = []; n = 0
-    for title, intro, orgs in GROUPS:
-        out.append(f'    <div class="cause">\n      <h3>{both(*title)}</h3>')
-        if intro: out.append(f'      <p class="cause-intro">{both(*intro)}</p>')
+    """The tab's HTML and its jump links. story_links maps an org id to [(story id, English label, Ukrainian label)]."""
+    e = html.escape; out = []
+    for number, (title, intro, orgs) in enumerate(GROUPS, 1):
+        intro_html = f'\n        <p class="section-intro">{both(*intro)}</p>' if intro else ''
+        cards = []
         for o in orgs:
-            parts = []
-            for en, uk, url, *_ in o['checks']:
-                parts.append(f'<a href="{e(url)}" target="_blank" rel="noopener">{both(en, uk)}</a>' if url else both(en, uk))
-            stories = ''.join(f'\n          <p class="src story-link"><a href="#{sid}">{both("A story: " + en, "Історія: " + uk)}</a></p>'
+            stories = ''.join(f'<a class="rel-chip" href="#{sid}"><span><span class="rel-kind">{both("Story", "Історія")}</span> {both(en, uk)}</span></a>'
                               for sid, en, uk in story_links.get(org_id(o), []))
-            out.append(f'''      <div class="org" id="{org_id(o)}" tabindex="-1">
-        <div class="org-text">
-          <p class="org-name">{both(*o["name"])}</p>
-          <p class="org-kind">{both(*o["kind"])}</p>
+            cards.append(f'''        <article class="org" id="{org_id(o)}" tabindex="-1">
+          <header class="org-head">
+            <span class="org-icon">{_icon(title[0])}</span>
+            <div>
+              <h4 class="org-name">{both(*o["name"])}</h4>
+              <p class="org-kind">{both(*o["kind"])}</p>
+            </div>
+          </header>{_stars(o)}
           <p class="org-what">{both(*o["what"])}</p>
-          <p class="src">{both("Checked", "Перевірено")}: {"; ".join(parts)}.</p>{stories}
-        </div>
-        <a class="give-link" href="{e(o["url"])}" target="_blank" rel="noopener">{both(*o["action"])}</a>
-      </div>''')
-            n += 1
-        out.append('    </div>')
-    return '\n'.join(out), n
+          {_checks(o)}{f'{chr(10)}          <p class="story-related">{stories}</p>' if stories else ''}
+          <a class="give-link" href="{e(o["url"])}" target="_blank" rel="noopener">{both(*o["action"])}</a>
+        </article>''')
+        out.append(f'''    <section class="cause" id="{group_id(title)}" aria-labelledby="{group_id(title)}-title">
+      <header class="section-head">
+        <p class="section-num" aria-hidden="true">{number:02d}</p>
+        <h3 id="{group_id(title)}-title">{both(*title)}</h3>{intro_html}
+      </header>
+      <div class="orgs">
+''' + '\n'.join(cards) + '''
+      </div>
+    </section>''')
+    return '\n'.join(out), [(group_id(title), *title) for title, _, _ in GROUPS]
