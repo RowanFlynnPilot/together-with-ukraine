@@ -3,19 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Together with Ukraine</title>
-<meta name="description" content="Ukraine’s culture and food, its history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<title>Together with Ukraine: culture, history and ways to help</title>
+<meta name="description" content="Ukrainian culture and recipes, a sourced history, stories of Ukrainians, Ukrainian places in the US and checked ways to help, in English and Ukrainian.">
 <link rel="canonical" href="https://rowanflynnpilot.github.io/together-with-ukraine/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Together with Ukraine · Разом з Україною">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="uk_UA">
 <meta property="og:title" content="Together with Ukraine · Разом з Україною">
-<meta property="og:description" content="Ukraine’s culture and food, its history, the stories of its people, Ukrainian places to eat and shop in the United States, and checked ways to help. In English and Ukrainian.">
+<meta property="og:description" content="Ukrainian culture and recipes, a sourced history, stories of Ukrainians, Ukrainian places in the US and checked ways to help, in English and Ukrainian.">
 <meta property="og:url" content="https://rowanflynnpilot.github.io/together-with-ukraine/">
-<meta property="og:image" content="https://rowanflynnpilot.github.io/together-with-ukraine/preview.png">
+<meta property="og:image" content="https://rowanflynnpilot.github.io/together-with-ukraine/images/share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The flag of Ukraine: blue over yellow">
+<meta property="og:image:alt" content="Разом з Україною, Together with Ukraine, over the Kyiv Pechersk Lavra, with the flag and the five sections: Culture, History, People, Places to eat and shop, Ways to help">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0057B7">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Together with Ukraine", "alternateName": "Разом з Україною", "url": "https://rowanflynnpilot.github.io/together-with-ukraine/", "inLanguage": ["en", "uk"], "description": "Ukrainian culture and recipes, a sourced history, stories of Ukrainians, Ukrainian places in the US and checked ways to help, in English and Ukrainian."}</script>
 <script>try { const theme = localStorage.getItem('theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch (error) { /* storage unavailable: the system theme applies */ }</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='1' fill='%230057B7'/%3E%3Crect y='1' width='3' height='1' fill='%23FFD700'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -802,7 +807,7 @@ const UK = JSON.parse(document.getElementById('places-uk').textContent);
 const pluralUk = (n, one, few, many) => n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? few : many;
 const TEXT = {
   en: {
-    title: 'Together with Ukraine',
+    title: 'Together with Ukraine: culture, history and ways to help',
     stateName: name => name,
     allStates: 'All states',
     count: n => `${n} ${n === 1 ? 'place' : 'places'}`,
@@ -810,7 +815,7 @@ const TEXT = {
     map: 'Map of the United States with a dot for each listed place. Select a state to zoom in and filter the list.',
   },
   uk: {
-    title: 'Разом з Україною',
+    title: 'Разом з Україною: культура, історія і як допомогти',
     stateName: name => UK.states[name],
     allStates: 'Усі штати',
     count: n => `${n} ${pluralUk(n, 'заклад', 'заклади', 'закладів')}`,

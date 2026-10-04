@@ -87,8 +87,8 @@ def build():
         raise ValueError(f'links to anchors that do not exist: {broken}')
     return page
 
-def flag_png(width=1200, height=630):
-    """The Ukrainian flag as a PNG, for link previews. Two solid bands compress to almost nothing."""
+def flag_png(width, height):
+    """The Ukrainian flag as a PNG, for the home-screen icon. Two solid bands compress to almost nothing."""
     def chunk(kind, data):
         return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data))
     blue, yellow = bytes((0x00, 0x57, 0xB7)) * width, bytes((0xFF, 0xD7, 0x00)) * width
@@ -101,8 +101,9 @@ if __name__ == '__main__':
     out = ROOT / 'site' / 'index.html'
     out.parent.mkdir(exist_ok=True)
     out.write_text(build(), encoding='utf-8')
-    (out.parent / 'preview.png').write_bytes(flag_png())
+    (out.parent / 'apple-touch-icon.png').write_bytes(flag_png(180, 180))
     (out.parent / 'images').mkdir(exist_ok=True)
-    for photo in stories.photo_files() + culture.photo_files() + places.photo_files() + history.photo_files():
+    # share.jpg is the link-preview picture, made once from the header photo and kept in images/.
+    for photo in stories.photo_files() + culture.photo_files() + places.photo_files() + history.photo_files() + [ROOT / 'images' / 'share.jpg']:
         (out.parent / 'images' / photo.name).write_bytes(photo.read_bytes())
     print(f'built {out.relative_to(ROOT)} ({out.stat().st_size:,} bytes)')

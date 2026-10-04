@@ -19,7 +19,7 @@ python build.py
 python -m http.server 8765 --directory site
 ```
 
-Then open http://localhost:8765/. `build.py` needs nothing beyond Python. It writes `site/index.html` and `site/preview.png` (the image shown when the link is shared) and uses no network.
+Then open http://localhost:8765/. `build.py` needs nothing beyond Python. It writes `site/index.html` and `site/apple-touch-icon.png` (the icon a phone shows for the page on its home screen), copies the pictures, and uses no network.
 
 The build refuses to produce a page that is wrong in ways it can detect: a missing translation, a place whose coordinates fall outside the state it names, a place with no evidence, a story that links to an entry that does not exist, or two entries with the same address.
 
