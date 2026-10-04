@@ -150,26 +150,111 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 @media (max-width: 54rem) { .stories { grid-template-columns: minmax(0, 1fr); } }
 
 /* Culture */
-.culture-section { margin: 0 0 3rem; }
-.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1.75rem 1.25rem; margin-top: 1rem; }
-.gallery-item { margin: 0; }
-.gallery-item img { display: block; width: 100%; height: auto; background: var(--wash); }
-.gallery-item figcaption { margin-top: 0.45rem; display: grid; gap: 0.15rem; }
-.gallery-caption { font-weight: 700; line-height: 1.3; }
-.gallery-link { font-size: 0.9375rem; }
-.credit, .culture-photo figcaption { font-size: 0.8125rem; line-height: 1.3; color: var(--muted); }
-.credit a, .culture-photo figcaption a { color: inherit; }
-.culture-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; margin-top: 1rem; }
-.culture-item { padding: 1.1rem 0 1.25rem; border-top: 1px solid var(--line); display: flow-root; }
-.culture-item h4 { margin: 0 0 0.3rem; font-size: 1.2rem; line-height: 1.25; }
-.culture-item p { margin: 0; }
-.culture-item .src { margin-top: 0.4rem; }
-.culture-meta { color: var(--muted); font-size: 1rem; margin-bottom: 0.2rem !important; }
-.culture-photo { float: right; width: 8.5rem; margin: 0.3rem 0 0.75rem 1.25rem; }
-.culture-photo img { display: block; width: 100%; height: auto; background: var(--wash); }
-.culture-photo figcaption { margin-top: 0.35rem; }
-@media (max-width: 54rem) { .culture-grid { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 34rem) { .culture-photo { width: 6.5rem; margin-left: 1rem; } }
+/* A cross-stitch pattern in the flag's colors, for entries without a photo. */
+.c-ornament {
+  background: #0B1F3A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M18 5 31 18 18 31 5 18Z' fill='none' stroke='%23FFD700' stroke-opacity='.4' stroke-width='2'/%3E%3Cpath d='M16 16h4v4h-4zM16 9h4v3h-4zM16 24h4v3h-4zM9 16h3v4H9zM24 16h3v4h-3z' fill='%23FFD700' fill-opacity='.55'/%3E%3Cpath d='M0 0h4v4H0zM32 0h4v4h-4zM0 32h4v4H0zM32 32h4v4h-4z' fill='%233D7FD1'/%3E%3C/svg%3E") center / 36px;
+}
+.culture-nav { gap: 0.5rem; }
+.culture-nav a { padding: 0.35rem 0.85rem; border: 2px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1rem; }
+.culture-nav a:hover { border-color: var(--link); }
+.culture-section { margin: 0 0 4.5rem; }
+.section-head { position: relative; max-width: 46rem; margin: 0 0 1.5rem; padding-top: 1.25rem; }
+.section-head::before { content: ""; position: absolute; top: 0; left: 0; width: 6rem; height: 6px; background: repeating-linear-gradient(90deg, var(--sky) 0 12px, var(--wheat) 12px 24px); }
+.section-num { margin: 0; font-size: 0.9375rem; font-weight: 700; letter-spacing: 0.14em; color: var(--link); }
+.section-head h3 { font-size: clamp(1.6rem, 3.2vw, 2.15rem); line-height: 1.15; }
+.section-intro { margin: 0.45rem 0 0; color: var(--muted); }
+.credit { font-size: 0.8125rem; line-height: 1.3; color: var(--muted); }
+.credit a { color: inherit; }
+
+/* Ukraine's beauty: a mosaic with the captions over the photos. */
+.bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 12.5rem; grid-auto-flow: dense; gap: 0.75rem; }
+.tile { position: relative; margin: 0; overflow: hidden; background: var(--wash); }
+.tile:first-child { grid-column: span 2; grid-row: span 2; }
+.tile-wide { grid-column: span 2; }
+.tile img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.tile:hover img { transform: scale(1.05); }
+.tile figcaption {
+  position: absolute; inset: auto 0 0 0; display: grid; gap: 0.15rem; padding: 3rem 0.9rem 0.7rem; color: #FFFFFF;
+  background: linear-gradient(transparent, rgba(11, 31, 58, 0.92));
+}
+.tile-caption { font-weight: 700; line-height: 1.25; }
+.tile:first-child .tile-caption { font-size: 1.4rem; }
+.tile-link { color: var(--wheat); font-size: 0.9375rem; }
+.tile .credit { color: rgba(255, 255, 255, 0.8); font-size: 0.75rem; }
+@media (max-width: 54rem) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 11rem; } }
+@media (max-width: 34rem) {
+  .bento { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 15rem; }
+  .tile:first-child, .tile-wide { grid-column: auto; grid-row: auto; }
+}
+
+/* Food and traditions: cards with a picture on top. */
+.c-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19.5rem), 1fr)); gap: 1.25rem; }
+.c-card { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); }
+.c-media { position: relative; margin: 0; }
+.c-media img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--wash); }
+.c-media .credit { display: block; padding: 0.4rem 1.1rem 0; }
+/* Traditions are objects and art: show the whole piece, not a crop. */
+#culture-traditions .c-media img { object-fit: contain; }
+.c-media.c-ornament { aspect-ratio: 4 / 3; display: grid; place-items: center; }
+.c-ornament span { background: #0B1F3A; color: #FFD700; border: 2px solid #FFD700; padding: 0.35rem 1rem; font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 700; text-align: center; max-width: 85%; }
+.badge { position: absolute; top: 0.75rem; left: 0.75rem; z-index: 1; background: var(--wheat); color: #0B1F3A; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.04em; padding: 0.15rem 0.55rem; }
+.c-body { display: flex; flex-direction: column; gap: 0.55rem; flex: 1; padding: 0.9rem 1.1rem 1rem; }
+.c-name { margin: 0; font-size: 1.35rem; line-height: 1.2; }
+.c-native { margin: -0.45rem 0 0; color: var(--muted); }
+.c-about { margin: 0; font-size: 1rem; }
+.c-body .why { margin-top: auto; }
+.recipes { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 0.2rem; }
+.recipes-label { margin-right: 0.15rem; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.recipe-btn { display: inline-flex; align-items: baseline; gap: 0.35rem; padding: 0.3rem 0.7rem; background: var(--sky); color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9375rem; }
+.recipe-btn::after { content: "↗"; font-weight: 400; }
+.recipe-btn:hover { background: var(--wheat); color: #0B1F3A; }
+.recipe-lang { font-weight: 400; font-size: 0.8125rem; opacity: 0.85; }
+.c-link { margin: 0; font-size: 0.9375rem; font-weight: 700; }
+.why .src-lang { color: var(--muted); }
+
+/* Ukrainian, not Russian: a night-blue panel, each work with the label it lost and the one it has now. */
+.culture-fixes { background: radial-gradient(ellipse at 15% 0%, #15365F, #0B1F3A 70%); color: #EAF0F8; padding: 2rem clamp(1rem, 3vw, 2.25rem) 2.25rem; }
+.culture-fixes .section-num { color: var(--wheat); }
+.culture-fixes .section-intro { color: #A8B8CE; }
+.culture-fixes a { color: #8DBEFF; }
+.fix-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.fix { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1.1rem; align-items: start; padding: 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); }
+.fix:not(:has(.fix-art)) { grid-template-columns: minmax(0, 1fr); }
+.fix-art { margin: 0; }
+.fix-art img { display: block; width: 100%; height: auto; }
+.fix-art .credit { display: block; margin-top: 0.35rem; color: #A8B8CE; font-size: 0.75rem; }
+.fix-body { display: flex; flex-direction: column; gap: 0.5rem; }
+.relabel { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.55rem; margin: 0; font-size: 1.1rem; }
+.relabel s { color: #A8B8CE; text-decoration-color: #FF6B6B; text-decoration-thickness: 2px; }
+.relabel-arrow { color: var(--wheat); font-weight: 700; }
+.relabel strong { color: var(--wheat); }
+.fix .why { border-top-color: rgba(255, 255, 255, 0.2); color: #A8B8CE; }
+.fix .why li { color: #EAF0F8; }
+.fix .why a, .fix .why .src-lang { color: #A8B8CE; }
+.fix .why summary::before { color: var(--wheat); }
+@media (max-width: 54rem) { .fix-list { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 34rem) { .fix { grid-template-columns: minmax(0, 1fr); } }
+
+/* Holidays and festivals: a calendar leaf beside each. */
+.dated-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); }
+.c-dated { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: 1rem; padding: 1rem 1.1rem; background: var(--card); border: 1px solid var(--line); }
+.c-dated .c-body { padding: 0; }
+.leaf { align-self: start; display: flex; flex-direction: column; text-align: center; background: var(--paper); border: 2px solid var(--sky); }
+.leaf-month { padding: 0.15rem 0; background: var(--sky); color: #FFFFFF; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.leaf-day { padding: 0.4rem 0.15rem 0.45rem; color: var(--ink); font-size: 1.2rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.leaf-day.c-ornament { min-height: 2.2rem; background-size: 18px; }
+.c-when { margin: -0.3rem 0 0; color: var(--link); font-size: 0.9375rem; font-weight: 700; }
+.c-where { margin: -0.3rem 0 0; display: flex; align-items: center; gap: 0.3rem; color: var(--muted); font-size: 0.9375rem; }
+.c-where .icon { width: 1rem; height: 1rem; }
+
+/* Resources: what each is for, with an icon. */
+.c-resource { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem 1.1rem; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--sky); }
+.c-kind { margin: 0; display: flex; align-items: center; gap: 0.5rem; color: var(--muted); font-size: 0.9375rem; }
+.c-kind-icon { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--sky); color: var(--wheat); flex: none; }
+.c-kind-icon .icon { width: 1.15rem; height: 1.15rem; }
+.c-actions { margin: auto 0 0; }
+.c-resource .why { margin-top: 0.2rem; }
+@media (prefers-reduced-motion: reduce) { .tile img { transition: none; } }
 
 /* Places */
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -378,7 +463,7 @@ __STORIES__
   <section id="culture" role="tabpanel" aria-labelledby="tab-culture" hidden>
     <h2>{{Ukrainian culture||Українська культура}}</h2>
     <p class="intro tight">{{Landscapes and landmarks, food, traditions and festivals that are Ukrainian in their own right. Every entry links to its sources, recipes stay on their authors’ sites, and every photo is openly licensed.||Краєвиди й пам’ятки, кухня, традиції та фестивалі, які є українськими за своєю суттю. Кожен запис має посилання на джерела, рецепти залишаються на сайтах їхніх авторів, а всі фото — з відкритими ліцензіями.}}</p>
-    <nav class="era-nav" aria-label="Jump to a section">
+    <nav class="era-nav culture-nav" aria-label="Jump to a section">
 __CULTURE_NAV__
     </nav>
 
