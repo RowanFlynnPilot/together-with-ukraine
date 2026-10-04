@@ -168,18 +168,37 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 }
 
 /* People */
-.theme { margin: 0 0 3rem; }
-.stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; margin-top: 1rem; }
-.story { padding: 1.25rem 0 1.5rem; border-top: 1px solid var(--line); display: flow-root; }
-.story-photo { float: right; width: 8.5rem; margin: 0.3rem 0 0.75rem 1.25rem; }
-.story-photo img { display: block; width: 100%; height: auto; background: var(--wash); }
-.story-photo figcaption { margin-top: 0.35rem; font-size: 0.8125rem; line-height: 1.3; color: var(--muted); }
-.story-photo figcaption a { color: inherit; }
-@media (max-width: 34rem) { .story-photo { width: 6.5rem; margin-left: 1rem; } }
-.story-who { margin: 0; color: var(--muted); font-size: 1rem; }
-.story h4 { margin: 0.2rem 0 0.4rem; font-size: 1.25rem; line-height: 1.25; }
-.story p { margin: 0; }
-.story .src { margin-top: 0.5rem; }
+.chip-nav { gap: 0.5rem; }
+.chip-nav a { padding: 0.35rem 0.85rem; border: 2px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1rem; }
+.chip-nav a:hover { border-color: var(--link); }
+.theme { margin: 0 0 4.5rem; }
+.stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
+.story { display: flex; flex-direction: column; gap: 0.6rem; padding: 1.15rem 1.25rem 1.2rem; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--sky); }
+.story-head { display: flex; align-items: center; gap: 0.85rem; }
+.story-avatar { flex: none; display: grid; place-items: center; width: 3.75rem; height: 3.75rem; border-radius: 50%; overflow: hidden; background: var(--sky); color: var(--wheat); box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--wheat); }
+.story-avatar .icon { width: 1.7rem; height: 1.7rem; }
+.story-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+.story-who { margin: 0; font-weight: 700; line-height: 1.25; }
+.story-where { margin: 0.1rem 0 0; color: var(--muted); font-size: 0.9375rem; line-height: 1.3; }
+.story-credit { margin: -0.2rem 0 0; font-size: 0.75rem; }
+.story-title { margin: 0.2rem 0 0; font-size: 1.4rem; line-height: 1.2; }
+.story-text { margin: 0; }
+/* With the script, a long story shows its first lines and opens on request. */
+html.js .story-text:not(.open) { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; line-clamp: 6; overflow: hidden; }
+.story-more { align-self: flex-start; margin-top: -0.2rem; padding: 0; border: 0; background: none; color: var(--link); font: inherit; font-weight: 700; cursor: pointer; text-decoration: underline; }
+.story-more[aria-expanded="false"] .less, .story-more[aria-expanded="true"] .more { display: none; }
+.story-read { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; margin-top: 0.35rem; }
+.story-read-label { margin-right: 0.15rem; color: var(--muted); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.read-btn { display: inline-grid; padding: 0.3rem 0.75rem 0.35rem; border: 2px solid var(--link); color: var(--link); text-decoration: none; line-height: 1.2; }
+.read-btn:hover { background: var(--link); color: var(--paper); }
+.read-outlet { font-weight: 700; }
+.read-outlet::after { content: " ↗"; font-weight: 400; }
+.read-date { font-size: 0.8125rem; opacity: 0.85; }
+.story-related { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.1rem 0 0; }
+.rel-chip { display: inline-flex; align-items: flex-start; gap: 0.35rem; max-width: 100%; padding: 0.3rem 0.65rem; background: var(--wash); border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: 0.875rem; line-height: 1.3; }
+.rel-chip:hover { border-color: var(--link); }
+.rel-chip .icon { width: 1rem; height: 1rem; margin-top: 0.05rem; color: var(--link); }
+.rel-kind { color: var(--muted); font-weight: 700; }
 @media (max-width: 54rem) { .stories { grid-template-columns: minmax(0, 1fr); } }
 
 /* Culture */
@@ -187,9 +206,6 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .c-ornament {
   background: #0B1F3A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M18 5 31 18 18 31 5 18Z' fill='none' stroke='%23FFD700' stroke-opacity='.4' stroke-width='2'/%3E%3Cpath d='M16 16h4v4h-4zM16 9h4v3h-4zM16 24h4v3h-4zM9 16h3v4H9zM24 16h3v4h-3z' fill='%23FFD700' fill-opacity='.55'/%3E%3Cpath d='M0 0h4v4H0zM32 0h4v4h-4zM0 32h4v4H0zM32 32h4v4h-4z' fill='%233D7FD1'/%3E%3C/svg%3E") center / 36px;
 }
-.culture-nav { gap: 0.5rem; }
-.culture-nav a { padding: 0.35rem 0.85rem; border: 2px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1rem; }
-.culture-nav a:hover { border-color: var(--link); }
 .culture-section { margin: 0 0 4.5rem; }
 .section-head { position: relative; max-width: 46rem; margin: 0 0 1.5rem; padding-top: 1.25rem; }
 .section-head::before { content: ""; position: absolute; top: 0; left: 0; width: 6rem; height: 6px; background: repeating-linear-gradient(90deg, var(--sky) 0 12px, var(--wheat) 12px 24px); }
@@ -476,7 +492,7 @@ footer p { margin: 0 0 0.4rem; max-width: 46rem; }
   <section id="culture" role="tabpanel" aria-labelledby="tab-culture">
     <h2>{{Ukrainian culture||Українська культура}}</h2>
     <p class="intro tight">{{Landscapes and landmarks, food, traditions and festivals that are Ukrainian in their own right. Every entry links to its sources, recipes stay on their authors’ sites, and every photo is openly licensed.||Краєвиди й пам’ятки, кухня, традиції та фестивалі, які є українськими за своєю суттю. Кожен запис має посилання на джерела, рецепти залишаються на сайтах їхніх авторів, а всі фото — з відкритими ліцензіями.}}</p>
-    <nav class="era-nav culture-nav" aria-label="Jump to a section">
+    <nav class="era-nav chip-nav" aria-label="Jump to a section">
 __CULTURE_NAV__
     </nav>
 
@@ -496,7 +512,7 @@ __HISTORY__
   <section id="stories" role="tabpanel" aria-labelledby="tab-stories" hidden>
     <h2>{{Stories of Ukrainians||Історії українців}}</h2>
     <p class="intro tight">{{People in Ukraine, Ukrainians who made a home in the United States, and people who lived through the history in the History tab, as reported by news organizations, UN agencies and museums. Each summary is ours and says only what the report says. Follow the link to read the story as it was published.||Люди в Україні, українці, які знайшли дім у Сполучених Штатах, і ті, хто пережив події з розділу «Історія», — так, як про них розповіли журналісти, агенції ООН і музеї. Кожен виклад написали ми, і в ньому лише те, що є у джерелі. Перейдіть за посиланням, щоб прочитати історію так, як її опублікували.}}</p>
-    <nav class="era-nav" aria-label="Jump to a theme">
+    <nav class="era-nav chip-nav" aria-label="Jump to a theme">
 __THEME_NAV__
     </nav>
 
@@ -597,7 +613,23 @@ function showTab(tab) {
   // When the tab bar is stuck to the top of the screen, start the new section at its beginning.
   const offset = main.getBoundingClientRect().top - tabBar.offsetHeight;
   if (offset < 0) window.scrollBy(0, offset);
+  fitStories();
 }
+// Long stories show their first lines; the button opens the rest. Measured while the People tab is showing.
+document.documentElement.classList.add('js');
+function fitStories() {
+  for (const text of document.querySelectorAll('.story-text:not(.open)')) {
+    if (text.offsetParent) text.nextElementSibling.hidden = text.scrollHeight <= text.clientHeight + 2;
+  }
+}
+function openStory(text, open) {
+  text.classList.toggle('open', open);
+  text.nextElementSibling.setAttribute('aria-expanded', String(open));
+}
+document.addEventListener('click', event => {
+  const button = event.target.closest('.story-more');
+  if (button) openStory(document.getElementById(button.getAttribute('aria-controls')), button.getAttribute('aria-expanded') !== 'true');
+});
 // Open what an anchor points at: a whole section, or one entry inside it.
 function reveal(target) {
   const panel = target.closest('[role="tabpanel"]');
@@ -605,6 +637,7 @@ function reveal(target) {
   history.replaceState(null, '', '#' + target.id);
   if (target === panel) return;
   if (target.matches('.place')) showPlace(target);
+  if (target.matches('.story')) openStory(target.querySelector('.story-text'), true);
   target.scrollIntoView();
   if (target.tabIndex === -1) target.focus({ preventScroll: true });
   target.classList.remove('flash');
@@ -672,6 +705,7 @@ function setLang(next) {
   try { localStorage.setItem('lang', next); } catch (error) { /* storage unavailable: the choice lasts for this visit */ }
   placesLang();
   mapLang();
+  fitStories();
 }
 for (const b of langButtons) b.addEventListener('click', () => {
   setLang(b.dataset.setLang);
