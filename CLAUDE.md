@@ -57,6 +57,9 @@ Both languages are in the built page. CSS shows the one matching `<html data-lan
 switches it, remembers the choice in localStorage, and redraws what it writes itself (the state
 menu, the order of the state groups, the map's labels). The place list is in the page, so it
 works without the script; the map is drawn last, so a CDN failure takes out only the map.
+The theme follows the system until the reader picks light or dark with the switch beside the
+language switch; the choice is kept in localStorage and applied by a one-line script in the head,
+before the page draws, so it never flashes the other theme.
 
 ## Rules for content
 
