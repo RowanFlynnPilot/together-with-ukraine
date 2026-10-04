@@ -128,6 +128,13 @@ One correct path, no fallbacks, fail fast. The build never touches the network; 
 writes files. Read and write every file with `encoding='utf-8'`: the content is Ukrainian and
 Windows defaults to another encoding.
 
+Accessibility: every label a screen reader reads comes in both languages, written as a
+visually hidden `{{English||Українська}}` pair that `aria-labelledby` points to, never an
+English-only `aria-label`. A link that repeats on many cards (Website, Map, Read more, a recipe)
+carries the name of its place, person or dish in a visually hidden span. The site's yellow focus
+ring disappears on yellow, so anything on a yellow background draws its own focus style, as the
+tabs do. Run axe-core on each tab in both languages after a layout change; it should find nothing.
+
 ## Known behavior
 
 - `check.py` fails when a charity files a new tax return or its rating changes. That is the point.

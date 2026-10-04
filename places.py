@@ -205,8 +205,9 @@ def render(story_links):
             address = ', '.join(e(x) for x in (p['street'], p['city']) if x)
             query = quote(', '.join((p['name'], p['street'], p['city'], p['state'])))
             links = []
-            if p['web']: links.append(f'<a class="place-btn" href="{e(p["web"])}" target="_blank" rel="noopener">{both("Website", "Сайт")}</a>')
-            links.append(f'<a class="place-btn" href="https://www.google.com/maps/search/?api=1&amp;query={query}" target="_blank" rel="noopener">{both("Map", "Мапа")}</a>')
+            whose = f'<span class="visually-hidden">: {e(p["name"])}</span>'  # these links repeat on every card; screen readers hear whose
+            if p['web']: links.append(f'<a class="place-btn" href="{e(p["web"])}" target="_blank" rel="noopener">{both("Website", "Сайт")}{whose}</a>')
+            links.append(f'<a class="place-btn" href="https://www.google.com/maps/search/?api=1&amp;query={query}" target="_blank" rel="noopener">{both("Map", "Мапа")}{whose}</a>')
             story = ''.join(f'\n    <p class="place-story"><a href="#{story_id}">{both("Story: " + en, "Історія: " + uk)}</a></p>'
                             for story_id, en, uk in story_links.get(target_ids[p['name'], p['city']], []))
             out.append(f"""  <article class="place" id="{p['id']}" tabindex="-1" data-state="{p['state_id']}" data-group="{p['group']}">
