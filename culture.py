@@ -447,7 +447,7 @@ RESOURCES = [
        ('A multilingual nonprofit media outlet with stories about Ukraine’s regions, people and culture. Several of the stories on the People tab come from it.',
         'Багатомовне некомерційне медіа з історіями про регіони, людей і культуру України. Кілька історій у розділі «Люди» взято саме звідти.'),
        [('en', 'own website', None, 'https://www.ukrainer.net/en/', 'multilingual non-profit media organisation'),
-        ('uk', 'власний сайт', None, 'https://www.ukrainer.net/', 'Досліджуємо Україну')],
+        ('uk', 'own website', None, 'https://www.ukrainer.net/', 'Досліджуємо Україну')],
        where=('Online', 'Онлайн'), url='https://www.ukrainer.net/en/'),
  entry('encyclopedia-of-ukraine', ('Internet Encyclopedia of Ukraine', 'Інтернет-енциклопедія України'),
        ('Run by the Canadian Institute of Ukrainian Studies, it calls itself the most comprehensive English-language source of authoritative information on Ukraine. Most of the history on this page draws on it.',

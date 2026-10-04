@@ -8,7 +8,7 @@ import json, pathlib, re, struct, sys, zlib
 from collections import Counter
 
 import culture, give, history, places, places_uk, stories
-from i18n import both, dates, fill_markers
+from i18n import both, dates, fill_markers, plural_uk
 
 ROOT = pathlib.Path(__file__).parent
 
@@ -32,6 +32,21 @@ def cross_links():
 def nav(items, indent='      '):
     return '\n'.join(f'{indent}<a href="#{i}">{both(en, uk)}</a>' for i, en, uk in items)
 
+def overview():
+    """Links to the five tabs with how much each holds, counted from the content so they stay true."""
+    counts = [
+        ('culture', len(culture.DISHES), ('dish with a recipe', 'dishes with recipes'), ('страва з рецептом', 'страви з рецептами', 'страв із рецептами')),
+        ('history', sum(len(events) for _, _, _, events in history.ERAS), ('turning point', 'turning points'), ('поворотний момент', 'поворотні моменти', 'поворотних моментів')),
+        ('stories', len(stories.STORIES), ('story', 'stories'), ('історія', 'історії', 'історій')),
+        ('places', len(places.PLACES), ('place to eat and shop', 'places to eat and shop'), ('заклад', 'заклади', 'закладів')),
+        ('give', sum(len(orgs) for _, _, orgs in give.GROUPS), ('way to help', 'ways to help'), ('спосіб допомогти', 'способи допомогти', 'способів допомогти')),
+    ]
+    links = []
+    for panel, n, en, uk in counts:
+        label = both(en[n != 1], plural_uk(n, *uk))
+        links.append(f'        <a class="overview-link" href="#{panel}"><span class="overview-num">{n}</span><span class="overview-label">{label}</span></a>')
+    return '\n'.join(links)
+
 def build():
     for name in places.STATE_IDS:
         if name not in places_uk.STATES: raise ValueError(f'no Ukrainian name for state: {name}')
@@ -45,6 +60,7 @@ def build():
     give_en, give_uk = dates(give.REVIEWED)
     places_en, places_uk_date = dates(places.REVIEW['reviewed'])
     summary_en, summary_uk = places.summary()
+    as_of_en, as_of_uk = dates(history.AS_OF)
 
     template = (ROOT / 'template.html').read_text(encoding='utf-8')
     page = (fill_markers(template)
@@ -57,6 +73,7 @@ def build():
             .replace('__RECORDS_EN__', records_en).replace('__RECORDS_UK__', records_uk)
             .replace('__GIVE_REVIEWED_EN__', give_en).replace('__GIVE_REVIEWED_UK__', give_uk)
             .replace('__PLACES_REVIEWED_EN__', places_en).replace('__PLACES_REVIEWED_UK__', places_uk_date)
+            .replace('__AS_OF_EN__', as_of_en).replace('__AS_OF_UK__', as_of_uk).replace('__OVERVIEW__', overview())
             .replace('__PLACES__', embed(places.map_data())).replace('__STATES__', embed(places.TOPO))
             .replace('__PLACES_UK__', embed({'states': places_uk.STATES})))
 
