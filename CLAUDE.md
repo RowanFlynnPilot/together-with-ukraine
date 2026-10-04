@@ -21,7 +21,7 @@ place or organization they involve, and those link back. Every tab and entry has
 ## Commands (Windows, PowerShell 5.1)
 
 ```powershell
-python build.py                                # writes site/index.html and site/preview.png, no network
+python build.py                                # writes site/index.html and the home-screen icon, no network
 python -m http.server 8765 --directory site    # view it at http://localhost:8765/
 python -m pip install -r requirements.txt      # only check.py and refresh.py need it
 python check.py                                # re-verify records, links, phrases, dates; exits 1 on any problem
@@ -50,7 +50,7 @@ python scout.py                                # leads for new places from OpenS
 | `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
-| `images/` | Pictures for the stories, the header, the Culture and History tabs and the places, openly licensed or public domain (rule 7), saved at display size. Copied to `site/images/` by the build. |
+| `images/` | Pictures for the stories, the header, the Culture and History tabs and the places, openly licensed or public domain (rule 7), saved at display size. Copied to `site/images/` by the build. `share.jpg` is the picture a shared link shows: the header photo with the title, made once and kept here, carrying the photographer's credit as its CC BY-SA license requires. |
 | `.github/ISSUE_TEMPLATE/` | Forms for suggesting a place, story or group, or reporting a mistake. The footer links to them. |
 
 Both languages are in the built page. CSS shows the one matching `<html data-lang>`; the script
