@@ -36,7 +36,7 @@ python census.py; git diff data/census.json    # pull the newest Census figures 
 
 | File | Role |
 |---|---|
-| `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter and the map. `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
+| `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter, Near me (the list sorted by distance from the reader, worked out in the browser) and the map. `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
 | `build.py` | Assembles the page and resolves the links between sections. No network. Stops on a missing translation, a link to an anchor that does not exist, or two elements with the same id. |
 | `history.py` / `history_uk.py` | Timeline entries with their sources / the Ukrainian text, keyed by English title. `AS_OF` dates the entries about the war today. `ERA_PHOTOS` (a banner per era) and `EVENT_PHOTOS` (a picture beside some entries) hold the timeline's pictures. |
 | `culture.py` | The Culture tab: the header photo, the gallery, and the food, traditions, "Ukrainian, not Russian", holidays, events and resources sections. `REVIEWED` dates the events and resources. `UNESCO_YEAR` (the badge), `RELABELS` (the label each museum dropped and the one it uses now) and `RESOURCE_KINDS` shape how entries look; the build checks each against the entry's own text. An entry without a photo shows its Ukrainian name on a cross-stitch pattern. |
@@ -44,6 +44,7 @@ python census.py; git diff data/census.json    # pull the newest Census figures 
 | `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, related entries elsewhere on the page, and optionally a `photo(...)`; without one, the card shows its theme's icon (`ICONS`). Long stories show their first lines and open with Read more. |
 | `places.py` | Loads and validates `data/places.json`: checks each place's coordinates fall inside the state it names (point-in-polygon on the TopoJSON), and renders the listings as cards. Also holds the groups of kinds of place behind the filter buttons and icons, and `PHOTOS`, the openly licensed photos taken at listed places that run above the list. |
 | `give.py` | Organizations, each text an (English, Ukrainian) pair, each with a list of checks. US charities pull facts from `data/`. `REVIEWED` is the date of the last review by hand. A check can carry a fourth item, a phrase its page must contain. A check that found something missing or worth knowing (no outside audit, not yet rated, a commercial carrier) is written `caveat(...)`, and the page marks it with an exclamation mark instead of a check mark. |
+| `review.py` | Builds `site/review.html`: every English text beside its Ukrainian, numbered and grouped by section, for a native speaker to check. Each row's button opens the "Report a mistake" form with the row filled in and the Ukrainian ready to edit; names spelled from English-only reports are highlighted (`GUESSED_NAMES`). Linked only from the footer's translation note, and not indexed. |
 | `i18n.py` | `both()`, the `{{..||..}}` marker filler, dates in both languages, Ukrainian plurals, slugs. |
 | `places_uk.py` | Ukrainian names for US states and kinds of place. |
 | `records.py` | Pulls IRS records (ProPublica Nonprofit Explorer API) and Charity Navigator ratings. Uses `curl_cffi` with Chrome impersonation because several sites reject plain clients. Raises if a Charity Navigator page shows neither stars nor "Not Rated", so a layout change is never read as a lost rating. |
@@ -52,7 +53,7 @@ python census.py; git diff data/census.json    # pull the newest Census figures 
 | `diaspora.py` | The In the US tab, from `data/census.json`: the headline figures, born in Ukraine by year, the state map's classes (`BINS`), the state table, the largest metro areas (`CITIES_UK` holds their Ukrainian names; a missing one stops the build) and the notes. Every figure shows its margin of error; a state where the Census Bureau withheld a table says "not published". The rise since 2021 must clear the margins of error (the Bureau's test for a difference), or the build stops. |
 | `census.py` | Pulls the American Community Survey's newest 1-year estimates into `data/census.json`: tables B04006 (Ukrainian ancestry; its total is the population) and B05006 (born in Ukraine) for each state, the US and the ten largest metro areas, and B05006 for the US for each year since 2021. Reads the Bureau's summary files, which need no key (its data API does), and finds each line through the API's table descriptions. `check.py` reports when a newer year is out. |
 | `data/places.json` | The listed businesses, maintained by hand. Each has `state` (full name), `ukrainian` (one or more of `food`, `goods`, `owner`) and `basis`: a list of `{by, url, says}`, where `by` is `own website` or an outlet name and `says` is an exact phrase on that page. |
-| `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. |
+| `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. `.github/workflows/scout.yml` runs it on the first of each month and opens an issue listing any leads. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
 | `images/` | Pictures for the stories, the header, the Culture and History tabs and the places, openly licensed or public domain (rule 7), saved at display size. Copied to `site/images/` by the build. `share.jpg` is the picture a shared link shows: the header photo with the title, made once and kept here, carrying the photographer's credit as its CC BY-SA license requires. |
@@ -155,7 +156,8 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   checker away, and which sites do that differs between a home connection and GitHub's servers
   (Nova Ukraine's site refused Rowan's machine but not the build machine). ukrainer.net leaves out
   an intermediate certificate, which browsers fetch for themselves and scripts cannot, so its pages
-  are treated the same way. These links, with the phrase each should carry, are listed in every
+  are treated the same way. So are 202 answers (a bot challenge), and the TEGNA stations (KING 5, ABC10,
+  13News Now, `WALLED` in check.py), which answer GitHub's servers with a stand-in page that has no article. These links, with the phrase each should carry, are listed in every
   report for a manual look. Only other failures (404, 5xx, timeouts, other certificate errors) fail
   the run.
 - A page that loads but no longer carries its phrase fails the run: a business renamed or closed,
@@ -173,11 +175,11 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
 
 ## Open items
 
-- A native speaker has not reviewed the Ukrainian text, including the story summaries and the
+- A native speaker has not reviewed the Ukrainian text (the review page, `review.html`, lists all of it with a button per text), including the story summaries and the
   Ukrainian spellings of names taken from English-only reports, which follow the official
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко). When that is done, delete the footer paragraph in `template.html` that says the
-  Ukrainian is a machine translation.
+  Ukrainian is a machine translation, with its link to the review page.
 - The places list has 101 places in 29 states and DC, from three passes of state-by-state research
   (October 3, 2026) in local press and the businesses' own sites. Every state was searched at least
   once; the 21 without a listing turned up nothing that passes rule 2 (the near-misses are in `held`).

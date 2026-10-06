@@ -20,7 +20,7 @@ python build.py
 python -m http.server 8765 --directory site
 ```
 
-Then open http://localhost:8765/. `build.py` needs nothing beyond Python. It writes `site/index.html` and `site/apple-touch-icon.png` (the icon a phone shows for the page on its home screen), copies the pictures, and uses no network.
+Then open http://localhost:8765/. `build.py` needs nothing beyond Python. It writes `site/index.html`, `site/review.html` (every text beside its Ukrainian, for a native speaker to check) and `site/apple-touch-icon.png` (the icon a phone shows for the page on its home screen), copies the pictures, and uses no network.
 
 The build refuses to produce a page that is wrong in ways it can detect: a missing translation, a place whose coordinates fall outside the state it names, a place with no evidence, a story that links to an entry that does not exist, or two entries with the same address.
 
@@ -71,7 +71,7 @@ Pushing to `main` rebuilds and publishes the site. People can suggest places, st
 
 - **History**: every sentence must be supported by the entry's listed sources.
 - **People**: a story comes from a news organization, a UN agency, a museum or archive, or an established documentary project, and is free to read. The person is named in it. The summary is in our own words, without quotations, and every sentence is supported by the report. No graphic detail, no minors by full name, no one in Russian-occupied territory, and nothing that adds to the risk a named person faces. Photos are used only when openly licensed (from Wikimedia Commons, credited as the license requires), never taken from the outlet's article.
-- **Places**: a business is listed if its own website or the press says it serves Ukrainian food, sells Ukrainian goods, or is owned by Ukrainians. Each listing shows which, with the evidence. `python scout.py` lists leads from OpenStreetMap.
+- **Places**: a business is listed if its own website or the press says it serves Ukrainian food, sells Ukrainian goods, or is owned by Ukrainians. Each listing shows which, with the evidence. `python scout.py` lists leads from OpenStreetMap, and a monthly GitHub job opens an issue with any new ones.
 - **In the US**: every figure is the Census Bureau's own estimate, shown with its margin of error; a figure the Bureau did not publish is marked as such, never filled in. A claim of change must clear the margins of error, or the build stops.
 - **Give**: US charities must appear in IRS records. Ukrainian groups must publish reports or audits, or be confirmed by an independent source. Every entry says what was checked.
 

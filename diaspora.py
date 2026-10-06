@@ -4,7 +4,7 @@ American Community Survey. census.py pulls the figures into data/census.json; th
 Every figure is the Bureau's estimate with its margin of error (90 percent confidence). A state where the Bureau
 withheld a table shows that it was not published. A claim the page makes about a change, such as the rise since
 2021, must clear the margins of error, or the build stops."""
-import html, json, math, pathlib
+import html, json, math, pathlib, re
 
 import places, places_uk
 from i18n import both, plural_uk
@@ -33,6 +33,19 @@ ABOUT = {
     'margins': 'https://www.census.gov/content/dam/Census/library/publications/2018/acs/acs_general_handbook_2018_ch07.pdf',
     'withheld': 'https://www.census.gov/programs-surveys/acs/technical-documentation/data-suppression.html',
 }
+
+# Every sentence and label the tab shows, for the review page: key -> (part of the tab, English, Ukrainian).
+# A text that repeats with each state's numbers or name is recorded once, as an example, under a key of its own.
+TEXTS = {}
+
+def note(part, en, uk, example=None):
+    plain = lambda text: html.unescape(re.sub(r'<[^>]+>', '', text))
+    TEXTS.setdefault(example or plain(en), (part, plain(en), plain(uk)))
+
+def say(part, en, uk, cls='', example=None):
+    """A text in both languages, recorded for the review page."""
+    note(part, html.escape(en), html.escape(uk), example)
+    return both(en, uk, cls=cls)
 
 def num(n):
     """A count in both languages: 1,263,837 and 1 263 837."""
@@ -73,6 +86,7 @@ def change():
     return first, last, round((b - a) / a * 100)
 
 def tiles():
+    t = lambda en, uk: say('Headline figures', en, uk)
     us = CENSUS['us']
     first, last, pct = change()
     years = CENSUS['born_by_year']
@@ -88,40 +102,38 @@ def tiles():
       <div class="stat">
         <p class="stat-num">{both(*num(us['ancestry'][0]))}</p>
         <p class="stat-moe">±{NBSP}{both(*num(us['ancestry'][1]))}</p>
-        <p class="stat-label">{both('people in the US gave Ukrainian as their ancestry, alone or with another', 'мешканців США вказали українське походження — єдине або разом з іншим')}</p>
+        <p class="stat-label">{t('people in the US gave Ukrainian as their ancestry, alone or with another', 'мешканців США вказали українське походження — єдине або разом з іншим')}</p>
       </div>
       <div class="stat">
         <p class="stat-num">{both(*num(us['born'][0]))}</p>
         <p class="stat-moe">±{NBSP}{both(*num(us['born'][1]))}</p>
-        <p class="stat-label">{both('people in the US were born in Ukraine', 'мешканців США народилися в Україні')}</p>
+        <p class="stat-label">{t('people in the US were born in Ukraine', 'мешканців США народилися в Україні')}</p>
       </div>
       <figure class="stat trend">
-        <figcaption class="trend-title">{both('Born in Ukraine, by year', 'Народжені в Україні, за роками')}</figcaption>
+        <figcaption class="trend-title">{t('Born in Ukraine, by year', 'Народжені в Україні, за роками')}</figcaption>
         <ol class="cols">
 {chr(10).join(columns)}
         </ol>
-        <p class="trend-note">{both(f'{pct}% more in {last} than in {first}, the last year before the full-scale invasion.',
-                                    f'У {last} році — на {pct}{NBSP}% більше, ніж у {first}-му, останньому році перед повномасштабним вторгненням.')}</p>
+        <p class="trend-note">{t(f'{pct}% more in {last} than in {first}, the last year before the full-scale invasion.',
+                                 f'У {last} році — на {pct}{NBSP}% більше, ніж у {first}-му, останньому році перед повномасштабним вторгненням.')}</p>
       </figure>
     </div>'''
 
-def legend():
-    items = [f'<li><span class="swatch bin-{i + 1}"></span>{both(en, uk)}</li>' for i, (_, en, uk) in enumerate(BINS)]
-    items.append(f'<li><span class="swatch bin-0"></span>{both("Not published", "Не опубліковано")}</li>')
-    return f'<ul class="us-legend">{"".join(items)}</ul>'
-
 def map_section():
+    t = lambda en, uk: say('Map', en, uk)
+    legend = [f'<li><span class="swatch bin-{i + 1}"></span>{t(en, uk)}</li>' for i, (_, en, uk) in enumerate(BINS)]
+    legend.append(f'<li><span class="swatch bin-0"></span>{t("Not published", "Не опубліковано")}</li>')
     return f'''    <section class="us-block" aria-labelledby="us-map-title">
-      <h3 id="us-map-title">{both('Where they live', 'Де вони живуть')}</h3>
-      <p class="us-sub">{both(f'People of Ukrainian ancestry per 1,000 residents, by state, {YEAR}', f'Люди українського походження на 1000 мешканців, за штатами, {YEAR}')}</p>
-      {legend()}
+      <h3 id="us-map-title">{t('Where they live', 'Де вони живуть')}</h3>
+      <p class="us-sub">{t(f'People of Ukrainian ancestry per 1,000 residents, by state, {YEAR}', f'Люди українського походження на 1000 мешканців, за штатами, {YEAR}')}</p>
+      <ul class="us-legend">{"".join(legend)}</ul>
       <div class="us-map-frame">
         <svg id="us-map" viewBox="0 0 975 610" role="img" aria-labelledby="us-map-label"></svg>
-        <span class="visually-hidden" id="us-map-label">{both('Map of the United States, each state shaded by its number of people of Ukrainian ancestry per 1,000 residents. The table below gives every state’s figures.',
-                                                              'Мапа Сполучених Штатів, де кожен штат зафарбовано відповідно до кількості людей українського походження на 1000 мешканців. Дані для кожного штату — у таблиці нижче.')}</span>
+        <span class="visually-hidden" id="us-map-label">{t('Map of the United States, each state shaded by its number of people of Ukrainian ancestry per 1,000 residents. The table below gives every state’s figures.',
+                                                           'Мапа Сполучених Штатів, де кожен штат зафарбовано відповідно до кількості людей українського походження на 1000 мешканців. Дані для кожного штату — у таблиці нижче.')}</span>
         <div class="map-tip" hidden></div>
       </div>
-      <p class="map-hint">{both('Point at or tap a state for its figures.', 'Наведіть на штат або торкніться його, щоб побачити дані.')}</p>
+      <p class="map-hint">{t('Point at or tap a state for its figures.', 'Наведіть на штат або торкніться його, щоб побачити дані.')}</p>
     </section>'''
 
 def bar(pair, top):
@@ -130,39 +142,40 @@ def bar(pair, top):
     return (f'<span class="bar"><span class="bar-fill" style="width:{e / top * 100:.2f}%"></span>'
             f'<span class="bar-moe" style="left:{low / top * 100:.2f}%;width:{(high - low) / top * 100:.2f}%"></span></span>')
 
-def not_published():
-    return f'<span class="na">{both("not published", "не опубліковано")}</span>'
+def not_published(part):
+    return f'<span class="na">{say(part, "not published", "не опубліковано")}</span>'
 
 def table():
+    t = lambda en, uk, example=None: say('State table', en, uk, example=example)
     top = max(sum(STATES[s]['ancestry']) for s in PUBLISHED)
     rows = []
     for i, state in enumerate(PUBLISHED + WITHHELD):
         s, uk = STATES[state], places_uk.STATES[state]
         n = PLACES_IN[state]
-        where = f'<span class="visually-hidden">{both(f" {'place' if n == 1 else 'places'} listed in {state}", f" {plural_uk(n, 'заклад', 'заклади', 'закладів')} у списку: {uk}")}</span>'
-        listed = f'<a href="#{places.group_id(state)}">{n}{where}</a>' if n else '<span class="na">—</span>'
+        where = t(f" {'place' if n == 1 else 'places'} listed in {state}", f" {plural_uk(n, 'заклад', 'заклади', 'закладів')} у списку: {uk}", example='places listed')
+        listed = f'<a href="#{places.group_id(state)}">{n}<span class="visually-hidden">{where}</span></a>' if n else '<span class="na">—</span>'
         if s['ancestry']:
             ancestry = f'{figure(s["ancestry"])}{bar(s["ancestry"], top)}'
             rate = both(*dec(per_thousand(state)))
         else:
-            ancestry, rate = not_published(), '<span class="na">—</span>'
-        born = figure(s['born']) if s['born'] else not_published()
+            ancestry, rate = not_published('State table'), '<span class="na">—</span>'
+        born = figure(s['born']) if s['born'] else not_published('State table')
         more = ' class="more"' if i >= SHOWN_ROWS else ''
         rows.append(f'          <tr{more}><th scope="row">{both(state, uk)}</th><td>{ancestry}</td><td class="num">{rate}</td><td>{born}</td><td class="num">{listed}</td></tr>')
     total = len(STATES)
     return f'''    <section class="us-block" aria-labelledby="us-table-title">
-      <h3 id="us-table-title">{both('State by state', 'Штат за штатом')}</h3>
+      <h3 id="us-table-title">{t('State by state', 'Штат за штатом')}</h3>
       <div class="table-scroll">
         <table class="us-table" id="us-table">
-          <caption class="visually-hidden">{both(f'People of Ukrainian ancestry and people born in Ukraine in each state, {YEAR}, with margins of error, and the number of places listed in the Eat and shop tab',
-                                                  f'Люди українського походження та народжені в Україні в кожному штаті, {YEAR}, із похибками, і кількість закладів у розділі «Заклади»')}</caption>
-          <thead><tr><th scope="col">{both('State', 'Штат')}</th><th scope="col">{both('Ukrainian ancestry', 'Українське походження')}</th><th scope="col" class="num">{both('Per 1,000 residents', 'На 1000 мешканців')}</th><th scope="col">{both('Born in Ukraine', 'Народжені в Україні')}</th><th scope="col" class="num">{both('Places listed', 'Заклади')}</th></tr></thead>
+          <caption class="visually-hidden">{t(f'People of Ukrainian ancestry and people born in Ukraine in each state, {YEAR}, with margins of error, and the number of places listed in the Eat and shop tab',
+                                               f'Люди українського походження та народжені в Україні в кожному штаті, {YEAR}, із похибками, і кількість закладів у розділі «Заклади»')}</caption>
+          <thead><tr><th scope="col">{t('State', 'Штат')}</th><th scope="col">{t('Ukrainian ancestry', 'Українське походження')}</th><th scope="col" class="num">{t('Per 1,000 residents', 'На 1000 мешканців')}</th><th scope="col">{t('Born in Ukraine', 'Народжені в Україні')}</th><th scope="col" class="num">{t('Places listed', 'Заклади')}</th></tr></thead>
           <tbody>
 {chr(10).join(rows)}
           </tbody>
         </table>
       </div>
-      <button type="button" class="more-btn" id="us-more" aria-controls="us-table" aria-expanded="false" hidden><span class="when-closed">{both(f'Show all {total}', f'Показати всі {total}')}</span><span class="when-open">{both('Show fewer', 'Згорнути')}</span></button>
+      <button type="button" class="more-btn" id="us-more" aria-controls="us-table" aria-expanded="false" hidden><span class="when-closed">{t(f'Show all {total}', f'Показати всі {total}')}</span><span class="when-open">{t('Show fewer', 'Згорнути')}</span></button>
     </section>'''
 
 def metro_name(census_name):
@@ -173,21 +186,22 @@ def metro_name(census_name):
     return city, CITIES_UK[city], states.replace('-', '–')
 
 def metros():
+    t = lambda en, uk, example=None: say('Metro areas', en, uk, example=example)
     top = max(sum(m['ancestry']) for m in CENSUS['metros'])
     rows = []
     for m in CENSUS['metros']:
         en, uk, codes = metro_name(m['name'])
-        born = (both(f'{num(m["born"][0])[0]} born in Ukraine', f'{num(m["born"][0])[1]} народилися в Україні') if m['born']
-                else both('born in Ukraine: not published', 'народжені в Україні: не опубліковано'))
+        born = (t(f'{num(m["born"][0])[0]} born in Ukraine', f'{num(m["born"][0])[1]} народилися в Україні', example='metro born') if m['born']
+                else t('born in Ukraine: not published', 'народжені в Україні: не опубліковано'))
         rows.append(f'''        <li class="metro">
-          <p class="metro-name">{both(en, uk)} <span class="metro-states">{codes}</span></p>
+          <p class="metro-name">{t(en, uk)} <span class="metro-states">{codes}</span></p>
           <p class="metro-born">{born}</p>
           {bar(m['ancestry'], top)}
           <p class="metro-fig">{figure(m['ancestry'])}</p>
         </li>''')
     return f'''    <section class="us-block" aria-labelledby="us-metros-title">
-      <h3 id="us-metros-title">{both('Metro areas with the most people of Ukrainian ancestry', 'Агломерації, де найбільше людей українського походження')}</h3>
-      <p class="us-sub">{both(f'Each area is a city with its suburbs, as the Census Bureau draws them, {YEAR}', f'Кожна агломерація — це місто з передмістями в межах, які визначає Бюро перепису населення, {YEAR}')}</p>
+      <h3 id="us-metros-title">{t('Metro areas with the most people of Ukrainian ancestry', 'Агломерації, де найбільше людей українського походження')}</h3>
+      <p class="us-sub">{t(f'Each area is a city with its suburbs, as the Census Bureau draws them, {YEAR}', f'Кожна агломерація — це місто з передмістями в межах, які визначає Бюро перепису населення, {YEAR}')}</p>
       <ol class="metros">
 {chr(10).join(rows)}
       </ol>
@@ -200,7 +214,9 @@ def _and(items_en, items_uk):
 def notes():
     e = html.escape
     link = lambda key, en, uk: (f'<a href="{e(ABOUT[key])}" target="_blank" rel="noopener">{en}</a>', f'<a href="{e(ABOUT[key])}" target="_blank" rel="noopener">{uk}</a>')
-    pair = lambda en, uk: f'<li><span data-l="en">{en}</span><span data-l="uk" lang="uk">{uk}</span></li>'
+    def pair(en, uk):
+        note('Notes', en, uk)
+        return f'<li><span data-l="en">{en}</span><span data-l="uk" lang="uk">{uk}</span></li>'
     us = CENSUS['us']
     if us['born'][0] * 2 >= us['ancestry'][0]: raise ValueError('the note says most people of Ukrainian ancestry were not born in Ukraine; the figures no longer show it')
     a_en, a_uk = link('ancestry', 'Ancestry', 'Походження')
@@ -231,7 +247,7 @@ def notes():
              f'Джерело: Бюро перепису населення США, American Community Survey, однорічні оцінки за {YEAR} рік, таблиці {t1_uk} і {t2_uk}; за попередні роки — та сама таблиця B05006 за кожен рік.'),
     ]
     return f'''    <div class="note us-notes">
-      <h3>{both('About these numbers', 'Про ці дані')}</h3>
+      <h3>{say('Notes', 'About these numbers', 'Про ці дані')}</h3>
       <ul>
 {chr(10).join('        ' + i for i in items)}
       </ul>
@@ -248,22 +264,27 @@ def map_data():
         if s['ancestry']:
             rate_en, rate_uk = dec(per_thousand(state))
             (a_en, a_uk), (am_en, am_uk) = num(s['ancestry'][0]), num(s['ancestry'][1])
-            en = [state, f'{rate_en} per 1,000 residents', f'{a_en} ± {am_en} of Ukrainian ancestry']
-            uk_lines = [uk, f'{rate_uk} на 1000 мешканців', f'{a_uk} ± {am_uk} українського походження']
+            lines = [(f'{rate_en} per 1,000 residents', f'{rate_uk} на 1000 мешканців', 'tip rate'),
+                     (f'{a_en} ± {am_en} of Ukrainian ancestry', f'{a_uk} ± {am_uk} українського походження', 'tip ancestry')]
+            if s['born']:
+                (b_en, b_uk), (bm_en, bm_uk) = num(s['born'][0]), num(s['born'][1])
+                lines.append((f'{b_en} ± {bm_en} born in Ukraine', f'{b_uk} ± {bm_uk} народилися в Україні', 'tip born'))
             cls = bin_of(per_thousand(state))
         else:
-            en = [state, f'Not published for {YEAR}']
-            uk_lines = [uk, f'Дані за {YEAR} рік не опубліковано']
+            lines = [(f'Not published for {YEAR}', f'Дані за {YEAR} рік не опубліковано', 'tip not published')]
             cls = 0
-        if s['ancestry'] and s['born']:
-            (b_en, b_uk), (bm_en, bm_uk) = num(s['born'][0]), num(s['born'][1])
-            en.append(f'{b_en} ± {bm_en} born in Ukraine')
-            uk_lines.append(f'{b_uk} ± {bm_uk} народилися в Україні')
-        out[s['fips']] = {'bin': cls, 'en': en, 'uk': uk_lines}
+        for en, uk_line, example in lines: note('Map', en, uk_line, example)
+        out[s['fips']] = {'bin': cls, 'en': [state] + [l[0] for l in lines], 'uk': [uk] + [l[1] for l in lines]}
     return out
 
 def overview():
     """The header's count for this tab: (number in English, in Ukrainian, label in English, in Ukrainian)."""
     millions = CENSUS['us']['ancestry'][0] / 1e6
-    return (f'{millions:.2f}M', f'{millions:.2f}'.replace('.', ',') + NBSP + 'млн',
-            'people of Ukrainian ancestry in the US', 'людей українського походження у США')
+    label = ('people of Ukrainian ancestry in the US', 'людей українського походження у США')
+    note('Header', *label)
+    return (f'{millions:.2f}M', f'{millions:.2f}'.replace('.', ',') + NBSP + 'млн', *label)
+
+def texts():
+    """(part of the tab, English, Ukrainian) for every text the tab and its header count show, for the review page."""
+    render(); map_data(); overview()
+    return list(TEXTS.values())
