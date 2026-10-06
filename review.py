@@ -32,12 +32,13 @@ def pairs():
             where = x['name'][0]
             add('Culture', where, x['name'])
             add('Culture', where, x['about'])
-            for field in ('date', 'when', 'where'):
+            for field in ('date', 'when', 'where', 'by'):
                 if field in x: add('Culture', where, x[field])
             if x.get('photo'): add('Culture', f'{where}: picture', x['photo']['alt'])
             if x['key'] in culture.RELABELS:
                 for label in culture.RELABELS[x['key']]: add('Culture', f'{where}: label', label)
     for label, _ in culture.RESOURCE_KINDS.values(): add('Culture', 'Resource kind', label)
+    for kind, action in culture.MEDIA_KINDS.values(): add('Culture', 'Read, watch, listen', kind); add('Culture', 'Read, watch, listen', action)
     for era_id, name, span, events in history.ERAS:
         add('History', name, (name, UK.ERAS[name][0]))
         add('History', name, (span, UK.ERAS[name][1]))

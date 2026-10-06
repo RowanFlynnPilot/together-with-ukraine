@@ -8,6 +8,7 @@ IMAGES = pathlib.Path(__file__).parent / 'images'
 # License -> (its deed, or None for the public domain; the phrase its Commons file page shows, which check.py looks for)
 LICENSES = {
     'CC BY 4.0': ('https://creativecommons.org/licenses/by/4.0/', 'Creative Commons Attribution 4.0 International'),
+    'CC BY 3.0': ('https://creativecommons.org/licenses/by/3.0/', 'Creative Commons Attribution 3.0 Unported'),
     'CC BY-SA 4.0': ('https://creativecommons.org/licenses/by-sa/4.0/', 'Creative Commons Attribution-Share Alike 4.0 International'),
     'CC BY-SA 3.0': ('https://creativecommons.org/licenses/by-sa/3.0/', 'Creative Commons Attribution-Share Alike 3.0 Unported'),
     'CC BY-SA 3.0 pl': ('https://creativecommons.org/licenses/by-sa/3.0/pl/deed.en', 'Creative Commons Attribution-Share Alike 3.0 Poland'),

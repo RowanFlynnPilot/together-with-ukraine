@@ -456,6 +456,122 @@ RESOURCES = [
        where=('Online', 'Онлайн'), url='https://www.encyclopediaofukraine.com/'),
 ]
 
+EOU_KOBZAR = ('en', 'Encyclopedia of Ukraine, “Kobzar”', None, EOU + 'K%5CO%5CKobzarIT.htm')
+GUTENBERG_KOBZAR = 'https://www.gutenberg.org/ebooks/68486'
+SUSPILNE_MAVKA = 'https://suspilne.media/culture/1255776-vid-pradavnogo-mifu-do-drami-lesi-ukrainki-ak-zobrazuvali-mavku-v-literaturi-teatri-ta-kino/'
+MACMILLAN_AMELINA = 'https://us.macmillan.com/books/9781250367686/lookingatwomenlookingatwar/'
+KI_ORWELL = 'https://kyivindependent.com/ukrainian-author-killed-by-russia-awarded-uks-prestigious-orwell-prize-in-political-writing/'
+FRONTLINE_MARIUPOL = 'https://www.pbs.org/wgbh/frontline/documentary/20-days-in-mariupol/'
+DOVZHENKO_SHADOWS = 'https://dovzhenkocentre.org/en/top-100/shadows-of-forgotten-ancestors-tini-zabutykh-predkiv-wild-horses-of-fire/'
+SUSPILNE_PAMFIR = 'https://suspilne.media/culture/230455-u-kannah-vidbudetsa-svitova-premera-filmu-pamfir-dmitra-suholitkogo-sobcuka/'
+NPR_DAKHABRAKHA = 'https://www.npr.org/2015/04/25/401767767/dakhabrakha-tiny-desk-concert'
+ESC_JAMALA = 'https://www.eurovision.com/eurovision-song-contest/stockholm-2016/participants/jamala-1/'
+ESC_KALUSH = 'https://www.eurovision.com/eurovision-song-contest/turin-2022/participants/kalush-orchestra-1/'
+
+# Read, watch, listen: books an American reader can get in English, films and music. Each links to where to find it,
+# and is marked free when it is (a public-domain translation, a free stream, an official video).
+MEDIA = [
+ entry('kobzar', ('Kobzar', 'Кобзар'),
+       ('Taras Shevchenko’s first collection, eight poems that were mainly Romantic ballads, came out in Saint Petersburg in 1840. Its title came to stand for the Ukrainian literary and national rebirth, the book became the central one for Ukrainians, and a whole museum in Cherkasy is devoted to it. Selected poems in a 1922 English verse translation are free to read online.',
+        'Перша збірка Тараса Шевченка — вісім поезій, переважно романтичних балад, — вийшла в Петербурзі 1840 року. Її назва стала символом українського літературного й національного відродження, сама книжка — головною для українців, а в Черкасах їй присвячено цілий музей. Вибрані поезії в англійському віршованому перекладі 1922 року можна безкоштовно прочитати онлайн.'),
+       [(*EOU_KOBZAR, 'consisting of eight poems, mainly Romantic ballads'), (*EOU_KOBZAR, 'symbolic of the Ukrainian literary and national rebirth'),
+        (*EOU_KOBZAR, 'Martos in Saint Petersburg in 1840'),
+        ('uk', 'Радіо Свобода', '2007-04-10', 'https://www.radiosvoboda.org/a/962162.html', 'головною книгою не лише для його автора, а й для українців'),
+        ('en', 'ukraine.ua', '2023-02-23', 'https://ukraine.ua/regions-of-ukraine/cherkasy-region/', 'An entire museum in Cherkasy is dedicated to his collection'),
+        ('en', 'Project Gutenberg', None, GUTENBERG_KOBZAR, 'done into English verse')],
+       kind='book', by=('Taras Shevchenko, 1840', 'Тарас Шевченко, 1840'), url=GUTENBERG_KOBZAR, free=True, related=('history', 'Shevchenko publishes Kobzar'),
+       photo=photo('media-shevchenko.jpg', ('Taras Shevchenko, self-portrait in oil', 'Тарас Шевченко, автопортрет олією'), 'Taras Shevchenko', 'Public domain', W + 'Taras_Shevchenko_selfportrait_oil_1840.jpg')),
+ entry('forest-song', ('The Forest Song', 'Лісова пісня'),
+       ('A neoromantic drama about the conflict between lofty ideals and the details of everyday life, which the Ukrainian Institute calls a lyrical drama blending folklore with profound philosophical ideas. Lesya Ukrainka wrote it in less than two weeks in the summer of 1911, while receiving medical treatment in Kutaisi, Georgia.',
+        'Неоромантична драма про конфлікт між високими ідеалами та прозою буденного життя; Український інститут називає її ліричною драмою, що поєднує фольклор із глибокими філософськими ідеями. Леся Українка написала її менш ніж за два тижні влітку 1911 року, коли лікувалася в грузинському Кутаїсі.'),
+       [('en', 'Encyclopedia of Ukraine, “Ukrainka, Lesia”', None, EOU + 'U%5CK%5CUkrainkaLesia.htm', 'Her neoromantic work, the drama Lisova pisnia (The Forest Song, 1911)'),
+        ('en', 'Encyclopedia of Ukraine, “Ukrainka, Lesia”', None, EOU + 'U%5CK%5CUkrainkaLesia.htm', 'conflict between lofty idealism and the prosaic details of everyday life'),
+        ('en', 'Ukrainian Institute', None, 'https://ukrdrama.ui.org.ua/en/author/lesya-ukrainka', 'a lyrical drama blending folklore with profound philosophical ideas'),
+        ('uk', 'Суспільне Культура', '2026-03-05', SUSPILNE_MAVKA, 'Влітку 1911 року Леся Українка перебувала на лікуванні в грузинському містечку Кутаїсі'),
+        ('uk', 'Суспільне Культура', '2026-03-05', SUSPILNE_MAVKA, 'письменниця за неповних 2 тижні створила драму-феєрію')],
+       kind='book', by=('Lesya Ukrainka, 1911', 'Леся Українка, 1911'), url='https://books.huri.harvard.edu/books/lesia-ukrainka-forest-song',
+       photo=photo('media-lesya-ukrainka.jpg', ('Lesya Ukrainka in a studio portrait, Chernivtsi, 1901', 'Леся Українка, студійний портрет, Чернівці, 1901 рік'), 'Johann Krzanowski', 'Public domain',
+                   W + '%D0%9B%D0%B5%D1%81%D1%8F_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%BA%D0%B0._%D0%A4%D0%BE%D1%82%D0%BE_1901_%D1%80.jpg')),
+ entry('looking-at-women', ('Looking at Women, Looking at War', 'Дивлячись на жінок, які дивляться на війну'),
+       ('Victoria Amelina’s war and justice diary follows Ukrainian women who joined the resistance, and combines diary entries, interviews, reports from the sites of war crimes and poetry. She was killed before she could finish it, and her closest friends and colleagues prepared it for publication. Margaret Atwood wrote the foreword, and in 2025 it won Britain’s Orwell Prize for political writing.',
+        'Щоденник війни та справедливості Вікторії Амеліної — про українських жінок, які долучилися до спротиву; він поєднує щоденникові записи, інтерв’ю, репортажі з місць воєнних злочинів і поезію. Авторку вбили раніше, ніж вона встигла його завершити, і до друку книжку підготували її найближчі друзі й колеги. Передмову написала Маргарет Етвуд, а 2025 року книжка здобула британську премію Орвелла за політичну літературу.'),
+       [('en', 'St. Martin’s Press', None, MACMILLAN_AMELINA, 'A War and Justice Diary'),
+        ('en', 'St. Martin’s Press', None, MACMILLAN_AMELINA, 'the chronicler of extraordinary women like herself who joined the resistance'),
+        ('en', 'The Kyiv Independent', '2025-06-25', KI_ORWELL, 'A group of her closest friends and colleagues undertook the responsibility'),
+        ('en', 'The Kyiv Independent', '2025-06-25', KI_ORWELL, 'Amelina is the first Ukrainian writer to receive the prize'),
+        ('uk', 'Суспільне Новини', '2025-06-25', 'https://suspilne.media/1051695-kniga-viktorii-amelinoi-zdobula-premiu-orvella/', "поєднує щоденникові записи, інтерв'ю, репортажі з місць воєнних злочинів та поезію"),
+        ('uk', 'Суспільне Новини', '2025-06-25', 'https://suspilne.media/1051695-kniga-viktorii-amelinoi-zdobula-premiu-orvella/', 'передмову до неї написала Маргарет Етвуд')],
+       kind='book', by=('Victoria Amelina, 2025', 'Вікторія Амеліна, 2025'), url=MACMILLAN_AMELINA, related=('story', 'story-victoria-amelina'),
+       photo=photo('amelina.jpg', ('Victoria Amelina at a literary festival in Wrocław, 2018', 'Вікторія Амеліна на літературному фестивалі у Вроцлаві, 2018 рік'), 'Rafał Komorowski', 'CC BY-SA 4.0', W + 'Victoria_Amelina_1022.jpg')),
+ entry('20-days-in-mariupol', ('20 Days in Mariupol', '20 днів у Маріуполі'),
+       ('An Associated Press team of Ukrainian journalists, trapped in Mariupol as Russian forces besiege it, keeps documenting what happens; they were the last journalists left in the city. Mstyslav Chernov’s first feature film won the Oscar for documentary feature in 2024, the first Oscar for Ukraine. Frontline streams it on the PBS website.',
+        'Команда українських журналістів Associated Press, опинившись у пастці в Маріуполі, який оточують російські війська, продовжує документувати те, що відбувається; вони були останніми журналістами, які залишалися в місті. Перший повнометражний фільм Мстислава Чернова здобув «Оскар» за найкращий документальний фільм 2024 року — перший український «Оскар» в історії. Frontline показує його на сайті PBS.'),
+       [('en', 'PBS Frontline', '2023-11-21', FRONTLINE_MARIUPOL, 'AP team of Ukrainian journalists trapped in the besieged city of Mariupol'),
+        ('en', 'PBS Frontline', '2023-11-21', FRONTLINE_MARIUPOL, 'Mstyslav Chernov makes his feature film debut with 20 Days in Mariupol'),
+        ('en', 'PBS Frontline', '2023-11-21', FRONTLINE_MARIUPOL, 'the Russian siege of Mariupol'),
+        ('en', 'Academy of Motion Picture Arts and Sciences', None, 'https://www.oscars.org/oscars/ceremonies/2024', 'Documentary Feature Film Winner 20 Days in Mariupol'),
+        ('en', 'Ukrainska Pravda', '2024-03-11', 'https://www.pravda.com.ua/eng/news/2024/03/11/7445845/', 'They were the last journalists to stay in the city of Mariupol'),
+        ('uk', 'Українська правда. Життя', '2024-03-11', 'https://life.pravda.com.ua/culture/oskar-2024-20-dniv-u-mariupoli-zdobuv-peremogu-pro-film-300450/', 'Це перший український Оскар в історії')],
+       kind='film', by=('Mstyslav Chernov, 2023', 'Мстислав Чернов, 2023'), url=FRONTLINE_MARIUPOL, free=True,
+       photo=photo('media-chernov.jpg', ('Mstyslav Chernov, 2022', 'Мстислав Чернов, 2022 рік'), 'Claude Truong-Ngoc', 'CC BY-SA 4.0', W + 'Mstyslav_Chernov_par_Claude_Truong-Ngoc_septembre_2022.jpg')),
+ entry('shadows-of-forgotten-ancestors', ('Shadows of Forgotten Ancestors', 'Тіні забутих предків'),
+       ('Two Hutsul families have feuded for years when Ivan and Marichka, one from each, fall in love. Sergei Parajanov filmed it at the Oleksandr Dovzhenko Film Studio from Mykhailo Kotsiubynsky’s novella; it won 16 prizes at international festivals, and the Dovzhenko Centre calls it a turning point in Ukrainian culture.',
+        'Два гуцульські роди багато років ворогують, коли Іван і Марічка, кожен зі свого роду, закохуються. Сергій Параджанов зняв фільм на Кіностудії імені Олександра Довженка за повістю Михайла Коцюбинського; він здобув 16 нагород на міжнародних кінофестивалях, а Довженко-Центр називає його поворотним моментом в українській культурі.'),
+       [('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'Two Hutsul families have been feuding for many years'),
+        ('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'born between Ivan and Marichka, members of the feuding families'),
+        ('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'Studio: Oleksandr Dovzhenko Film Studio'),
+        ('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'turning point in the development of Ukrainian culture'),
+        ('en', 'Encyclopedia of Ukraine, “Paradzhanov, Serhii”', None, EOU + 'P%5CA%5CParadzhanovSerhii.htm', 'based on Mykhailo Kotsiubynsky'),
+        ('en', 'Encyclopedia of Ukraine, “Paradzhanov, Serhii”', None, EOU + 'P%5CA%5CParadzhanovSerhii.htm', 'awarded 16 prizes in all at international film festivals'),
+        ('uk', 'Довженко-Центр', None, 'https://dovzhenkocentre.org/top-100/tini-zabutyh-predkiv/', 'Два гуцульські роди багато років ворогують')],
+       kind='film', by=('Sergei Parajanov, 1964', 'Сергій Параджанов, 1964'), url='https://www.criterion.com/films/28167-shadows-of-forgotten-ancestors',
+       photo=photo('media-parajanov.jpg', ('Sergei Parajanov, 1978', 'Сергій Параджанов, 1978 рік'), 'Yuri Mechitov', 'CC BY-SA 4.0', W + 'Sergei_Parajanov._1._Yuri_Mechitov.jpg')),
+ entry('pamfir', ('Pamfir', 'Памфір'),
+       ('A smuggler comes home from work abroad to Bukovina, in the Carpathians on the border with Romania, on the eve of the Malanka festival. It is the first feature by Dmytro Sukholytkyy-Sobchuk, and it premiered at the Directors’ Fortnight in Cannes in 2022, in competition for the Caméra d’Or.',
+        'Контрабандист повертається додому із закордонних заробітків на Буковину, у Карпати на кордоні з Румунією, напередодні Маланки. Це дебютний повнометражний фільм Дмитра Сухолиткого-Собчука; його світова прем’єра відбулася 2022 року в Каннах, у програмі «Двотижневик режисерів», де він змагався за «Золоту камеру».'),
+       [('en', 'The Guardian', '2023-05-03', 'https://www.theguardian.com/film/2023/may/03/pamfir-review-ukrainian-smugglers-dark-return', 'Ukrainian smuggler returns home'),
+        ('en', 'The Guardian', '2023-05-03', 'https://www.theguardian.com/film/2023/may/03/pamfir-review-ukrainian-smugglers-dark-return', 'The setting is Bukovina, in the eastern Carpathian mountains bordering Romania'),
+        ('en', 'Directors’ Fortnight', None, 'https://www.quinzaine-cineastes.fr/en/film/pamfir', "Film in competition for the Caméra d'Or Award"),
+        ('uk', 'Українська правда. Життя', '2023-03-24', 'https://life.pravda.com.ua/culture/2023/03/24/253501/', 'повертається додому із закордонних заробітків напередодні святкування Маланки'),
+        ('uk', 'Суспільне Культура', '2022-04-20', SUSPILNE_PAMFIR, 'дебютна повнометражна кінострічка режисера Дмитра Сухолиткого-Собчука'),
+        ('uk', 'Суспільне Культура', '2022-04-20', SUSPILNE_PAMFIR, 'дебютного фільму українського режисера у каннах')],
+       kind='film', by=('Dmytro Sukholytkyy-Sobchuk, 2022', 'Дмитро Сухолиткий-Собчук, 2022'), url='https://www.criterionchannel.com/films/TQduy1To/pamfir',
+       photo=photo('media-sukholytkyy-sobchuk.jpg', ('Dmytro Sukholytkyy-Sobchuk at the Odesa International Film Festival, 2012', 'Дмитро Сухолиткий-Собчук на Одеському міжнародному кінофестивалі, 2012 рік'),
+                   'Terrarium script projact', 'CC BY-SA 4.0', W + '%D0%A1%D1%83%D1%85%D0%BE%D0%BB%D0%B8%D1%82%D0%BA%D0%B8%D0%B9-%D0%A1%D0%BE%D0%B1%D1%87%D1%83%D0%BA.jpg')),
+ entry('dakhabrakha', ('DakhaBrakha', 'ДахаБраха'),
+       ('An acoustic quartet from Kyiv that began at an experimental theater and plays old Ukrainian folk styles with rhythms and sounds from around the world, on accordion, drums, reeds and shakers. In Ukraine the band has long been seen as a cultural ambassador.',
+        'Акустичний квартет із Києва, що постав в експериментальному театрі й поєднує давні українські фольклорні стилі з ритмами та звуками з усього світу — на акордеоні, барабанах, духових і шейкерах. В Україні гурт давно вважають культурним послом країни.'),
+       [('en', 'NPR', '2015-04-25', NPR_DAKHABRAKHA, 'whose music encompasses rhythms and sounds from around the world'),
+        ('en', 'NPR', '2015-04-25', NPR_DAKHABRAKHA, 'accordion, drums, reeds and shakers'),
+        ('en', 'NPR', '2022-04-20', 'https://www.npr.org/2022/04/20/1091770301/ukrainian-band-dakhabrakha-delivers-an-urgent-message-to-u-s-audiences', 'DakhaBrakha was born at an experimental theater in Kyiv'),
+        ('en', 'NPR', '2022-04-20', 'https://www.npr.org/2022/04/20/1091770301/ukrainian-band-dakhabrakha-delivers-an-urgent-message-to-u-s-audiences', 'old Ukrainian folk styles'),
+        ('uk', 'Суспільне Культура', '2020-06-05', 'https://suspilne.media/culture/38456-antologia-ukrainskogo-albomu-dahabraha/', 'ДахаБраха давно вважають культурними послами України')],
+       kind='music', by=('Kyiv', 'Київ'), url=NPR_DAKHABRAKHA, free=True,
+       photo=photo('media-dakhabrakha.jpg', ('DakhaBrakha on stage in Lviv, 2009', 'ДахаБраха на сцені у Львові, 2009 рік'), 'Lyudmyla Dobrynina', 'CC BY 3.0', W + 'DakhaBrakha_in_Lviv.JPG')),
+ entry('jamala', ('Jamala', 'Джамала'),
+       ('Jamala, a Ukrainian singer and composer who studied opera singing at the National Music Academy in Kyiv, won Eurovision in 2016 with 1944, a song about the mass deportation of Crimean Tatars during World War II. Its lyrics in Crimean Tatar were the first time the language was heard on the Eurovision stage.',
+        'Джамала, українська співачка й композиторка, яка закінчила Національну музичну академію в Києві за фахом «оперний спів», перемогла на Євробаченні 2016 року з піснею «1944» про депортацію кримських татар 1944 року. Слова кримськотатарською в цій пісні вперше прозвучали зі сцени Євробачення.'),
+       [('en', 'Eurovision Song Contest', None, ESC_JAMALA, 'Jamala is a Ukrainian singer, composer and actor'),
+        ('en', 'Eurovision Song Contest', None, ESC_JAMALA, 'majoring in opera singing'),
+        ('en', 'NPR', '2016-05-15', 'https://www.npr.org/sections/thetwo-way/2016/05/15/478114068/a-heavy-dose-of-glitter-pyrotechnics-and-politics-at-eurovision-2016', 'the mass deportation of Crimean Tatars during World War II'),
+        ('en', 'Eurovision Song Contest', None, 'https://www.eurovision.com/eurovision-song-contest/stockholm-2016/', 'marked the first time the language had been heard on the Eurovision stage'),
+        ('uk', 'Українська правда. Життя', '2016-05-15', 'https://life.pravda.com.ua/culture/2016/05/15/212345/', 'яка розповідає про депортацію кримських татар 1944 року')],
+       kind='music', by=('1944, Eurovision winner, 2016', '«1944», переможниця Євробачення, 2016'), url=ESC_JAMALA, free=True, related=('history', 'The Crimean Tatars are deported'),
+       photo=photo('media-jamala.jpg', ('Jamala singing 1944 at a Eurovision rehearsal in Stockholm, 2016', 'Джамала співає «1944» на репетиції Євробачення у Стокгольмі, 2016 рік'), 'Albin Olsson', 'CC BY-SA 4.0', W + 'ESC2016_-_Ukraine_05.jpg')),
+ entry('kalush-orchestra', ('Kalush Orchestra', 'Kalush Orchestra'),
+       ('A Ukrainian hip-hop band that combines ethnic motifs with modern sounds on folk instruments, named after the city of Kalush, the hometown of band member Oleh Psiuk. It won Eurovision in 2022 with Stefania, a tribute to Psiuk’s mother and the first winning song sung entirely in Ukrainian.',
+        'Український хіп-хоп-гурт, що поєднує етнічні мотиви із сучасним звучанням на народних інструментах; він названий на честь Калуша, рідного міста учасника гурту Олега Псюка. 2022 року гурт переміг на Євробаченні з піснею «Стефанія», присвяченою матері Псюка, — першою піснею-переможницею, яку виконали повністю українською.'),
+       [('en', 'Eurovision Song Contest', None, ESC_KALUSH, 'Ukrainian hip-hop band that combines ethnic motifs with modern sounds using different folk instruments'),
+        ('en', 'Eurovision Song Contest', None, ESC_KALUSH, 'The band was named after the Ukrainian city of Kalush'),
+        ('en', 'Eurovision Song Contest', None, ESC_KALUSH, 'it is the hometown of band member Oleh Psiuk'),
+        ('en', 'Eurovision Song Contest', None, ESC_KALUSH, 'is a tribute to Oleh’s mother'),
+        ('en', 'Eurovision Song Contest', None, 'https://www.eurovision.com/eurovision-song-contest/turin-2022/', 'the first Eurovision winner sung entirely in Ukrainian'),
+        ('uk', 'Суспільне Культура', '2022-05-15', 'https://suspilne.media/culture/239552-peremozcem-evrobacenna-2022-stali-predstavniki-ukraini-kalush-orchestra/', 'Переможцем Євробачення-2022 стали Kalush Orchestra з піснею Stefania')],
+       kind='music', by=('Stefania, Eurovision winner, 2022', '«Стефанія», переможниця Євробачення, 2022'), url=ESC_KALUSH, free=True,
+       photo=photo('media-kalush.jpg', ('Kalush Orchestra performing Stefania at the first Eurovision semi-final in Turin, 2022', 'Kalush Orchestra виконує «Стефанію» в першому півфіналі Євробачення в Турині, 2022 рік'),
+                   'Michael Doherty', 'CC BY-SA 4.0', W + 'Eurovision_2022_-_Semi-final_1_-_Ukraine_-_Kalush_Orchestra_(01).jpg')),
+]
+
 SECTIONS = [  # id, title, introduction, entries
  ('culture-food', ('Food and recipes', 'Кухня та рецепти'),
   ('Dishes that are Ukrainian by origin, each with a recipe from a Ukrainian source. The recipes stay on their authors’ sites.',
@@ -467,6 +583,9 @@ SECTIONS = [  # id, title, introduction, entries
  ('culture-holidays', ('Holidays and dates', 'Свята та пам’ятні дати'), None, HOLIDAYS),
  ('culture-events', ('Ukrainian festivals in the United States', 'Українські фестивалі у Сполучених Штатах'),
   ('Recurring events open to the public. Dates change from year to year, so check the organizer’s page.', 'Регулярні події, відкриті для всіх. Дати щороку змінюються, тож перевіряйте сторінку організатора.'), EVENTS),
+ ('culture-media', ('Read, watch, listen', 'Читати, дивитися, слухати'),
+  ('Books you can read in English, films and music, each with a link to where to find it.',
+   'Книжки, які можна прочитати англійською, фільми й музика — до кожного посилання, де їх знайти.'), MEDIA),
  ('culture-resources', ('Museums and ways to learn more', 'Музеї та де дізнатися більше'), None, RESOURCES),
 ]
 
@@ -487,12 +606,21 @@ RESOURCE_KINDS = {
     'read': (('Read', 'Читати'), ['harvard-library-ukrainian-literature', 'ukrainer', 'encyclopedia-of-ukraine']),
 }
 KIND_OF_RESOURCE = {key: kind for kind, (_, keys) in RESOURCE_KINDS.items() for key in keys}
+# What each entry in Read, watch, listen is, and the label of the link to where to find it.
+MEDIA_KINDS = {
+    'book': (('Book', 'Книжка'), ('Where to read it', 'Де прочитати')),
+    'film': (('Film', 'Фільм'), ('Where to watch it', 'Де подивитися')),
+    'music': (('Music', 'Музика'), ('Where to listen', 'Де послухати')),
+}
 # Line icons, 24 by 24, drawn with the stroke: a building with columns, a speech bubble, an open book, a map pin.
 ICONS = {
     'visit': 'M3 21h18M4 9.5h16M12 3 4 7.5h16ZM6.5 9.5v8.5M10 9.5v8.5M14 9.5v8.5M17.5 9.5v8.5M3.5 18h17',
     'learn': 'M4 5h16v10H9l-5 4ZM8 9h8M8 12h5',
     'read': 'M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5ZM12 6.5v13',
     'pin': 'M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+    'book': 'M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5ZM12 6.5v13',
+    'film': 'M4 4h16v16H4ZM8 4v16M16 4v16M4 8h4M4 12h4M4 16h4M16 8h4M16 12h4M16 16h4',
+    'music': 'M9 18.5V6l11-2v12.5M9 18.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM20 16.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z',
 }
 MONTHS_SHORT = (['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 ['Січ', 'Лют', 'Бер', 'Квіт', 'Трав', 'Черв', 'Лип', 'Серп', 'Вер', 'Жовт', 'Лист', 'Груд'])
@@ -511,7 +639,7 @@ def _validate():
     for section_id, _, _, entries in SECTIONS:
         for x in entries:
             where = f"{section_id}: {x['key']}"
-            for field in ('name', 'about') + tuple(f for f in ('date', 'where', 'when') if f in x):
+            for field in ('name', 'about') + tuple(f for f in ('date', 'where', 'when', 'by') if f in x):
                 if len(x[field]) != 2 or not all(t.strip() for t in x[field]): raise ValueError(f'{where}: {field} needs English and Ukrainian text')
             if '“' in x['about'][0] or '"' in x['about'][0]: raise ValueError(f'{where}: write the text in our own words, without quotations')
             if not x['sources']: raise ValueError(f'{where}: no source')
@@ -529,6 +657,8 @@ def _validate():
         for en, _ in RELABELS[x['key']]:
             if en.casefold() not in x['about'][0].casefold(): raise ValueError(f"RELABELS: {x['key']} does not say {en!r}")
     if set(KIND_OF_RESOURCE) != {x['key'] for x in RESOURCES} or len(KIND_OF_RESOURCE) != len(RESOURCES): raise ValueError('RESOURCE_KINDS needs every resource exactly once')
+    for x in MEDIA:
+        if x.get('kind') not in MEDIA_KINDS or 'by' not in x or not x.get('url', '').startswith('https://'): raise ValueError(f"culture-media: {x['key']} needs a kind, by and url")
     for x in HOLIDAYS: leaf(x['date'][0])
     for x in EVENTS: leaf(x['when'][0])
 _validate()
@@ -587,10 +717,14 @@ def _recipes(x):
         out.append(f'<div class="recipes" {attrs}><span class="recipes-label">{label}</span>{buttons}</div>')
     return ''.join(out)
 
+RELATED_LABELS = {'history': ('In the timeline: ', 'В історії: '), 'story': ('Story: ', 'Історія: ')}
+
 def _timeline(x, targets):
+    """The link from an entry to its timeline entry or its story."""
     if not x.get('related'): return ''
     target_id, en, uk = targets[x['related']]
-    return f'<p class="c-link"><a href="#{target_id}">{both("In the timeline: " + en, "В історії: " + uk)}</a></p>'
+    label_en, label_uk = RELATED_LABELS[x['related'][0]]
+    return f'<p class="c-link"><a href="#{target_id}">{both(label_en + en, label_uk + uk)}</a></p>'
 
 def _media(x):
     """The entry's photo with its credit, or, without one, its Ukrainian name on an embroidery pattern."""
@@ -655,6 +789,21 @@ def _resource(x, section_id, targets):
           {_sources(x)}
         </article>"""
 
+def _work(x, section_id, targets):
+    """A book, film or music: picture, what it is and whose, name, text, where to find it, sources."""
+    label, action = MEDIA_KINDS[x['kind']]
+    free = f'<span class="c-free">{both("Free", "Безкоштовно")}</span>' if x.get('free') else ''
+    return f"""        <article class="culture-item c-card" id="{section_id}-{x['key']}" tabindex="-1">
+          {_media(x)}
+          <div class="c-body">
+            <p class="c-kind"><span class="c-kind-icon">{_icon(x['kind'])}</span>{both(*label)} · {both(*x['by'])}</p>
+            {_head(x)}
+            <p class="c-about">{both(*x['about'])}</p>{_timeline(x, targets)}
+            <p class="c-actions"><a class="place-btn" href="{html.escape(x['url'])}" target="_blank" rel="noopener">{both(*action)}<span class="visually-hidden">: {both(*x['name'])}</span></a>{free}</p>
+            {_sources(x)}
+          </div>
+        </article>"""
+
 # How each section lays out its entries: the renderer, the grid's class, and the order of the entries.
 LAYOUTS = {
     'culture-food': (_card, 'c-grid', None),
@@ -662,6 +811,7 @@ LAYOUTS = {
     'culture-corrections': (_correction, 'fix-list', None),
     'culture-holidays': (lambda x, s, t: _dated(x, s, t, 'date'), 'c-grid dated-grid', lambda x: leaf(x['date'][0])[0]),
     'culture-events': (lambda x, s, t: _dated(x, s, t, 'when'), 'c-grid dated-grid', lambda x: leaf(x['when'][0])[0]),
+    'culture-media': (_work, 'c-grid', None),
     'culture-resources': (_resource, 'c-grid', lambda x: list(RESOURCE_KINDS).index(KIND_OF_RESOURCE[x['key']])),
 }
 
