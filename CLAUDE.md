@@ -189,11 +189,19 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко). When that is done, delete the footer paragraph in `template.html` that says the
   Ukrainian is a machine translation, with its link to the review page.
-- The places list has 101 places in 29 states and DC, from three passes of state-by-state research
-  (October 3, 2026) in local press and the businesses' own sites. Every state was searched at least
-  once; the 21 without a listing turned up nothing that passes rule 2 (the near-misses are in `held`).
-  Worth rechecking: Hatta Ukrainian Cuisine (Wood Village, OR), whose own site failed to load; Just
-  Right Cake (Wausau, WI), Ukrainian-owned but closed as of October 2026; Mriya Bakery (Vancouver, WA). Undecided: Multicook-style prepared and frozen-food shops (held).
+- The places list has 109 places in 31 states and DC, from three passes of state-by-state research
+  (October 3, 2026) in local press and the businesses' own sites, and a fourth (October 6) aimed at the
+  states where the Census shows many people of Ukrainian ancestry and few listings: Oregon, Connecticut,
+  Massachusetts, New Jersey, Michigan, Ohio and California. Every state was searched at least once; the
+  near-misses are in `held`. That pass ran out of web searches, so New Jersey, Massachusetts,
+  Connecticut and California's Central Valley got lighter coverage. Rowan's calls on it: a chocolate
+  shop counts as a gift shop (DoChéri), and Travel Oregon's guide is not press (Hatta stays held).
+  Worth rechecking: Hatta Ukrainian Cuisine (Wood Village, OR), whose own site fails to load; Just
+  Right Cake (Wausau, WI), Ukrainian-owned but closed as of October 2026; Mriya Bakery (Vancouver, WA);
+  places that had not opened in October 2026: Odesa by Chef Sergey (Midland, MI), Franko & Friends
+  (San Francisco) and Muse Cheesecakes & Bakery's shop (San Diego); Tupelo Coffee's second café, at
+  1500 Q Street in Sacramento, once its rebrand is done; and Gold Cup Coffee (Vancouver, WA), whose
+  owner was born in Ukraine (KOIN, 2022). Undecided: Multicook-style prepared and frozen-food shops (held).
   `python scout.py` gives OpenStreetMap leads. New places must pass rule 2.
 - Most pre-2022 history rests on one encyclopedia. A second independent source on the contested
   entries (Pereiaslav, the Holodomor, Crimea) would strengthen it.
