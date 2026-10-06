@@ -128,7 +128,8 @@ before the page draws, so it never flashes the other theme.
 - **Ukraine House DC Foundation** (EIN 87-2080907): reported as UNITED24's US partner, not confirmed
   on UNITED24's site, 2 of 4 stars on Charity Navigator.
 - **Revived Soldiers Ukraine**: 3 of 4 stars, but its site could not be read.
-- Eight businesses held back from the places list; see `data/places_review.json`.
+- Businesses held back from the places list, each with the reason, are under `held` in `data/places_review.json`;
+  `scout.py` skips them, so the monthly lead finder does not suggest them again.
 - **Stories left out on purpose:** Tamara Islyamova's testimony of the 1944 deportation (Krym.Realii,
   Ukrainian only), because she lives in Crimea, now occupied; Mustafa Dzhemilev's story covers the
   deportation instead. Kateryna Temchenko (Cap Times, Madison, February 2025), because the story turns
