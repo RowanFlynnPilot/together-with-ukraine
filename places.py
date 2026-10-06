@@ -111,6 +111,10 @@ def shown(name):
     """A business name as the page shows it: with a typographic apostrophe, like the rest of the page."""
     return name.replace("'", '’')
 
+def group_id(state):
+    """The anchor of a state's listings, which opens the list filtered to that state."""
+    return 'places-' + slug(state)
+
 def targets():
     """(name, city) -> (element id, English label, Ukrainian label), for links from other sections."""
     out = {}
@@ -204,7 +208,7 @@ def render(story_links):
     e = html.escape; out = []
     target_ids = {key: target[0] for key, target in targets().items()}  # a story about a business shows on all its listings in that city
     for state in sorted(STATES_WITH_PLACES):
-        out.append(f'<div class="state-group" data-state="{STATE_IDS[state]}">\n  <h3 class="group-name">{both(state, places_uk.STATES[state])}</h3>\n  <div class="cards">')
+        out.append(f'<div class="state-group" id="{group_id(state)}" tabindex="-1" data-state="{STATE_IDS[state]}">\n  <h3 class="group-name">{both(state, places_uk.STATES[state])}</h3>\n  <div class="cards">')
         for p in sorted((p for p in PLACES if p['state'] == state), key=lambda p: (p['name'], p['city'])):
             address = ', '.join(e(x) for x in (p['street'], p['city']) if x)
             query = quote(', '.join((p['name'], p['street'], p['city'], p['state'])))

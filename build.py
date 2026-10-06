@@ -7,7 +7,7 @@ the same id, or a US charity without a pulled record."""
 import json, pathlib, re, struct, sys, zlib
 from collections import Counter
 
-import culture, give, history, places, places_uk, stories
+import culture, diaspora, give, history, places, places_uk, stories
 from i18n import both, dates, fill_markers, plural_uk
 
 ROOT = pathlib.Path(__file__).parent
@@ -33,18 +33,20 @@ def nav(items, indent='      '):
     return '\n'.join(f'{indent}<a href="#{i}">{both(en, uk)}</a>' for i, en, uk in items)
 
 def overview():
-    """Links to the five tabs with how much each holds, counted from the content so they stay true."""
+    """Links to the six tabs with how much each holds, counted from the content so they stay true."""
+    def counted(n, en, uk): return str(n), str(n), en[n != 1], plural_uk(n, *uk)
     counts = [
-        ('culture', len(culture.DISHES), ('dish with a recipe', 'dishes with recipes'), ('страва з рецептом', 'страви з рецептами', 'страв із рецептами')),
-        ('history', sum(len(events) for _, _, _, events in history.ERAS), ('turning point', 'turning points'), ('поворотний момент', 'поворотні моменти', 'поворотних моментів')),
-        ('stories', len(stories.STORIES), ('story', 'stories'), ('історія', 'історії', 'історій')),
-        ('places', len(places.PLACES), ('place to eat and shop', 'places to eat and shop'), ('заклад', 'заклади', 'закладів')),
-        ('give', sum(len(orgs) for _, _, orgs in give.GROUPS), ('way to help', 'ways to help'), ('спосіб допомогти', 'способи допомогти', 'способів допомогти')),
+        ('culture', counted(len(culture.DISHES), ('dish with a recipe', 'dishes with recipes'), ('страва з рецептом', 'страви з рецептами', 'страв із рецептами'))),
+        ('history', counted(sum(len(events) for _, _, _, events in history.ERAS), ('turning point', 'turning points'), ('поворотний момент', 'поворотні моменти', 'поворотних моментів'))),
+        ('stories', counted(len(stories.STORIES), ('story', 'stories'), ('історія', 'історії', 'історій'))),
+        ('in-the-us', diaspora.overview()),
+        ('places', counted(len(places.PLACES), ('place to eat and shop', 'places to eat and shop'), ('заклад', 'заклади', 'закладів'))),
+        ('give', counted(sum(len(orgs) for _, _, orgs in give.GROUPS), ('way to help', 'ways to help'), ('спосіб допомогти', 'способи допомогти', 'способів допомогти'))),
     ]
     links = []
-    for panel, n, en, uk in counts:
-        label = both(en[n != 1], plural_uk(n, *uk))
-        links.append(f'        <a class="overview-link" href="#{panel}"><span class="overview-num">{n}</span><span class="overview-label">{label}</span></a>')
+    for panel, (n_en, n_uk, en, uk) in counts:
+        n = n_en if n_en == n_uk else both(n_en, n_uk)
+        links.append(f'        <a class="overview-link" href="#{panel}"><span class="overview-num">{n}</span><span class="overview-label">{both(en, uk)}</span></a>')
     return '\n'.join(links)
 
 def build():
@@ -70,12 +72,14 @@ def build():
             .replace('__PLACES_SUMMARY__', both(summary_en, summary_uk)).replace('__PLACE_LIST__', places.render(back['place']))
             .replace('__PLACE_PHOTOS__', places.photo_strip()).replace('__KIND_FILTER__', places.kind_filter()).replace('__PLACE_ICONS__', places.icons())
             .replace('__GIVE_NAV__', nav(give_nav)).replace('__GIVE__', give_html)
+            .replace('__CENSUS__', diaspora.render()).replace('__CENSUS_YEAR__', str(diaspora.YEAR))
             .replace('__RECORDS_EN__', records_en).replace('__RECORDS_UK__', records_uk)
             .replace('__GIVE_REVIEWED_EN__', give_en).replace('__GIVE_REVIEWED_UK__', give_uk)
             .replace('__PLACES_REVIEWED_EN__', places_en).replace('__PLACES_REVIEWED_UK__', places_uk_date)
             .replace('__AS_OF_EN__', as_of_en).replace('__AS_OF_UK__', as_of_uk).replace('__OVERVIEW__', overview())
             .replace('__PLACES__', embed(places.map_data())).replace('__STATES__', embed(places.TOPO))
-            .replace('__PLACES_UK__', embed({'states': places_uk.STATES})))
+            .replace('__PLACES_UK__', embed({'states': places_uk.STATES}))
+            .replace('__CENSUS_DATA__', embed(diaspora.map_data())))
 
     markup = page.split('<script type="application/json"')[0]
     if '__' in markup or '{{' in markup:

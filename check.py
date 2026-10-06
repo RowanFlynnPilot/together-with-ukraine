@@ -9,6 +9,7 @@
 4. The scripts loaded from the CDN must still match their integrity hashes, or browsers will refuse them.
 5. Nothing the page dates may be too old: the entries about the war today, and the reviews by hand
    of the places and of the Give list.
+6. The Census figures must be the latest year the Census Bureau has published.
 
 Prints a report and exits 1 if anything changed, broke or went stale, so a scheduled run fails loudly.
 
@@ -20,7 +21,7 @@ confirmed on them, are listed for a look by hand instead of failing the run. Any
 error fails it, because browsers would show a warning too."""
 import base64, datetime, hashlib, html, json, pathlib, re, sys, time
 
-import build, culture, give, history, places, stories
+import build, census, culture, diaspora, give, history, places, stories
 from records import RequestException, charity_navigator_record, get, irs_record
 
 DATA = pathlib.Path(__file__).parent / 'data'
@@ -74,6 +75,15 @@ def page_text(response):
     """The page's text with the tags removed. Script contents stay, because some sites carry their text in page data."""
     return normalize(html.unescape(re.sub(r'<[^>]+>', ' ', response.text)))
 
+def census_problems():
+    """A newer year of the Census figures than data/census.json holds."""
+    year = diaspora.YEAR + 1
+    try:
+        if not census.published(year): return []
+    except (RequestException, ValueError) as error:
+        return [f'could not check for {year} Census figures ({error})']
+    return [f'the Census Bureau has published its {year} figures: run census.py, review the diff and commit']
+
 def web_report():
     """Returns (problems, refused, link count, phrase count). refused lists each refused url with the phrases it should carry."""
     page = build.build()
@@ -100,7 +110,7 @@ def web_report():
 
 if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
-    problems = record_problems() + stale()
+    problems = record_problems() + stale() + census_problems()
     web_problems, refused, links, phrases = web_report()
     problems += web_problems
     print(f'{links} links, {phrases} phrases on them, {len(give.EINS)} charity records checked.')

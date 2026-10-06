@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400&display=swap">
 <!-- Without the script the tabs cannot switch, so show every section in turn. -->
-<noscript><style>section[role="tabpanel"][hidden] { display: block !important; } .wheat, .lang, .place-filters, .map-frame, .map-hint { display: none; }</style></noscript>
+<noscript><style>section[role="tabpanel"][hidden] { display: block !important; } .wheat, .lang, .place-filters, .map-frame, .map-hint, .us-map-frame { display: none; }</style></noscript>
 <style>
 :root {
   color-scheme: light dark;
@@ -45,6 +45,7 @@
   --shadow: rgba(11, 31, 58, 0.14);
   --card-shadow: 0 1px 2px rgba(11, 31, 58, 0.06), 0 6px 18px rgba(11, 31, 58, 0.06);
   --star: #B07D00;
+  --seq-1: #86b6ef; --seq-2: #3987e5; --seq-3: #256abf; --seq-4: #184f95; --seq-5: #0d366b; --bar: #2a78d6;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -62,6 +63,7 @@
     --shadow: rgba(0, 0, 0, 0.45);
     --card-shadow: none;
     --star: #FFD700;
+    --seq-1: #184f95; --seq-2: #2a78d6; --seq-3: #5598e7; --seq-4: #9ec5f4; --seq-5: #cde2fb; --bar: #3987e5;
   }
 }
 :root[data-theme="light"] { color-scheme: light; }
@@ -77,6 +79,7 @@
   --shadow: rgba(0, 0, 0, 0.45);
   --card-shadow: none;
   --star: #FFD700;
+  --seq-1: #184f95; --seq-2: #2a78d6; --seq-3: #5598e7; --seq-4: #9ec5f4; --seq-5: #cde2fb; --bar: #3987e5;
 }
 *, *::before, *::after { box-sizing: inherit; }
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
@@ -114,12 +117,12 @@ a { color: var(--link); }
 .lang button[aria-pressed="true"] { background: #FFFFFF; color: var(--sky); font-weight: 700; }
 .lang button[aria-pressed="false"]:hover { background: rgba(255, 255, 255, 0.15); }
 /* What is here: one link per tab, with its count. */
-.overview { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.5rem; margin: 2rem 0 0; max-width: 56rem; }
+.overview { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.5rem; margin: 2rem 0 0; max-width: 64rem; }
 .overview-link { display: grid; align-content: start; gap: 0.15rem; padding: 0.7rem 0.85rem 0.75rem; background: rgba(11, 31, 58, 0.45); border-top: 3px solid var(--wheat); color: #FFFFFF; text-decoration: none; }
 .overview-link:hover { background: rgba(11, 31, 58, 0.7); }
 .overview-num { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; line-height: 1; color: var(--wheat); font-variant-numeric: tabular-nums; }
 .overview-label { font-size: 0.9375rem; line-height: 1.25; }
-/* On a narrow screen the five sit in one row to swipe, so the tabs stay near the top. */
+/* On a narrow screen the six sit in one row to swipe, so the tabs stay near the top. */
 @media (max-width: 44rem) { .overview { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 8.25rem; overflow-x: auto; scroll-snap-type: x mandatory; margin-top: 1.5rem; padding-bottom: 0.35rem; } .overview-link { scroll-snap-align: start; } }
 .title { margin: 0; font-weight: 700; }
 .title-uk { display: block; font-size: clamp(2.75rem, 10vw, 7rem); line-height: 0.95; letter-spacing: -0.01em; }
@@ -140,7 +143,9 @@ a { color: var(--link); }
 .skip-link { position: absolute; z-index: 10; top: 0.5rem; left: 0.5rem; padding: 0.6rem 1rem; background: var(--wheat); color: #0B1F3A; font-weight: 700; transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
 main:focus { outline: none; }
-@media (max-width: 34rem) { .tab { padding: 1rem 0.1rem; font-size: 0.9375rem; line-height: 1.2; } }
+/* Six tabs share a phone's width: the bar gives up its side margins, and on the narrowest screens the words shrink. */
+@media (max-width: 34rem) { .tabs.wrap { padding: 0 0.25rem; } .tab { padding: 1rem 0.1rem; font-size: 0.9375rem; line-height: 1.2; } }
+@media (max-width: 22rem) { .tab { font-size: 0.8125rem; } }
 
 main.wrap { padding-top: 3rem; padding-bottom: 4rem; }
 h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 0.75rem; }
@@ -148,7 +153,7 @@ h3 { font-size: 1.375rem; line-height: 1.25; margin: 0; }
 .intro { max-width: 40rem; margin: 0 0 2.5rem; color: var(--muted); }
 .intro.tight { margin-bottom: 1rem; }
 /* Anything a link can jump to clears the sticky tab bar, and briefly lights up when reached. */
-#content, [role="tabpanel"], .era, .event, .theme, .story, .place, .org, .culture-section, .culture-item { scroll-margin-top: 6.5rem; }
+#content, [role="tabpanel"], .era, .event, .theme, .story, .place, .state-group, .org, .culture-section, .culture-item { scroll-margin-top: 6.5rem; }
 .event:focus, .story:focus, .place:focus, .org:focus, .culture-item:focus { outline: none; }
 .flash { animation: flash 2.5s ease-out; }
 @keyframes flash { from { background: var(--wash); box-shadow: 0 0 0 0.6rem var(--wash); } to { background: transparent; box-shadow: 0 0 0 0.6rem transparent; } }
@@ -355,6 +360,81 @@ html.js .story-text:not(.open) { display: -webkit-box; -webkit-box-orient: verti
 .c-resource .why { margin-top: 0.2rem; }
 @media (prefers-reduced-motion: reduce) { .tile img { transition: none; } }
 
+/* In the US: Census figures. The map's classes are one blue, light to dark, and dark to light on the dark theme,
+   each set checked for even steps; the bars are the same blue. Numbers stay in the text colors. */
+.us-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0 0 3rem; }
+.stat { margin: 0; padding: 1.1rem 1.25rem 1.2rem; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--sky); }
+.stat p { margin: 0; }
+.stat-num { font-size: clamp(2.25rem, 5vw, 3.25rem); font-weight: 700; line-height: 1; font-variant-numeric: proportional-nums; }
+.stat .stat-moe { margin-top: 0.35rem; color: var(--muted); font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+.stat .stat-label { margin-top: 0.6rem; }
+.trend-title { font-weight: 700; }
+.cols { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--muted); }
+.col { display: grid; justify-items: center; }
+.col-plot { position: relative; width: 1.5rem; height: 6.5rem; margin-top: 1.4rem; }
+.col-bar { position: absolute; inset: auto 0 0 0; background: var(--bar); border-radius: 4px 4px 0 0; }
+.col-moe { position: absolute; left: calc(50% - 0.75px); border-left: 1.5px solid var(--ink); opacity: 0.6; }
+.col-value { position: absolute; left: 50%; transform: translateX(-50%); padding-bottom: 0.2rem; font-size: 0.8125rem; line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.col-year { order: 2; margin-top: 0.3rem; color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.trend-note { margin: 0.75rem 0 0; font-size: 0.9375rem; }
+@media (max-width: 54rem) { .us-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .trend { grid-column: 1 / -1; } }
+@media (max-width: 34rem) { .us-stats { grid-template-columns: minmax(0, 1fr); } }
+.us-block { margin: 0 0 3rem; }
+.us-block h3 { margin: 0 0 0.25rem; }
+.us-sub { margin: 0 0 1rem; color: var(--muted); }
+.us-legend { list-style: none; margin: 0 0 0.75rem; padding: 0; display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; font-size: 0.9375rem; }
+.us-legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
+.swatch { display: inline-block; width: 1.1rem; height: 1.1rem; }
+.bin-1 { fill: var(--seq-1); background: var(--seq-1); }
+.bin-2 { fill: var(--seq-2); background: var(--seq-2); }
+.bin-3 { fill: var(--seq-3); background: var(--seq-3); }
+.bin-4 { fill: var(--seq-4); background: var(--seq-4); }
+.bin-5 { fill: var(--seq-5); background: var(--seq-5); }
+/* Not published: a hatch rather than a color, so it never reads as a value. */
+.bin-0 { fill: url(#us-hatch); background: repeating-linear-gradient(45deg, var(--muted) 0 1.5px, var(--paper) 1.5px 5px); }
+.hatch-bg { fill: var(--paper); }
+.hatch-line { stroke: var(--muted); stroke-width: 1.5; }
+.us-map-frame { position: relative; max-width: 52rem; }
+#us-map { display: block; width: 100%; height: auto; }
+.us-state { stroke: var(--paper); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.us-state:hover, .us-state.on { stroke: var(--ink); stroke-width: 2; }
+/* Positioned, so the hidden labels inside scroll with the table instead of widening the page. A shadow shows at an edge
+   while more of the table lies beyond it; the paper-colored covers scroll with the table and hide it at the ends. */
+.table-scroll {
+  position: relative; overflow-x: auto;
+  background: linear-gradient(to right, var(--paper) 30%, transparent) left / 2rem 100% no-repeat local,
+    linear-gradient(to left, var(--paper) 30%, transparent) right / 2rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--shadow), transparent) left / 0.75rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--shadow), transparent) right / 0.75rem 100% no-repeat scroll;
+}
+.us-table { width: 100%; min-width: 42rem; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.us-table th, .us-table td { padding: 0.5rem 1rem 0.5rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+.us-table thead th { color: var(--muted); font-size: 0.875rem; vertical-align: bottom; }
+.us-table .num { text-align: right; }
+.us-table td:nth-child(2) { width: 36%; }
+.us-table td:last-child, .us-table th:last-child { padding-right: 0; }
+.fig { white-space: nowrap; }
+.moe, .na { color: var(--muted); font-size: 0.875rem; white-space: nowrap; }
+.bar { position: relative; display: block; height: 0.625rem; margin-top: 0.35rem; }
+.bar-fill { position: absolute; inset: 0 auto 0 0; background: var(--bar); border-radius: 0 4px 4px 0; }
+.bar-moe { position: absolute; top: calc(50% - 0.75px); border-top: 1.5px solid var(--ink); opacity: 0.6; }
+@media (max-width: 40rem) { .us-table { min-width: 31rem; } .us-table th, .us-table td { padding-right: 0.75rem; } .us-table .moe { display: block; } }
+html.js .us-table:not(.open) tr.more { display: none; }
+.more-btn { margin-top: 1rem; font: inherit; font-size: 1rem; font-weight: 700; padding: 0.4rem 0.85rem; border: 2px solid var(--link); background: var(--paper); color: var(--link); cursor: pointer; }
+.more-btn:hover { background: var(--link); color: var(--paper); }
+.more-btn[aria-expanded="true"] .when-closed, .more-btn[aria-expanded="false"] .when-open { display: none; }
+.metros { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; max-width: 52rem; }
+.metro { display: grid; grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr) auto; grid-template-areas: "name bar fig" "born bar fig"; column-gap: 1rem; align-items: center; }
+.metro p { margin: 0; }
+.metro-name { grid-area: name; font-weight: 700; line-height: 1.25; }
+.metro-states { color: var(--muted); font-size: 0.875rem; font-weight: 400; }
+.metro-born { grid-area: born; color: var(--muted); font-size: 0.875rem; line-height: 1.3; }
+.metro .bar { grid-area: bar; height: 1rem; margin: 0; }
+.metro-fig { grid-area: fig; text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 40rem) { .metro { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name fig" "born born" "bar bar"; row-gap: 0.25rem; } }
+.us-notes h3 { font-size: 1.125rem; }
+.us-notes ul { margin: 0.6rem 0 0; padding-left: 1.2rem; display: grid; gap: 0.5rem; }
+
 /* Places */
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
@@ -427,6 +507,7 @@ select {
 }
 .map-tip strong { display: block; }
 .map-tip.below { transform: translate(-50%, 12px); }
+.us-map-frame .map-tip { max-width: 20rem; }
 .map-tip.below::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #FFFFFF; }
 .map-tip::after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #FFFFFF; }
 .map-hint { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.9375rem; }
@@ -566,7 +647,7 @@ footer p { margin: 0; }
         <span class="title-uk" lang="uk">Разом з Україною</span>
         <span class="title-en" data-l="en">Together with Ukraine</span>
       </h1>
-      <p class="lede">{{Discover Ukraine’s culture and food, read how the country got here and the stories of its people, eat and shop at Ukrainian places in the United States, and give to the people defending it.||Відкрийте культуру й кухню України, дізнайтеся, який шлях пройшла країна, прочитайте історії її людей, знайдіть українські заклади у Сполучених Штатах і підтримайте тих, хто її захищає.}}</p>
+      <p class="lede">{{Discover Ukraine’s culture and food, read how the country got here and the stories of its people, see where Ukrainian Americans live and where to eat and shop, and give to the people defending it.||Відкрийте культуру й кухню України, дізнайтеся, який шлях пройшла країна, прочитайте історії її людей, подивіться, де у Сполучених Штатах живуть українці і де є українські заклади, та підтримайте тих, хто її захищає.}}</p>
       <nav class="overview" aria-labelledby="overview-label">
         <span class="visually-hidden" id="overview-label">{{What is here||Що тут є}}</span>
 __OVERVIEW__
@@ -582,6 +663,7 @@ __OVERVIEW__
     <button class="tab" role="tab" id="tab-culture" aria-controls="culture" aria-selected="true">{{Culture||Культура}}</button>
     <button class="tab" role="tab" id="tab-history" aria-controls="history" aria-selected="false" tabindex="-1">{{History||Історія}}</button>
     <button class="tab" role="tab" id="tab-stories" aria-controls="stories" aria-selected="false" tabindex="-1">{{People||Люди}}</button>
+    <button class="tab" role="tab" id="tab-in-the-us" aria-controls="in-the-us" aria-selected="false" tabindex="-1">{{In the US||У США}}</button>
     <button class="tab" role="tab" id="tab-places" aria-controls="places" aria-selected="false" tabindex="-1">{{Eat and shop||Заклади}}</button>
     <button class="tab" role="tab" id="tab-give" aria-controls="give" aria-selected="false" tabindex="-1">{{Give||Допомогти}}</button>
   </div>
@@ -620,6 +702,12 @@ __THEME_NAV__
     </nav>
 
 __STORIES__
+  </section>
+
+  <section id="in-the-us" role="tabpanel" aria-labelledby="tab-in-the-us" hidden>
+    <h2>{{Ukrainians in America||Українці в Америці}}</h2>
+    <p class="intro">{{How many people of Ukrainian ancestry live in the United States, and where, in the Census Bureau’s American Community Survey for __CENSUS_YEAR__, the latest year published. States with listed places link to them in Eat and shop.||Скільки людей українського походження живе у Сполучених Штатах і де саме — за даними Американського опитування громад (American Community Survey) Бюро перепису населення США за __CENSUS_YEAR__ рік, останній опублікований. Штати, де є заклади зі списку, мають посилання на них у розділі «Заклади».}}</p>
+__CENSUS__
   </section>
 
   <section id="places" role="tabpanel" aria-labelledby="tab-places" hidden>
@@ -704,6 +792,7 @@ __GIVE__
         <li><a href="#culture">{{Culture||Культура}}</a></li>
         <li><a href="#history">{{History||Історія}}</a></li>
         <li><a href="#stories">{{People||Люди}}</a></li>
+        <li><a href="#in-the-us">{{In the US||У США}}</a></li>
         <li><a href="#places">{{Eat and shop||Заклади}}</a></li>
         <li><a href="#give">{{Give||Допомогти}}</a></li>
       </ul>
@@ -714,6 +803,7 @@ __GIVE__
         <li>{{Places were found in local press, on the businesses’ own websites and through OpenStreetMap (© OpenStreetMap contributors, Open Database License), and each was checked against its own website or local press on __PLACES_REVIEWED_EN__.||Заклади знайдено в місцевій пресі, на власних сайтах закладів і через OpenStreetMap (© учасники OpenStreetMap, Open Database License); кожен перевірено за його власним сайтом або місцевою пресою __PLACES_REVIEWED_UK__.}}</li>
         <li>{{Organizations checked __GIVE_REVIEWED_EN__, against IRS records, Charity Navigator and their own published reports.||Організації перевірено __GIVE_REVIEWED_UK__ за реєстром IRS, Charity Navigator та їхніми власними звітами.}}</li>
         <li>{{The history is a short overview. Most entries draw on the Internet Encyclopedia of Ukraine, published by the Canadian Institute of Ukrainian Studies. The entries about the war are current as of __AS_OF_EN__.||Історичний розділ — це стислий огляд. Більшість записів спирається на Internet Encyclopedia of Ukraine, яку видає Канадський інститут українських студій. Записи про війну актуальні станом на __AS_OF_UK__.}}</li>
+        <li>{{The figures on Ukrainian Americans are the Census Bureau’s American Community Survey for __CENSUS_YEAR__, the latest year published, with its margins of error.||Дані про українців у США взято з Американського опитування громад Бюро перепису населення за __CENSUS_YEAR__ рік, останнього опублікованого, разом із похибками.}}</li>
         <li>{{The stories are short summaries; the reports they come from belong to their publishers.||Історії людей — це короткі виклади; оригінальні матеріали належать їхнім видавцям.}}</li>
         <li>{{Every picture is openly licensed or in the public domain, from Wikimedia Commons, and credited beside it.||Усі зображення мають відкриті ліцензії або є суспільним надбанням, походять із Вікісховища й підписані поруч.}}</li>
       </ul>
@@ -728,6 +818,7 @@ __GIVE__
 <script type="application/json" id="places-data">__PLACES__</script>
 <script type="application/json" id="states-data">__STATES__</script>
 <script type="application/json" id="places-uk">__PLACES_UK__</script>
+<script type="application/json" id="census-data">__CENSUS_DATA__</script>
 <script>
 // Tabs. The address keeps the open section (#give) or entry (#story-...), so any of them can be linked to.
 const tabs = [...document.querySelectorAll('.tab')];
@@ -768,6 +859,7 @@ function reveal(target) {
   history.replaceState(null, '', '#' + target.id);
   if (target === panel) return;
   if (target.matches('.place')) showPlace(target);
+  if (target.matches('.state-group')) { kind = ''; select(target.dataset.state); }
   if (target.matches('.story')) openStory(target.querySelector('.story-text'), true);
   target.scrollIntoView();
   if (target.tabIndex === -1) target.focus({ preventScroll: true });
@@ -914,6 +1006,10 @@ function showPlace(card) {
 stateSelect.addEventListener('change', () => select(stateSelect.value));
 mapReset.addEventListener('click', () => select(''));
 for (const chip of chips) chip.addEventListener('click', () => { kind = chip.dataset.kind; filterPlaces(); });
+// The state table shows the largest states first; the button opens the rest.
+const usMore = document.getElementById('us-more');
+usMore.hidden = false;
+usMore.addEventListener('click', () => usMore.setAttribute('aria-expanded', String(document.getElementById('us-table').classList.toggle('open'))));
 // Pointing at a listing lights up its dot on the map.
 list.addEventListener('mouseover', event => hot(event.target.closest('.place')));
 list.addEventListener('mouseleave', () => hot(null));
@@ -1045,6 +1141,44 @@ hot = card => {
 mapLang = () => stateTitles.text(s => nameOf(s.id));
 drawMap();
 mapLang();
+</script>
+<script>
+// The In the US map: each state shaded by its people of Ukrainian ancestry per 1,000 residents. The colors come
+// from the stylesheet, so they follow the theme. The table under the map holds every figure, so nothing is lost
+// without it. In a block of its own, so its names do not meet the places map's.
+{
+  const census = JSON.parse(document.getElementById('census-data').textContent);
+  const shapes = topojson.feature(topo, topo.objects.states).features.filter(s => census[s.id]);
+  const path = d3.geoPath(d3.geoAlbersUsa().fitSize([975, 610], { type: 'FeatureCollection', features: shapes }));
+  const svg = d3.select('#us-map');
+  const hatch = svg.append('defs').append('pattern').attr('id', 'us-hatch')
+    .attr('patternUnits', 'userSpaceOnUse').attr('width', 6).attr('height', 6).attr('patternTransform', 'rotate(45)');
+  hatch.append('rect').attr('class', 'hatch-bg').attr('width', 6).attr('height', 6);
+  hatch.append('line').attr('class', 'hatch-line').attr('y2', 6);
+  const frame = document.querySelector('.us-map-frame');
+  const tip = frame.querySelector('.map-tip');
+  const hide = () => { tip.hidden = true; svg.selectAll('.on').classed('on', false); };
+  const show = (event, s) => {
+    svg.selectAll('.on').classed('on', false);
+    d3.select(event.currentTarget).classed('on', true).raise();
+    const [name, ...lines] = census[s.id][lang];
+    const strong = document.createElement('strong');
+    strong.textContent = name;
+    tip.replaceChildren(strong, ...lines.flatMap(line => [line, document.createElement('br')]).slice(0, -1));
+    tip.hidden = false;
+    const f = frame.getBoundingClientRect(), w = tip.offsetWidth / 2 + 6;
+    const x = event.clientX - f.left, y = event.clientY - f.top;
+    tip.classList.toggle('below', y < tip.offsetHeight + 24);
+    tip.style.left = `${Math.min(Math.max(x, w), f.width - w)}px`;
+    tip.style.top = `${y}px`;
+  };
+  svg.append('g').selectAll('path').data(shapes).join('path')
+    .attr('d', path).attr('class', s => `us-state bin-${census[s.id].bin}`)
+    .on('pointerenter pointermove', show)
+    // A finger lifted from the screen leaves the state at once; its figures stay until the next tap elsewhere.
+    .on('pointerleave', event => { if (event.pointerType !== 'touch') hide(); });
+  document.addEventListener('pointerdown', event => { if (!event.target.closest('.us-state')) hide(); });
+}
 </script>
 </body>
 </html>

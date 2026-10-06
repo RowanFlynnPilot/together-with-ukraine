@@ -1,0 +1,703 @@
+{
+ "year": 2024,
+ "pulled": "2026-10-05",
+ "us": {
+  "population": 340110990,
+  "ancestry": [
+   1263837,
+   36402
+  ],
+  "born": [
+   510016,
+   22720
+  ]
+ },
+ "born_by_year": {
+  "2021": [
+   398040,
+   15525
+  ],
+  "2022": [
+   427163,
+   19243
+  ],
+  "2023": [
+   468780,
+   18854
+  ],
+  "2024": [
+   510016,
+   22720
+  ]
+ },
+ "states": {
+  "Alabama": {
+   "fips": "01",
+   "population": 5157699,
+   "ancestry": [
+    4303,
+    1697
+   ],
+   "born": null
+  },
+  "Alaska": {
+   "fips": "02",
+   "population": 740133,
+   "ancestry": [
+    2767,
+    936
+   ],
+   "born": null
+  },
+  "Arizona": {
+   "fips": "04",
+   "population": 7582384,
+   "ancestry": [
+    20602,
+    3752
+   ],
+   "born": [
+    3197,
+    1563
+   ]
+  },
+  "Arkansas": {
+   "fips": "05",
+   "population": 3088354,
+   "ancestry": [
+    1075,
+    708
+   ],
+   "born": null
+  },
+  "California": {
+   "fips": "06",
+   "population": 39431263,
+   "ancestry": [
+    148449,
+    11306
+   ],
+   "born": [
+    83912,
+    9648
+   ]
+  },
+  "Colorado": {
+   "fips": "08",
+   "population": 5957494,
+   "ancestry": [
+    18297,
+    2965
+   ],
+   "born": [
+    5022,
+    1609
+   ]
+  },
+  "Connecticut": {
+   "fips": "09",
+   "population": 3675069,
+   "ancestry": [
+    26080,
+    4513
+   ],
+   "born": [
+    6344,
+    2385
+   ]
+  },
+  "Delaware": {
+   "fips": "10",
+   "population": 1051917,
+   "ancestry": [
+    6854,
+    1684
+   ],
+   "born": null
+  },
+  "District of Columbia": {
+   "fips": "11",
+   "population": 702250,
+   "ancestry": [
+    4287,
+    1262
+   ],
+   "born": null
+  },
+  "Florida": {
+   "fips": "12",
+   "population": 23372215,
+   "ancestry": [
+    89093,
+    9415
+   ],
+   "born": [
+    35587,
+    5793
+   ]
+  },
+  "Georgia": {
+   "fips": "13",
+   "population": 11180878,
+   "ancestry": [
+    16379,
+    2618
+   ],
+   "born": [
+    5547,
+    1712
+   ]
+  },
+  "Hawaii": {
+   "fips": "15",
+   "population": 1446146,
+   "ancestry": [
+    3370,
+    1640
+   ],
+   "born": null
+  },
+  "Idaho": {
+   "fips": "16",
+   "population": 2001619,
+   "ancestry": [
+    7498,
+    2661
+   ],
+   "born": null
+  },
+  "Illinois": {
+   "fips": "17",
+   "population": 12710158,
+   "ancestry": [
+    88890,
+    9543
+   ],
+   "born": [
+    53935,
+    7341
+   ]
+  },
+  "Indiana": {
+   "fips": "18",
+   "population": 6924275,
+   "ancestry": [
+    8561,
+    1546
+   ],
+   "born": [
+    1101,
+    565
+   ]
+  },
+  "Iowa": {
+   "fips": "19",
+   "population": 3241488,
+   "ancestry": [
+    5613,
+    2406
+   ],
+   "born": [
+    1491,
+    1078
+   ]
+  },
+  "Kansas": {
+   "fips": "20",
+   "population": 2970606,
+   "ancestry": [
+    4441,
+    1716
+   ],
+   "born": null
+  },
+  "Kentucky": {
+   "fips": "21",
+   "population": 4588372,
+   "ancestry": [
+    7330,
+    3128
+   ],
+   "born": [
+    3885,
+    2355
+   ]
+  },
+  "Louisiana": {
+   "fips": "22",
+   "population": 4597740,
+   "ancestry": [
+    2613,
+    1378
+   ],
+   "born": null
+  },
+  "Maine": {
+   "fips": "23",
+   "population": 1405012,
+   "ancestry": [
+    3436,
+    913
+   ],
+   "born": null
+  },
+  "Maryland": {
+   "fips": "24",
+   "population": 6263220,
+   "ancestry": [
+    24936,
+    3337
+   ],
+   "born": [
+    8891,
+    2517
+   ]
+  },
+  "Massachusetts": {
+   "fips": "25",
+   "population": 7136171,
+   "ancestry": [
+    30693,
+    3693
+   ],
+   "born": [
+    9733,
+    2187
+   ]
+  },
+  "Michigan": {
+   "fips": "26",
+   "population": 10140459,
+   "ancestry": [
+    40812,
+    4177
+   ],
+   "born": [
+    6962,
+    1944
+   ]
+  },
+  "Minnesota": {
+   "fips": "27",
+   "population": 5793151,
+   "ancestry": [
+    19849,
+    3043
+   ],
+   "born": [
+    6647,
+    2021
+   ]
+  },
+  "Mississippi": {
+   "fips": "28",
+   "population": 2943045,
+   "ancestry": [
+    546,
+    392
+   ],
+   "born": null
+  },
+  "Missouri": {
+   "fips": "29",
+   "population": 6245466,
+   "ancestry": [
+    13995,
+    3608
+   ],
+   "born": [
+    5251,
+    1414
+   ]
+  },
+  "Montana": {
+   "fips": "30",
+   "population": 1137233,
+   "ancestry": [
+    2606,
+    736
+   ],
+   "born": null
+  },
+  "Nebraska": {
+   "fips": "31",
+   "population": 2005466,
+   "ancestry": [
+    4415,
+    2122
+   ],
+   "born": null
+  },
+  "Nevada": {
+   "fips": "32",
+   "population": 3267467,
+   "ancestry": [
+    6316,
+    1778
+   ],
+   "born": [
+    1807,
+    1036
+   ]
+  },
+  "New Hampshire": {
+   "fips": "33",
+   "population": 1409032,
+   "ancestry": [
+    3857,
+    1204
+   ],
+   "born": null
+  },
+  "New Jersey": {
+   "fips": "34",
+   "population": 9500851,
+   "ancestry": [
+    68383,
+    5813
+   ],
+   "born": [
+    23054,
+    2969
+   ]
+  },
+  "New Mexico": {
+   "fips": "35",
+   "population": 2130256,
+   "ancestry": [
+    2008,
+    684
+   ],
+   "born": null
+  },
+  "New York": {
+   "fips": "36",
+   "population": 19867248,
+   "ancestry": [
+    156190,
+    12711
+   ],
+   "born": [
+    83752,
+    7841
+   ]
+  },
+  "North Carolina": {
+   "fips": "37",
+   "population": 11046024,
+   "ancestry": [
+    23275,
+    3684
+   ],
+   "born": [
+    6820,
+    1933
+   ]
+  },
+  "North Dakota": {
+   "fips": "38",
+   "population": null,
+   "ancestry": null,
+   "born": null
+  },
+  "Ohio": {
+   "fips": "39",
+   "population": 11883304,
+   "ancestry": [
+    54039,
+    7800
+   ],
+   "born": [
+    16796,
+    4747
+   ]
+  },
+  "Oklahoma": {
+   "fips": "40",
+   "population": 4095393,
+   "ancestry": [
+    4836,
+    1430
+   ],
+   "born": [
+    2260,
+    995
+   ]
+  },
+  "Oregon": {
+   "fips": "41",
+   "population": 4272371,
+   "ancestry": [
+    26132,
+    5873
+   ],
+   "born": [
+    14389,
+    4227
+   ]
+  },
+  "Pennsylvania": {
+   "fips": "42",
+   "population": 13078751,
+   "ancestry": [
+    111821,
+    8378
+   ],
+   "born": [
+    22583,
+    4064
+   ]
+  },
+  "Rhode Island": {
+   "fips": "44",
+   "population": 1112308,
+   "ancestry": [
+    4937,
+    1305
+   ],
+   "born": null
+  },
+  "South Carolina": {
+   "fips": "45",
+   "population": 5478831,
+   "ancestry": [
+    22285,
+    5036
+   ],
+   "born": [
+    9571,
+    3276
+   ]
+  },
+  "South Dakota": {
+   "fips": "46",
+   "population": 924669,
+   "ancestry": [
+    1539,
+    925
+   ],
+   "born": null
+  },
+  "Tennessee": {
+   "fips": "47",
+   "population": 7227750,
+   "ancestry": [
+    10770,
+    2344
+   ],
+   "born": [
+    4435,
+    1659
+   ]
+  },
+  "Texas": {
+   "fips": "48",
+   "population": 31290831,
+   "ancestry": [
+    35166,
+    4276
+   ],
+   "born": [
+    10847,
+    2387
+   ]
+  },
+  "Utah": {
+   "fips": "49",
+   "population": 3503613,
+   "ancestry": [
+    6722,
+    2569
+   ],
+   "born": [
+    2275,
+    1224
+   ]
+  },
+  "Vermont": {
+   "fips": "50",
+   "population": null,
+   "ancestry": null,
+   "born": null
+  },
+  "Virginia": {
+   "fips": "51",
+   "population": 8811195,
+   "ancestry": [
+    26748,
+    3736
+   ],
+   "born": [
+    8405,
+    2102
+   ]
+  },
+  "Washington": {
+   "fips": "53",
+   "population": 7958180,
+   "ancestry": [
+    67853,
+    8717
+   ],
+   "born": [
+    43858,
+    6383
+   ]
+  },
+  "West Virginia": {
+   "fips": "54",
+   "population": 1769979,
+   "ancestry": [
+    2608,
+    929
+   ],
+   "born": null
+  },
+  "Wisconsin": {
+   "fips": "55",
+   "population": 5960975,
+   "ancestry": [
+    13423,
+    2697
+   ],
+   "born": [
+    3826,
+    1810
+   ]
+  },
+  "Wyoming": {
+   "fips": "56",
+   "population": null,
+   "ancestry": null,
+   "born": null
+  }
+ },
+ "metros": [
+  {
+   "name": "New York-Newark-Jersey City, NY-NJ Metro Area",
+   "population": 19940274,
+   "ancestry": [
+    152092,
+    11879
+   ],
+   "born": [
+    91968,
+    7730
+   ]
+  },
+  {
+   "name": "Chicago-Naperville-Elgin, IL-IN Metro Area",
+   "population": [
+    9406924,
+    1413
+   ],
+   "ancestry": [
+    85463,
+    9567
+   ],
+   "born": [
+    52831,
+    7388
+   ]
+  },
+  {
+   "name": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD Metro Area",
+   "population": 6330422,
+   "ancestry": [
+    66288,
+    7392
+   ],
+   "born": [
+    17016,
+    3244
+   ]
+  },
+  {
+   "name": "Seattle-Tacoma-Bellevue, WA Metro Area",
+   "population": 4145494,
+   "ancestry": [
+    41628,
+    6835
+   ],
+   "born": [
+    31924,
+    5937
+   ]
+  },
+  {
+   "name": "Los Angeles-Long Beach-Anaheim, CA Metro Area",
+   "population": 12927614,
+   "ancestry": [
+    41248,
+    5078
+   ],
+   "born": [
+    22795,
+    4292
+   ]
+  },
+  {
+   "name": "Sacramento-Roseville-Folsom, CA Metro Area",
+   "population": 2463127,
+   "ancestry": [
+    35073,
+    7355
+   ],
+   "born": [
+    30670,
+    7095
+   ]
+  },
+  {
+   "name": "Miami-Fort Lauderdale-West Palm Beach, FL Metro Area",
+   "population": 6457988,
+   "ancestry": [
+    29642,
+    5386
+   ],
+   "born": [
+    15019,
+    3481
+   ]
+  },
+  {
+   "name": "Portland-Vancouver-Hillsboro, OR-WA Metro Area",
+   "population": [
+    2537070,
+    1559
+   ],
+   "ancestry": [
+    29592,
+    6160
+   ],
+   "born": [
+    17007,
+    4819
+   ]
+  },
+  {
+   "name": "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area",
+   "population": [
+    6437907,
+    2806
+   ],
+   "ancestry": [
+    29276,
+    4536
+   ],
+   "born": [
+    10302,
+    2656
+   ]
+  },
+  {
+   "name": "Cleveland, OH Metro Area",
+   "population": 2171877,
+   "ancestry": [
+    28386,
+    5788
+   ],
+   "born": null
+  }
+ ]
+}
