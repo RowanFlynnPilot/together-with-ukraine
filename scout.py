@@ -28,6 +28,7 @@ WORDS = ['ukrainian restaurant', 'ukrainian cafe', 'ukrainian bakery', 'ukrainia
          'ukrainian kitchen', 'ukrainian gift', 'ukraine', 'kyiv', 'kiev', 'lviv', 'kharkiv', 'odesa', 'varenyky', 'borscht', 'borsch', 'tryzub']
 VENUE_TYPES = {'restaurant', 'cafe', 'fast_food', 'bar', 'pub', 'ice_cream', 'marketplace'}
 NEAR_METERS = 300  # a lead this close to a listed place with a similar name is that place
+NO_NAME = '(no name)'  # a lead with no name this close to a listed place is taken to be that place
 
 def fetch(url, data=None):
     request = urllib.request.Request(url, data=data, headers={'User-Agent': USER_AGENT})
@@ -40,7 +41,7 @@ def tagged():
     for el in body['elements']:
         tags = el.get('tags', {})
         lat, lon = (el['lat'], el['lon']) if 'lat' in el else (el['center']['lat'], el['center']['lon'])
-        yield (tags.get('name') or tags.get('name:uk') or '(no name)', lat, lon, tags.get('amenity') or 'shop=' + tags.get('shop', '?'),
+        yield (tags.get('name') or tags.get('name:uk') or NO_NAME, lat, lon, tags.get('amenity') or 'shop=' + tags.get('shop', '?'),
                tags, f"https://www.openstreetmap.org/{el['type']}/{el['id']}")
 
 def named():
@@ -63,7 +64,7 @@ def simple(name):
 def known(name, lat, lon):
     for p in places.PLACES:
         same_name = simple(p['name'])[:6] in simple(name) or simple(name)[:6] in simple(p['name'])
-        if same_name and meters(lat, lon, p['lat'], p['lon']) < NEAR_METERS: return True
+        if (same_name or name == NO_NAME) and meters(lat, lon, p['lat'], p['lon']) < NEAR_METERS: return True
     return any(simple(name)[:8] in simple(held) for held in places.REVIEW['held'])
 
 def leads():
