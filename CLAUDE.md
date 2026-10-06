@@ -161,9 +161,11 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   Run `refresh.py`, review the diff, commit.
 - A link that answers 403 or 429 is reported as "refused", not as broken: the site turned the
   checker away, and which sites do that differs between a home connection and GitHub's servers
-  (Nova Ukraine's site refused Rowan's machine but not the build machine). ukrainer.net leaves out
-  an intermediate certificate, which browsers fetch for themselves and scripts cannot, so its pages
-  are treated the same way. So are 202 answers (a bot challenge), and the TEGNA stations (KING 5, ABC10,
+  (Nova Ukraine's site refused Rowan's machine but not the build machine). A site whose certificate
+  chain leads to a root scripts no longer trust (browsers fetch a better chain themselves) is treated the
+  same way, except ukrainer.net: `records.get` checks it against `data/ukrainer-chain.pem`, the chain
+  browsers find, so its pages are verified like any other (until October 2032, when that certificate
+  expires; the file says how to replace it). So are 202 answers (a bot challenge), and the TEGNA stations (KING 5, ABC10,
   13News Now, `WALLED` in check.py), which answer GitHub's servers with a stand-in page that has no article. These links, with the phrase each should carry, are listed in every
   report for a manual look. Only other failures (404, 5xx, timeouts, other certificate errors) fail
   the run.

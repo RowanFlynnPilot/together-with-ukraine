@@ -50,7 +50,7 @@ When it fails:
 - **Something went stale**: review that part of the page, then update its date (`AS_OF` in `history.py`, `reviewed` in `data/places_review.json`, `REVIEWED` in `give.py`).
 - **New Census figures are out** (usually each September): run `python census.py`, read `git diff data/census.json`, rebuild, and commit.
 
-Some sites turn automated requests away (they answer 403 or 429), and which ones do depends on the network the check runs from. Ukraїner's site leaves out part of its certificate chain, which browsers handle and scripts cannot. Those links do not fail the check. Every report lists them, with the phrase to look for, so you can open them by hand.
+Some sites turn automated requests away (they answer 403 or 429), and which ones do depends on the network the check runs from. A site whose certificate chain leads to a root scripts no longer trust also cannot be checked; Ukraїner's is, because `data/ukrainer-chain.pem` holds the chain browsers find for it. Those links do not fail the check. Every report lists them, with the phrase to look for, so you can open them by hand.
 
 ## Change it
 

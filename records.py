@@ -3,14 +3,19 @@ Nonprofit Explorer) and Charity Navigator ratings. Used by refresh.py and check.
 
 A page that loads but cannot be read stops with an error rather than returning empty values,
 so a change in a site's layout is never mistaken for a charity losing its rating."""
-import re
+import pathlib, re
+from urllib.parse import urlsplit
 
 from curl_cffi import requests
 from curl_cffi.requests.exceptions import RequestException  # re-exported for check.py
 
+# A site whose certificate leads to a root the usual stores no longer carry is checked against a file holding the chain
+# browsers find for themselves. data/ukrainer-chain.pem says why Ukraїner's needs one.
+CHAINS = {'www.ukrainer.net': str(pathlib.Path(__file__).parent / 'data' / 'ukrainer-chain.pem')}
+
 def get(url):
     """Fetch like Chrome does. Several of these sites refuse clients that don't look like a browser."""
-    return requests.get(url, impersonate='chrome', timeout=30)
+    return requests.get(url, impersonate='chrome', timeout=30, verify=CHAINS.get(urlsplit(url).hostname, True))
 
 def irs_record(ein):
     response = get(f'https://projects.propublica.org/nonprofits/api/v2/organizations/{ein}.json')
