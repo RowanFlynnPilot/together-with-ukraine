@@ -8,7 +8,7 @@ engines not to index it."""
 import html, re, pathlib
 from urllib.parse import urlencode
 
-import culture, give, history, places, places_uk, stories
+import culture, diaspora, give, history, places, places_uk, stories
 import history_uk as UK
 
 ROOT = pathlib.Path(__file__).parent
@@ -55,6 +55,8 @@ def pairs():
             where = s['person'][0]
             for field in ('person', 'context', 'title', 'text'): add('People', where, s[field])
             if s['photo']: add('People', f'{where}: picture', s['photo']['alt'])
+    for part, en, uk in diaspora.texts():
+        if en != uk: add('In the US', part, (en, uk))  # the map legend's ranges read the same in both
     add('Eat and shop', 'Summary', places.summary())
     for tag in places.UKRAINIAN.values(): add('Eat and shop', 'Tag', tag)
     for label, _ in places.GROUPS.values(): add('Eat and shop', 'Kind filter', label)
@@ -73,7 +75,7 @@ def pairs():
         if item[2:] not in seen: seen.add(item[2:]); unique.append(item)
     return unique
 
-SECTIONS = {'Page': 'Загальне', 'Culture': 'Культура', 'History': 'Історія', 'People': 'Люди', 'Eat and shop': 'Заклади', 'Give': 'Допомогти'}
+SECTIONS = {'Page': 'Загальне', 'Culture': 'Культура', 'History': 'Історія', 'People': 'Люди', 'In the US': 'У США', 'Eat and shop': 'Заклади', 'Give': 'Допомогти'}
 
 def _issue_link(number, section, where, en, uk):
     fields = {'template': 'problem.yml', 'title': f'Ukrainian #{number}: {where}'[:120],

@@ -8,15 +8,17 @@ Live: https://rowanflynnpilot.github.io/together-with-ukraine/ — the repo name
 
 ## What it is
 
-One static page, English and Ukrainian, with five tabs: Ukrainian culture (a photo gallery, food with
+One static page, English and Ukrainian, with six tabs: Ukrainian culture (a photo gallery, food with
 recipes, traditions, holidays, US festivals and resources), a sourced history timeline, stories of
-Ukrainian people summarized from published reports, a map of Ukrainian places to eat and shop in
-the US, and a list of vetted ways to give money, supplies or time. The page opens on Culture. The header carries the flag,
+Ukrainian people summarized from published reports, Census figures on where people of Ukrainian
+ancestry live in the US, a map of Ukrainian places to eat and shop in the US, and a list of vetted
+ways to give money, supplies or time. The page opens on Culture. The header carries the flag,
 a photo of the Kyiv Pechersk Lavra under a blue wash, and a row of links to the tabs with their
 counts, which `build.py` counts from the content. The footer says how each part is checked, with
 the review dates. Stories link to the timeline entry,
 place or organization they involve, and those link back. Every tab and entry has its own address
-(`#give`, `#event-the-holodomor`, `#story-…`, `#place-…`, `#org-…`); `?lang=uk` forces Ukrainian.
+(`#give`, `#event-the-holodomor`, `#story-…`, `#place-…`, `#org-…`), and `#places-<state>` opens the
+place list filtered to a state, which the In the US table links to; `?lang=uk` forces Ukrainian.
 
 ## Commands (Windows, PowerShell 5.1)
 
@@ -27,6 +29,7 @@ python -m pip install -r requirements.txt      # only check.py and refresh.py ne
 python check.py                                # re-verify records, links, phrases, dates; exits 1 on any problem
 python refresh.py; git diff data/              # pull fresh records after check.py reports a change
 python scout.py                                # leads for new places from OpenStreetMap (slow; needs the public Overpass server)
+python census.py; git diff data/census.json    # pull the newest Census figures after check.py reports them
 ```
 
 ## Layout
@@ -47,6 +50,8 @@ python scout.py                                # leads for new places from OpenS
 | `records.py` | Pulls IRS records (ProPublica Nonprofit Explorer API) and Charity Navigator ratings. Uses `curl_cffi` with Chrome impersonation because several sites reject plain clients. Raises if a Charity Navigator page shows neither stars nor "Not Rated", so a layout change is never read as a lost rating. |
 | `refresh.py` | Writes fresh records to `data/` and stamps `data/checked.json` (`records`). Does not touch the review dates. |
 | `check.py` | Compares live records to `data/`, loads every link, confirms every recorded phrase is still on its page, checks the CDN integrity hashes, and fails on stale review dates. Run weekly by `.github/workflows/check.yml`. |
+| `diaspora.py` | The In the US tab, from `data/census.json`: the headline figures, born in Ukraine by year, the state map's classes (`BINS`), the state table, the largest metro areas (`CITIES_UK` holds their Ukrainian names; a missing one stops the build) and the notes. Every figure shows its margin of error; a state where the Census Bureau withheld a table says "not published". The rise since 2021 must clear the margins of error (the Bureau's test for a difference), or the build stops. |
+| `census.py` | Pulls the American Community Survey's newest 1-year estimates into `data/census.json`: tables B04006 (Ukrainian ancestry; its total is the population) and B05006 (born in Ukraine) for each state, the US and the ten largest metro areas, and B05006 for the US for each year since 2021. Reads the Bureau's summary files, which need no key (its data API does), and finds each line through the API's table descriptions. `check.py` reports when a newer year is out. |
 | `data/places.json` | The listed businesses, maintained by hand. Each has `state` (full name), `ukrainian` (one or more of `food`, `goods`, `owner`) and `basis`: a list of `{by, url, says}`, where `by` is `own website` or an outlet name and `says` is an exact phrase on that page. |
 | `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. `.github/workflows/scout.yml` runs it on the first of each month and opens an issue listing any leads. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
@@ -109,6 +114,11 @@ before the page draws, so it never flashes the other theme.
    unless a source calls them Ukrainian. Recipes are linked, never copied, and come from Ukrainian
    sources first (ukraine.ua, Yevhen Klopotenko, the Ukrainian Institute). Events come from their
    organizers' own pages; give the usual month rather than a date unless the page states one.
+9. **In the US.** Every figure is the Census Bureau's own estimate, shown with its margin of error, and a figure it
+   did not publish says so; never fill one in from another year or source. Words about the figures follow the
+   Bureau's definitions (ancestry is reported, up to two per person; "born in Ukraine" is its foreign-born count).
+   Leave out causes the figures do not show: the rise in ancestry from 2021 to 2022 is far larger than the rise in
+   people born in Ukraine, and the page does not guess why, so it shows only the birthplace trend.
 
 ## Deliberately not listed
 
@@ -153,6 +163,9 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
 - A page that loads but no longer carries its phrase fails the run: a business renamed or closed,
   a story taken down (news sites often redirect a removed article to their home page, which still
   answers 200), or a redesign that changed the wording. Look, then fix the entry or the phrase.
+- The run also fails once the Census Bureau publishes a newer year of the American Community Survey (the 1-year
+  estimates usually come out each September; 2025's were delayed). Run `census.py`, read the diff, rebuild, commit.
+  Before release the Bureau's files for the year are already there but answer 401, which counts as not published.
 - The run also fails when a review date is too old: `AS_OF` in `history.py` after 4 months,
   `REVIEWED` in `give.py` after 6, `reviewed` in `data/places_review.json` after 12. Review that
   part of the page, then move the date.
