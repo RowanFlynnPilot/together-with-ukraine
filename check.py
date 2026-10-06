@@ -14,9 +14,10 @@
 Prints a report and exits 1 if anything changed, broke or went stale, so a scheduled run fails loudly.
 
 A site that answers 403 or 429 has turned the checker away, which says nothing about whether the page
-exists. Which sites do that depends on the network the check runs from. A site that leaves out part of
-its certificate chain (ukrainer.net does) works in browsers, which fetch the missing certificate
-themselves, but cannot be verified by a script. Those links, with the phrases that could not be
+exists. Which sites do that depends on the network the check runs from. A site whose certificate chain
+leads to a root that scripts no longer trust works in browsers, which fetch a better chain themselves,
+but cannot be verified by a script; ukrainer.net's is supplied from data/ukrainer-chain.pem (see
+records.py), so any other such site is listed by hand. Those links, with the phrases that could not be
 confirmed on them, are listed for a look by hand instead of failing the run. Any other certificate
 error fails it, because browsers would show a warning too."""
 import base64, datetime, hashlib, html, json, pathlib, re, sys, time
