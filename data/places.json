@@ -2278,5 +2278,207 @@
     "says": "Yana is from the Poltava region of central Ukraine"
    }
   ]
+ },
+ {
+  "name": "Artisserie Fine Bakery",
+  "kind": "Bakery",
+  "street": "710 Northwest 23rd Avenue",
+  "city": "Portland",
+  "state": "Oregon",
+  "web": "https://www.artisserie-finebakery.com/",
+  "lat": 45.52795,
+  "lon": -122.6984,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Lake Oswego Review",
+    "url": "https://lakeoswegoreview.com/2025/05/16/french-bakery-opening-at-former-blue-star-shop-in-downtown-lake-oswego",
+    "says": "Pastry chef Vitaliya Popovych grew up in Ukraine"
+   },
+   {
+    "by": "Lake Oswego Review",
+    "url": "https://lakeoswegoreview.com/2025/05/16/french-bakery-opening-at-former-blue-star-shop-in-downtown-lake-oswego",
+    "says": "Her dream came to fruition two years ago when Artisserie Fine Bakery opened"
+   }
+  ]
+ },
+ {
+  "name": "Artisserie Fine Bakery",
+  "kind": "Bakery",
+  "street": "350 First Street",
+  "city": "Lake Oswego",
+  "state": "Oregon",
+  "web": "https://www.artisserie-finebakery.com/",
+  "lat": 45.41854,
+  "lon": -122.66463,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Lake Oswego Review",
+    "url": "https://lakeoswegoreview.com/2025/05/16/french-bakery-opening-at-former-blue-star-shop-in-downtown-lake-oswego",
+    "says": "Pastry chef Vitaliya Popovych grew up in Ukraine"
+   },
+   {
+    "by": "Lake Oswego Review",
+    "url": "https://lakeoswegoreview.com/2025/05/16/french-bakery-opening-at-former-blue-star-shop-in-downtown-lake-oswego",
+    "says": "Her dream came to fruition two years ago when Artisserie Fine Bakery opened"
+   }
+  ]
+ },
+ {
+  "name": "DoChéri Chocolate",
+  "kind": "Gift shop",
+  "street": "878 Post Road",
+  "city": "Darien",
+  "state": "Connecticut",
+  "web": "https://docheri-chocolate.com/",
+  "lat": 41.07776,
+  "lon": -73.46955,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://docheri-chocolate.com/pages/about",
+    "says": "Maryna's passion for chocolate began in her native Ukraine"
+   },
+   {
+    "by": "CT Bites",
+    "url": "https://www.ctbites.com/blog/2026/7/13/dochri-european-chocolate-opens-in-darien",
+    "says": "Eight years ago, she was living in Ukraine"
+   }
+  ]
+ },
+ {
+  "name": "Sudova",
+  "kind": "Restaurant",
+  "street": "22 West Court Street",
+  "city": "Cincinnati",
+  "state": "Ohio",
+  "web": "https://sudovaoncourt.com/",
+  "lat": 39.10634,
+  "lon": -84.51507,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "Cincinnati Magazine",
+    "url": "https://www.cincinnatimagazine.com/dining-reviews/sudova-review/",
+    "says": "An enchanting journey through Ukrainian cuisine"
+   },
+   {
+    "by": "WCPO",
+    "url": "https://www.wcpo.com/entertainment/local-a-e/local-dining/new-restaurant-sudova-to-bring-eastern-european-fare-to-cincinnatis-dining-scene",
+    "says": "Dworak is Ukrainian on her father's side"
+   }
+  ]
+ },
+ {
+  "name": "State Meats",
+  "kind": "Deli",
+  "street": "5338 State Road",
+  "city": "Parma",
+  "state": "Ohio",
+  "web": "https://statemeats.com/",
+  "lat": 41.4151,
+  "lon": -81.71058,
+  "ukrainian": [
+   "food",
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://statemeats.com/about",
+    "says": "preserving the tradition of old-fashioned Ukrainian butchery"
+   },
+   {
+    "by": "own website",
+    "url": "https://statemeats.com/about",
+    "says": "we honor and respect the legacy of our Ukrainian ancestors"
+   }
+  ]
+ },
+ {
+  "name": "Winesburg Meats",
+  "kind": "Deli",
+  "street": "2181 U.S. Route 62",
+  "city": "Winesburg",
+  "state": "Ohio",
+  "web": "https://www.winesburg-meats.com/",
+  "lat": 40.61479,
+  "lon": -81.69763,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://www.winesburg-meats.com/team",
+    "says": "started by Walter and Katherine who were Ukrainian immigrants"
+   },
+   {
+    "by": "own website",
+    "url": "https://www.winesburg-meats.com/team",
+    "says": "family owned and operated business since 1959"
+   }
+  ]
+ },
+ {
+  "name": "Tupelo Coffee",
+  "kind": "Café",
+  "street": "5700 Elvas Avenue",
+  "city": "Sacramento",
+  "state": "California",
+  "web": "",
+  "lat": 38.56854,
+  "lon": -121.43397,
+  "ukrainian": [
+   "owner"
+  ],
+  "basis": [
+   {
+    "by": "What Now Sacramento",
+    "url": "https://whatnow.com/sacramento/restaurants/a-sacramento-coffee-obsessive-bought-two-cafes-and-plans-to-make-them-better/",
+    "says": "originally from Ukraine and a Sacramento resident since 2002"
+   },
+   {
+    "by": "What Now Sacramento",
+    "url": "https://whatnow.com/sacramento/restaurants/a-sacramento-coffee-obsessive-bought-two-cafes-and-plans-to-make-them-better/",
+    "says": "is the new owner of Tupelo Coffee"
+   }
+  ]
+ },
+ {
+  "name": "Shoreside Bakery",
+  "kind": "Bakery",
+  "street": "1040 8th Avenue",
+  "city": "San Diego",
+  "state": "California",
+  "web": "https://shoresidebakery.com/",
+  "lat": 32.71611,
+  "lon": -117.15761,
+  "ukrainian": [
+   "food"
+  ],
+  "basis": [
+   {
+    "by": "own website",
+    "url": "https://shoresidebakery.com/menu",
+    "says": "traditional Ukrainian beet and beef soup, served with sour cream"
+   },
+   {
+    "by": "What Now San Diego",
+    "url": "https://whatnow.com/san-diego/restaurants/shoreside-bakery-expanding-next-door-with-new-gelato-shop/",
+    "says": "dishes such as lamb plov, Ukrainian borscht, pelmeni, and quiche"
+   }
+  ]
  }
 ]
