@@ -1,0 +1,44 @@
+name: Find place leads
+
+# On the first of every month, look in OpenStreetMap for Ukrainian places that are neither listed nor
+# held back (scout.py), and open an issue listing them. A lead is only a lead: it still has to pass
+# rule 2 in CLAUDE.md before it goes on the page.
+on:
+  schedule:
+    - cron: '0 14 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python scout.py | tee leads.txt
+      - name: Open an issue with the leads
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          count=$(head -n 1 leads.txt | cut -d' ' -f1)
+          if [ "$count" = "0" ]; then echo "No new leads."; exit 0; fi
+          title="Place leads from OpenStreetMap, $(date -u +'%B %Y')"
+          if [ "$(gh issue list --state open --search "\"$title\" in:title" --json number --jq length)" != "0" ]; then
+            echo "An issue for this month is already open."; exit 0
+          fi
+          {
+            echo "scout.py found $count places in OpenStreetMap that are tagged or named as Ukrainian and are not yet listed or held back."
+            echo
+            echo "Each is only a lead. Before listing one, find its own website or a press report that says it serves Ukrainian food, sells Ukrainian goods or is Ukrainian-owned (rule 2 in CLAUDE.md), and record that evidence in data/places.json. If it does not qualify, add it to held in data/places_review.json with the reason, so it is not suggested again."
+            echo
+            echo '```'
+            tail -n +2 leads.txt
+            echo '```'
+          } > body.md
+          gh issue create --title "$title" --body-file body.md

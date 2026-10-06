@@ -33,7 +33,7 @@ python scout.py                                # leads for new places from OpenS
 
 | File | Role |
 |---|---|
-| `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter and the map. `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
+| `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter, Near me (the list sorted by distance from the reader, worked out in the browser) and the map. `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
 | `build.py` | Assembles the page and resolves the links between sections. No network. Stops on a missing translation, a link to an anchor that does not exist, or two elements with the same id. |
 | `history.py` / `history_uk.py` | Timeline entries with their sources / the Ukrainian text, keyed by English title. `AS_OF` dates the entries about the war today. `ERA_PHOTOS` (a banner per era) and `EVENT_PHOTOS` (a picture beside some entries) hold the timeline's pictures. |
 | `culture.py` | The Culture tab: the header photo, the gallery, and the food, traditions, "Ukrainian, not Russian", holidays, events and resources sections. `REVIEWED` dates the events and resources. `UNESCO_YEAR` (the badge), `RELABELS` (the label each museum dropped and the one it uses now) and `RESOURCE_KINDS` shape how entries look; the build checks each against the entry's own text. An entry without a photo shows its Ukrainian name on a cross-stitch pattern. |
@@ -47,7 +47,7 @@ python scout.py                                # leads for new places from OpenS
 | `refresh.py` | Writes fresh records to `data/` and stamps `data/checked.json` (`records`). Does not touch the review dates. |
 | `check.py` | Compares live records to `data/`, loads every link, confirms every recorded phrase is still on its page, checks the CDN integrity hashes, and fails on stale review dates. Run weekly by `.github/workflows/check.yml`. |
 | `data/places.json` | The listed businesses, maintained by hand. Each has `state` (full name), `ukrainian` (one or more of `food`, `goods`, `owner`) and `basis`: a list of `{by, url, says}`, where `by` is `own website` or an outlet name and `says` is an exact phrase on that page. |
-| `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. |
+| `scout.py` | Prints OpenStreetMap leads for new places (tagged Ukrainian cuisine, a Ukrainian name, or a Ukrainian word in the name) that are not listed or held. Leads still need rule 2. Writes nothing. `.github/workflows/scout.yml` runs it on the first of each month and opens an issue listing any leads. |
 | `data/places_review.json` | `reviewed` (date of the last review by hand) and `held`: places held back, with the reason. |
 | `data/states-10m.json` | US state shapes (us-atlas). |
 | `images/` | Pictures for the stories, the header, the Culture and History tabs and the places, openly licensed or public domain (rule 7), saved at display size. Copied to `site/images/` by the build. `share.jpg` is the picture a shared link shows: the header photo with the title, made once and kept here, carrying the photographer's credit as its CC BY-SA license requires. |
@@ -145,7 +145,8 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   checker away, and which sites do that differs between a home connection and GitHub's servers
   (Nova Ukraine's site refused Rowan's machine but not the build machine). ukrainer.net leaves out
   an intermediate certificate, which browsers fetch for themselves and scripts cannot, so its pages
-  are treated the same way. These links, with the phrase each should carry, are listed in every
+  are treated the same way. So are 202 answers (a bot challenge), and the TEGNA stations (KING 5, ABC10,
+  13News Now, `WALLED` in check.py), which answer GitHub's servers with a stand-in page that has no article. These links, with the phrase each should carry, are listed in every
   report for a manual look. Only other failures (404, 5xx, timeouts, other certificate errors) fail
   the run.
 - A page that loads but no longer carries its phrase fails the run: a business renamed or closed,

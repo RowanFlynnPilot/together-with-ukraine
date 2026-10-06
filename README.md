@@ -67,7 +67,7 @@ Pushing to `main` rebuilds and publishes the site. People can suggest places, st
 
 - **History**: every sentence must be supported by the entry's listed sources.
 - **People**: a story comes from a news organization, a UN agency, a museum or archive, or an established documentary project, and is free to read. The person is named in it. The summary is in our own words, without quotations, and every sentence is supported by the report. No graphic detail, no minors by full name, no one in Russian-occupied territory, and nothing that adds to the risk a named person faces. Photos are used only when openly licensed (from Wikimedia Commons, credited as the license requires), never taken from the outlet's article.
-- **Places**: a business is listed if its own website or the press says it serves Ukrainian food, sells Ukrainian goods, or is owned by Ukrainians. Each listing shows which, with the evidence. `python scout.py` lists leads from OpenStreetMap.
+- **Places**: a business is listed if its own website or the press says it serves Ukrainian food, sells Ukrainian goods, or is owned by Ukrainians. Each listing shows which, with the evidence. `python scout.py` lists leads from OpenStreetMap, and a monthly GitHub job opens an issue with any new ones.
 - **Give**: US charities must appear in IRS records. Ukrainian groups must publish reports or audits, or be confirmed by an independent source. Every entry says what was checked.
 
 The Ukrainian text is a machine translation that a native speaker has not yet reviewed. The page says so in its Ukrainian footer.

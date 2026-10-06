@@ -19,13 +19,17 @@ themselves, but cannot be verified by a script. Those links, with the phrases th
 confirmed on them, are listed for a look by hand instead of failing the run. Any other certificate
 error fails it, because browsers would show a warning too."""
 import base64, datetime, hashlib, html, json, pathlib, re, sys, time
+from concurrent.futures import ThreadPoolExecutor
 
 import build, culture, give, history, places, stories
 from records import RequestException, charity_navigator_record, get, irs_record
 
 DATA = pathlib.Path(__file__).parent / 'data'
 INCOMPLETE_CHAIN = 'incomplete certificate chain'
-REFUSED = ('403', '429', INCOMPLETE_CHAIN)  # links the checker cannot judge, listed for a look by hand
+REFUSED = ('403', '429', '202', INCOMPLETE_CHAIN)  # links the checker cannot judge, listed for a look by hand; 202 is a bot challenge
+# Sites that show automated readers a stand-in page: 403 from a home connection, and from GitHub's servers a page that
+# answers 200 without the article. Their links are refused whatever they answer, and listed for a look by hand.
+WALLED = ('https://www.13newsnow.com/', 'https://www.abc10.com/', 'https://www.king5.com/')
 NOT_SOURCES = ('https://www.google.com/maps/search/',)  # searches the page builds for each place
 MAX_AGE = {  # what, (date, days)
     'the entries about the war today (AS_OF in history.py)': (history.AS_OF, 120),
@@ -63,6 +67,7 @@ def fetch(url):
         except RequestException as error:
             response = None
             status = INCOMPLETE_CHAIN if 'unable to get local issuer certificate' in str(error) else type(error).__name__
+        if url.startswith(WALLED) and status == '200': status = '403'
         if status in ('200', *REFUSED) or attempt:
             return status, response
         time.sleep(5)
@@ -78,10 +83,12 @@ def web_report():
     """Returns (problems, refused, link count, phrase count). refused lists each refused url with the phrases it should carry."""
     page = build.build()
     claims = places.claims() + give.claims() + stories.claims() + culture.claims() + history.claims()
-    urls = {html.unescape(u) for u in re.findall(r'(?:href|src)="(https?://[^"]+)"', page) if not u.startswith(NOT_SOURCES)}
+    links = re.sub(r'<link rel="preconnect"[^>]*>', '', page)  # a preconnect hint names a host, not a page
+    urls = {html.unescape(u) for u in re.findall(r'(?:href|src)="(https?://[^"]+)"', links) if not u.startswith(NOT_SOURCES)}
     urls |= {url for url, _, _ in claims}
     integrity = dict(re.findall(r'<script src="([^"]+)" integrity="([^"]+)"', page))
-    results = {url: fetch(url) for url in sorted(urls)}
+    with ThreadPoolExecutor(max_workers=8) as pool:  # one at a time took 7 minutes, and the page keeps growing
+        results = dict(zip(sorted(urls), pool.map(fetch, sorted(urls))))
     problems, refused = [], {}
     for url, (status, _) in results.items():
         if status in REFUSED: refused[url] = (status, [])

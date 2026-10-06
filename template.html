@@ -393,6 +393,14 @@ select {
 .chip[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: #FFFFFF; }
 .chip:disabled { opacity: 0.4; cursor: default; border-color: var(--line); }
 .places-status { margin: 0; color: var(--muted); }
+.near-btn { font: inherit; font-size: 1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.85rem; border: 2px solid var(--link); background: var(--paper); color: var(--link); cursor: pointer; }
+.near-btn[aria-pressed="true"] { background: var(--link); color: var(--paper); }
+/* Sorted by distance, the cards leave their state groups and line up in one column, nearest first. */
+.list-col.by-distance { display: flex; flex-direction: column; gap: 0.9rem; }
+.by-distance .state-group, .by-distance .cards { display: contents; }
+.by-distance .group-name { display: none; }
+.place-distance { margin: 0.15rem 0 0; color: var(--link); font-size: 0.9375rem; font-weight: 700; }
+.you { fill: #FFFFFF; stroke: #3D7FD1; stroke-width: 3; vector-effect: non-scaling-stroke; pointer-events: none; }
 .places-status:empty { display: none; }
 
 /* The map: a night-blue panel in both themes, with the places as points of wheat-colored light. */
@@ -633,6 +641,7 @@ __PLACE_PHOTOS__
       </div>
       <span class="visually-hidden" id="kinds-label">{{Kind of place||Тип закладу}}</span>
       <div class="chips" role="group" aria-labelledby="kinds-label">__KIND_FILTER__</div>
+      <button type="button" class="near-btn" id="near-me" aria-pressed="false"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/></svg>{{Near me||Поруч зі мною}}</button>
       <p class="places-status" id="places-status" aria-live="polite"></p>
     </div>
     <div class="places-grid">
@@ -812,6 +821,9 @@ const TEXT = {
     allStates: 'All states',
     count: n => `${n} ${n === 1 ? 'place' : 'places'}`,
     showing: (n, total) => `Showing ${n} of ${total} places`,
+    nearest: 'Nearest first. Your location stays in this browser.',
+    locating: 'Finding where you are…',
+    noLocation: 'Your location was not shared, so the list stays by state.',
     map: 'Map of the United States with a dot for each listed place. Select a state to zoom in and filter the list.',
   },
   uk: {
@@ -820,6 +832,9 @@ const TEXT = {
     allStates: 'Усі штати',
     count: n => `${n} ${pluralUk(n, 'заклад', 'заклади', 'закладів')}`,
     showing: (n, total) => `Показано ${n} із ${total}`,
+    nearest: 'Спершу найближчі. Ваше місцеперебування не залишає цього браузера.',
+    locating: 'Визначаємо, де ви…',
+    noLocation: 'Ви не поділилися місцеперебуванням, тож список лишається за штатами.',
     map: 'Мапа Сполучених Штатів із позначкою для кожного закладу зі списку. Оберіть штат, щоб наблизити його й відфільтрувати список.',
   },
 };
@@ -890,7 +905,8 @@ function filterPlaces() {
     chip.setAttribute('aria-pressed', String(chip.dataset.kind === kind));
     chip.disabled = !cards.some(card => matches(card, selected, chip.dataset.kind));
   }
-  placesStatus.textContent = selected || kind ? T.showing(cards.filter(card => !card.hidden).length, cards.length) : '';
+  placesStatus.textContent = list.classList.contains('by-distance') ? T.nearest
+    : selected || kind ? T.showing(cards.filter(card => !card.hidden).length, cards.length) : '';
   mapReset.hidden = mapLabel.hidden = !selected;
   if (selected) {
     const name = document.createElement('strong');
@@ -912,6 +928,43 @@ function showPlace(card) {
   select(selected ? card.dataset.state : '');
 }
 stateSelect.addEventListener('change', () => select(stateSelect.value));
+// Near me: the listings in order of distance from the reader. The browser works it out; the location is sent nowhere.
+const nearButton = document.getElementById('near-me');
+let here = null;            // [longitude, latitude] once the reader shares it
+let showYou = () => {};     // replaced once the map is drawn
+function kmFromHere(lon, lat) {
+  const r = Math.PI / 180, dLat = (lat - here[1]) * r, dLon = (lon - here[0]) * r;
+  return 12742 * Math.asin(Math.sqrt(Math.sin(dLat / 2) ** 2 + Math.cos(here[1] * r) * Math.cos(lat * r) * Math.sin(dLon / 2) ** 2));
+}
+function inBoth(en, uk) {
+  const e = document.createElement('span'), u = document.createElement('span');
+  e.dataset.l = 'en'; e.textContent = en; u.dataset.l = 'uk'; u.lang = 'uk'; u.textContent = uk;
+  return [e, u];
+}
+function sortByDistance(on) {
+  list.classList.toggle('by-distance', on);
+  nearButton.setAttribute('aria-pressed', String(on));
+  const ranked = on ? places.map(p => [p, kmFromHere(p.lon, p.lat)]).sort((a, b) => a[1] - b[1]) : [];
+  for (const card of cards) { card.style.order = ''; card.querySelector('.place-distance').hidden = !on; }
+  ranked.forEach(([p, km], i) => {
+    const card = document.getElementById(p.id), miles = Math.round(km / 1.609), kms = Math.round(km);
+    card.style.order = i;
+    card.querySelector('.place-distance').replaceChildren(...inBoth(
+      miles < 1 ? 'Less than a mile away' : `${miles.toLocaleString('en-US')} ${miles === 1 ? 'mile' : 'miles'} away`,
+      kms < 1 ? 'Менше ніж за кілометр' : `За ${kms.toLocaleString('uk-UA')} км`));
+  });
+  showYou(on ? here : null, ranked.slice(0, 3).map(([p]) => p));
+  filterPlaces();
+}
+nearButton.addEventListener('click', () => {
+  if (here) return sortByDistance(!list.classList.contains('by-distance'));
+  placesStatus.textContent = TEXT[lang].locating;
+  navigator.geolocation.getCurrentPosition(
+    position => { here = [position.coords.longitude, position.coords.latitude]; sortByDistance(true); },
+    () => { placesStatus.textContent = TEXT[lang].noLocation; },
+    { timeout: 15000, maximumAge: 600000 });
+});
+nearButton.hidden = !('geolocation' in navigator);
 mapReset.addEventListener('click', () => select(''));
 for (const chip of chips) chip.addEventListener('click', () => { kind = chip.dataset.kind; filterPlaces(); });
 // Pointing at a listing lights up its dot on the map.
@@ -999,30 +1052,40 @@ const zoom = d3.zoom().scaleExtent([1, 40]).translateExtent([[0, 0], [W, H]])
     dots.attr('r', DOT / transform.k);
     hits.attr('r', HIT / transform.k);
     blur.attr('stdDeviation', GLOW / transform.k);
+    you.attr('r', YOU / transform.k);
   });
 svg.call(zoom);
 const moveMap = () => svg.transition().duration(still.matches ? 0 : 750);
 for (const b of document.querySelectorAll('[data-zoom]')) b.addEventListener('click', () => moveMap().call(zoom.scaleBy, Number(b.dataset.zoom)));
 let zoomed = '';
+// The smallest window around a set of points, widened to at least `least` each way.
+function span(values, least) {
+  const [lo, hi] = d3.extent(values), mid = (lo + hi) / 2, half = Math.max(hi - lo, least) / 2;
+  return [mid - half, mid + half];
+}
+function frameView([x0, x1], [y0, y1]) {
+  const k = Math.min(40, 0.8 / Math.max((x1 - x0) / W, (y1 - y0) / H));
+  moveMap().call(zoom.transform, d3.zoomIdentity.translate(W / 2 - k * (x0 + x1) / 2, H / 2 - k * (y0 + y1) / 2).scale(k));
+}
 // A state is framed around its places, widened to at least a third of the state each way so its shape still shows.
 function zoomTo(stateId) {
-  let k = 1, x = 0, y = 0;
   const shape = states.find(s => s.id === stateId);
-  if (shape) {
-    const [[sx0, sy0], [sx1, sy1]] = path.bounds(shape);
-    const points = places.filter(p => p.state === stateId).map(at);
-    const span = (values, least) => {
-      const [lo, hi] = d3.extent(values), mid = (lo + hi) / 2, half = Math.max(hi - lo, least) / 2;
-      return [mid - half, mid + half];
-    };
-    const [x0, x1] = span(points.map(d => d[0]), (sx1 - sx0) / 3);
-    const [y0, y1] = span(points.map(d => d[1]), (sy1 - sy0) / 3);
-    k = Math.min(40, 0.8 / Math.max((x1 - x0) / W, (y1 - y0) / H));
-    x = W / 2 - k * (x0 + x1) / 2;
-    y = H / 2 - k * (y0 + y1) / 2;
-  }
-  moveMap().call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(k));
+  if (!shape) return moveMap().call(zoom.transform, d3.zoomIdentity);
+  const [[sx0, sy0], [sx1, sy1]] = path.bounds(shape);
+  const points = places.filter(p => p.state === stateId).map(at);
+  frameView(span(points.map(d => d[0]), (sx1 - sx0) / 3), span(points.map(d => d[1]), (sy1 - sy0) / 3));
 }
+// The reader's position, framed with the nearest places. Outside the map's projection (abroad), only the list is sorted.
+const YOU = 7;
+const you = layer.append('circle').attr('class', 'you').attr('r', YOU).attr('display', 'none');
+showYou = (point, nearest) => {
+  const xy = point && projection(point);
+  you.attr('display', xy ? null : 'none');
+  if (!xy) return zoomTo(selected);
+  you.attr('cx', xy[0]).attr('cy', xy[1]).raise();
+  const points = [xy, ...nearest.map(at)];
+  frameView(span(points.map(d => d[0]), 40), span(points.map(d => d[1]), 30));
+};
 drawMap = () => {
   if (selected !== zoomed) zoomTo(zoomed = selected);
   statePaths.classed('sel', s => s.id === selected).filter(s => s.id === selected).raise();
