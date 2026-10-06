@@ -1,0 +1,22 @@
+name: Build
+
+# Every pull request is built before it can be merged, so a change that breaks the build shows a red check
+# on the pull request instead of a failed deploy after it reaches main. The build uses no network and needs
+# nothing beyond Python; compiling every script also catches a broken one the build does not import.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m py_compile *.py
+      - run: python build.py
