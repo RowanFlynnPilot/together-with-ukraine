@@ -79,7 +79,8 @@ before the page draws, so it never flashes the other theme.
    that calls itself Russian is out even with a Ukrainian owner: one OpenStreetMap entry turned out
    to be a Russian restaurant. Restaurants, cafés, bakeries, delis, groceries, gift and craft shops
    and bookstores count; food trucks, market stalls, frozen-food shops (Multicook), event halls,
-   home bakers and chain franchises do not. Yelp, Google and social media are not evidence. Record
+   home bakers, chain franchises and bars do not (Rowan left bars out on October 6, 2026, which
+   keeps Sly Fox, a Ukrainian bar in the East Village, held). Yelp, Google and social media are not evidence. Record
    the evidence in `basis` with an exact phrase; the page shows it and `check.py` re-reads it weekly.
 3. **Give.** A US charity must be in IRS records (add its EIN with `us_org`, then run `refresh.py`).
    A Ukrainian group must publish reports or audits, or be confirmed by an independent source.
