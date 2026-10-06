@@ -65,7 +65,7 @@ Some sites turn automated requests away (they answer 403 or 429), and which ones
 | The Census figures | `python census.py` rewrites `data/census.json`; `diaspora.py` renders the tab |
 | Page layout, interface text | `template.html` (`{{English||Українська}}` marks two-language text) |
 
-Pushing to `main` rebuilds and publishes the site. People can suggest places, stories and groups, or report mistakes, through the forms under the repository's Issues tab.
+Every pull request is built first (`.github/workflows/build.yml`), so a change that breaks the build shows a red check before it can be merged. Pushing to `main` rebuilds and publishes the site. People can suggest places, stories and groups, or report mistakes, through the forms under the repository's Issues tab.
 
 ## Standards
 

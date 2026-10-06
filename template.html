@@ -4,23 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Together with Ukraine: culture, history and ways to help</title>
-<meta name="description" content="Ukrainian culture and recipes, a sourced history, stories of Ukrainians, Ukrainian places in the US and checked ways to help, in English and Ukrainian.">
+<meta name="description" content="Ukrainian culture and recipes, a sourced history, stories, Census figures, Ukrainian places in the US and checked ways to help, in English and Ukrainian.">
 <link rel="canonical" href="https://rowanflynnpilot.github.io/together-with-ukraine/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Together with Ukraine · Разом з Україною">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="uk_UA">
 <meta property="og:title" content="Together with Ukraine · Разом з Україною">
-<meta property="og:description" content="Ukrainian culture and recipes, a sourced history, stories of Ukrainians, Ukrainian places in the US and checked ways to help, in English and Ukrainian.">
+<meta property="og:description" content="Ukrainian culture and recipes, a sourced history, stories, Census figures, Ukrainian places in the US and checked ways to help, in English and Ukrainian.">
 <meta property="og:url" content="https://rowanflynnpilot.github.io/together-with-ukraine/">
 <meta property="og:image" content="https://rowanflynnpilot.github.io/together-with-ukraine/images/share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Разом з Україною, Together with Ukraine, over the Kyiv Pechersk Lavra, with the flag and the five sections: Culture, History, People, Places to eat and shop, Ways to help">
+<meta property="og:image:alt" content="Разом з Україною, Together with Ukraine, over the Kyiv Pechersk Lavra, with the flag and the six sections: Culture, History, People, In the US, Places to eat and shop, Ways to help">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0057B7">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Together with Ukraine", "alternateName": "Разом з Україною", "url": "https://rowanflynnpilot.github.io/together-with-ukraine/", "inLanguage": ["en", "uk"], "description": "Ukrainian culture and recipes, a sourced history, stories of Ukrainians, Ukrainian places in the US and checked ways to help, in English and Ukrainian."}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Together with Ukraine", "alternateName": "Разом з Україною", "url": "https://rowanflynnpilot.github.io/together-with-ukraine/", "inLanguage": ["en", "uk"], "description": "Ukrainian culture and recipes, a sourced history, stories, Census figures, Ukrainian places in the US and checked ways to help, in English and Ukrainian."}</script>
 <script>try { const theme = localStorage.getItem('theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch (error) { /* storage unavailable: the system theme applies */ }</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 2'%3E%3Crect width='3' height='1' fill='%230057B7'/%3E%3Crect y='1' width='3' height='1' fill='%23FFD700'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -348,6 +348,16 @@ html.js .story-text:not(.open) { display: -webkit-box; -webkit-box-orient: verti
 .leaf-day { padding: 0.4rem 0.15rem 0.45rem; color: var(--ink); font-size: 1.2rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .leaf-day.c-ornament { min-height: 2.2rem; background-size: 18px; }
 .c-when { margin: -0.3rem 0 0; color: var(--link); font-size: 0.9375rem; font-weight: 700; }
+/* Coming up: this month's and next month's holidays and festivals, worked out in the browser from today's date. */
+.coming-up { margin: 0 0 2.5rem; padding: 1rem 1.25rem 1.15rem; background: var(--wash); border-left: 4px solid var(--wheat); }
+.coming-up h3 { margin: 0 0 0.8rem; font-size: 1.125rem; }
+.coming-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); gap: 0.9rem 1.25rem; }
+.coming-item { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); gap: 0.75rem; align-items: start; color: var(--ink); text-decoration: none; }
+.coming-item .leaf-month { font-size: 0.75rem; }
+.coming-item .leaf-day { font-size: 1.05rem; padding: 0.3rem 0.1rem 0.35rem; }
+.coming-name { display: block; color: var(--link); font-weight: 700; line-height: 1.25; text-decoration: underline; text-underline-offset: 0.15em; }
+.coming-item:hover .coming-name { text-decoration-thickness: 2px; }
+.coming-when { display: block; margin-top: 0.2rem; color: var(--muted); font-size: 0.9375rem; line-height: 1.3; }
 .c-where { margin: -0.3rem 0 0; display: flex; align-items: center; gap: 0.3rem; color: var(--muted); font-size: 0.9375rem; }
 .c-where .icon { width: 1rem; height: 1rem; }
 
@@ -690,6 +700,10 @@ __OVERVIEW__
       <span class="visually-hidden" id="culture-nav-label">{{Jump to a section||Перейти до розділу}}</span>
 __CULTURE_NAV__
     </nav>
+    <section class="coming-up" id="coming-up" aria-labelledby="coming-up-title" hidden>
+      <h3 id="coming-up-title">{{Coming up||Незабаром}}</h3>
+      <ol class="coming-list" id="coming-list"></ol>
+    </section>
 
 __CULTURE__
   </section>
@@ -1082,6 +1096,69 @@ function placesLang() {
   document.getElementById('map').setAttribute('aria-label', T.map);
   select(selected);
 }
+
+// Coming up: the holidays and festivals that fall this month or next, worked out from today's date, nearest first.
+// A holiday's card gives its day or its rule (the fourth Saturday of November); a festival's only its usual month.
+function nthWeekday(year, month, n, weekday) {
+  const first = new Date(year, month, 1).getDay();
+  return new Date(year, month, 1 + (weekday - first + 7) % 7 + (n - 1) * 7);
+}
+function showComingUp(today) {
+  today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const soon = [];
+  for (const card of document.querySelectorAll('.c-dated[data-month]')) {
+    const d = card.dataset, month = Number(d.month);
+    for (const year of [today.getFullYear(), today.getFullYear() + 1]) {
+      const ahead = (year - today.getFullYear()) * 12 + month - today.getMonth();
+      const date = d.nth ? nthWeekday(year, month, Number(d.nth), Number(d.weekday)) : new Date(year, month, Number(d.day || 15));
+      if (ahead < 0 || date < today) continue;
+      if (ahead <= 1) soon.push({ card, date, usual: 'usual' in d });
+      break;
+    }
+  }
+  soon.sort((a, b) => a.date - b.date);
+  const items = soon.slice(0, 4).map(({ card, date, usual }) => {
+    // The leaf shows the day when it is known for this year; a festival without this year's dates shows the pattern.
+    const leafEl = card.querySelector('.leaf').cloneNode(true);
+    const thisYear = card.querySelector('.c-when').textContent.includes(date.getFullYear());
+    if (!usual || !thisYear) {
+      const day = document.createElement('span');
+      day.className = usual ? 'leaf-day c-ornament' : 'leaf-day';
+      if (!usual) day.textContent = date.getDate();
+      leafEl.querySelector('.leaf-day').replaceWith(day);
+    }
+    const name = document.createElement('span');
+    name.className = 'coming-name';
+    name.append(...card.querySelector('.c-name').cloneNode(true).childNodes);
+    const when = document.createElement('span');
+    when.className = 'coming-when';
+    if (usual) {
+      // The card's note of a past year's dates (November 22 in 2025) is left out; this year's is kept.
+      const usualWhen = card.querySelector('.c-when').cloneNode(true);
+      for (const span of usualWhen.children) if (!span.textContent.includes(date.getFullYear())) span.textContent = span.textContent.split(' (')[0];
+      when.append(...usualWhen.childNodes, ' · ', ...card.querySelector('.c-where').cloneNode(true).childNodes);
+      when.querySelector('svg')?.remove();
+    } else {
+      const days = Math.round((date - today) / 864e5);
+      const on = locale => date.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
+      when.append(...inBoth(
+        `${on('en-US')} · ${days === 0 ? 'today' : days === 1 ? 'tomorrow' : `in ${days} days`}`,
+        `${on('uk-UA')} · ${days === 0 ? 'сьогодні' : days === 1 ? 'завтра' : `через ${days} ${pluralUk(days, 'день', 'дні', 'днів')}`}`));
+    }
+    const text = document.createElement('span');
+    text.append(name, when);
+    const link = document.createElement('a');
+    link.className = 'coming-item';
+    link.href = '#' + card.id;
+    link.append(leafEl, text);
+    const item = document.createElement('li');
+    item.append(link);
+    return item;
+  });
+  document.getElementById('coming-list').replaceChildren(...items);
+  document.getElementById('coming-up').hidden = !items.length;
+}
+showComingUp(new Date());
 
 let savedLang = null;
 try { savedLang = localStorage.getItem('lang'); } catch (error) { /* storage unavailable */ }
