@@ -44,11 +44,19 @@ def tagged():
         yield (tags.get('name') or tags.get('name:uk') or NO_NAME, lat, lon, tags.get('amenity') or 'shop=' + tags.get('shop', '?'),
                tags, f"https://www.openstreetmap.org/{el['type']}/{el['id']}")
 
+def stem(word):
+    """The part of a search that makes it Ukrainian: 'ukrainian deli' and 'ukraine' -> 'ukrain', 'lviv' -> 'lviv'."""
+    return 'ukrain' if word.startswith('ukrain') else word
+
 def named():
-    """The same, for venues and shops whose names Nominatim matches to a Ukrainian word. At most one request a second."""
+    """The same, for venues and shops whose names Nominatim matches to a Ukrainian word. At most one request a second.
+    Nominatim also matches words in an address, which turned every shop in Chicago's Ukrainian Village into a lead
+    (October 2026), so a result counts only when the word is in its name or its cuisine."""
     for word in WORDS:
         query = urllib.parse.urlencode({'q': word, 'countrycodes': 'us', 'format': 'jsonv2', 'limit': 50, 'extratags': 1})
         for r in fetch(NOMINATIM + query):
+            said = f"{r['name']} {(r.get('extratags') or {}).get('cuisine', '')}".lower()
+            if stem(word) not in said: continue
             if r['category'] == 'shop' or (r['category'] == 'amenity' and r['type'] in VENUE_TYPES):
                 yield (r['name'], float(r['lat']), float(r['lon']), r['type'] if r['category'] == 'amenity' else 'shop=' + r['type'],
                        r.get('extratags') or {}, f"https://www.openstreetmap.org/{r['osm_type']}/{r['osm_id']}")
