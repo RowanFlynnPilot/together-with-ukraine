@@ -504,6 +504,22 @@ def leaf(text):
     day = re.search(r'\b(\d{1,2}(?:–\d{1,2})?)\b(?!\d)', text[month.start():])
     return MONTHS_EN.index(month.group()), day.group(1) if day else None
 
+ORDINALS = {'First': 1, 'Second': 2, 'Third': 3, 'Fourth': 4}
+WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']  # in the order the browser counts them
+
+def when_data(x, field):
+    """Data attributes from which the page's Coming up panel works out when an entry next falls: its month (0 to 11),
+    and for a holiday its day or its rule (the third Thursday of May). A festival's dates change every year, so it
+    is marked usual, and its day, when the entry gives one, only orders it within its month."""
+    text = x[field][0]
+    month, day = leaf(text)
+    first_day = f' data-day="{day.split("–")[0]}"' if day else ''
+    if field == 'when': return f' data-month="{month}" data-usual{first_day}'
+    if rule := re.match(r'(First|Second|Third|Fourth) (\w+day) of', text):
+        return f' data-month="{month}" data-nth="{ORDINALS[rule[1]]}" data-weekday="{WEEKDAYS.index(rule[2])}"'
+    if not day: raise ValueError(f'holiday {x["key"]}: its date {text!r} gives neither a day nor a rule such as "Third Thursday of"')
+    return f' data-month="{month}"{first_day}'
+
 def _validate():
     keys = set()
     photos.validate(HERO, 'header photo')
@@ -529,8 +545,8 @@ def _validate():
         for en, _ in RELABELS[x['key']]:
             if en.casefold() not in x['about'][0].casefold(): raise ValueError(f"RELABELS: {x['key']} does not say {en!r}")
     if set(KIND_OF_RESOURCE) != {x['key'] for x in RESOURCES} or len(KIND_OF_RESOURCE) != len(RESOURCES): raise ValueError('RESOURCE_KINDS needs every resource exactly once')
-    for x in HOLIDAYS: leaf(x['date'][0])
-    for x in EVENTS: leaf(x['when'][0])
+    for x in HOLIDAYS: when_data(x, 'date')
+    for x in EVENTS: when_data(x, 'when')
 _validate()
 
 def photo_files():
@@ -634,7 +650,7 @@ def _dated(x, section_id, targets, field):
     """A holiday or a festival, under a calendar leaf."""
     month, day = leaf(x[field][0])
     where = f'<p class="c-where">{_icon("pin")}{both(*x["where"])}</p>' if 'where' in x else ''
-    return f"""        <article class="culture-item c-dated" id="{section_id}-{x['key']}" tabindex="-1">
+    return f"""        <article class="culture-item c-dated" id="{section_id}-{x['key']}" tabindex="-1"{when_data(x, field)}>
           <div class="leaf" aria-hidden="true"><span class="leaf-month">{both(MONTHS_SHORT[0][month], MONTHS_SHORT[1][month])}</span>{f'<span class="leaf-day">{day}</span>' if day else '<span class="leaf-day c-ornament"></span>'}</div>
           <div class="c-body">
             <h4 class="c-name">{both(*x['name'])}</h4>
