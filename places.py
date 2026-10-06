@@ -216,6 +216,7 @@ def render(story_links):
                             for story_id, en, uk in story_links.get(target_ids[p['name'], p['city']], []))
             out.append(f"""  <article class="place" id="{p['id']}" tabindex="-1" data-state="{p['state_id']}" data-group="{p['group']}">
     <p class="place-kind">{_icon(p['group'])}{both(p['kind'], places_uk.KINDS[p['kind']])}</p>
+    <p class="place-distance" hidden></p>
     <h4 class="place-name">{e(shown(p['name']))}</h4>
     <p class="place-addr">{address}</p>
     <p class="place-tags">{''.join(both(*UKRAINIAN[t], cls='tag tag-' + t) for t in p['ukrainian'])}</p>{story}
