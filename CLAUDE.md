@@ -41,6 +41,7 @@ python scout.py                                # leads for new places from OpenS
 | `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, related entries elsewhere on the page, and optionally a `photo(...)`; without one, the card shows its theme's icon (`ICONS`). Long stories show their first lines and open with Read more. |
 | `places.py` | Loads and validates `data/places.json`: checks each place's coordinates fall inside the state it names (point-in-polygon on the TopoJSON), and renders the listings as cards. Also holds the groups of kinds of place behind the filter buttons and icons, and `PHOTOS`, the openly licensed photos taken at listed places that run above the list. |
 | `give.py` | Organizations, each text an (English, Ukrainian) pair, each with a list of checks. US charities pull facts from `data/`. `REVIEWED` is the date of the last review by hand. A check can carry a fourth item, a phrase its page must contain. A check that found something missing or worth knowing (no outside audit, not yet rated, a commercial carrier) is written `caveat(...)`, and the page marks it with an exclamation mark instead of a check mark. |
+| `review.py` | Builds `site/review.html`: every English text beside its Ukrainian, numbered and grouped by section, for a native speaker to check. Each row's button opens the "Report a mistake" form with the row filled in and the Ukrainian ready to edit; names spelled from English-only reports are highlighted (`GUESSED_NAMES`). Linked only from the footer's translation note, and not indexed. |
 | `i18n.py` | `both()`, the `{{..||..}}` marker filler, dates in both languages, Ukrainian plurals, slugs. |
 | `places_uk.py` | Ukrainian names for US states and kinds of place. |
 | `records.py` | Pulls IRS records (ProPublica Nonprofit Explorer API) and Charity Navigator ratings. Uses `curl_cffi` with Chrome impersonation because several sites reject plain clients. Raises if a Charity Navigator page shows neither stars nor "Not Rated", so a layout change is never read as a lost rating. |
@@ -161,11 +162,11 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
 
 ## Open items
 
-- A native speaker has not reviewed the Ukrainian text, including the story summaries and the
+- A native speaker has not reviewed the Ukrainian text (the review page, `review.html`, lists all of it with a button per text), including the story summaries and the
   Ukrainian spellings of names taken from English-only reports, which follow the official
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко). When that is done, delete the footer paragraph in `template.html` that says the
-  Ukrainian is a machine translation.
+  Ukrainian is a machine translation, with its link to the review page.
 - The places list has 101 places in 29 states and DC, from three passes of state-by-state research
   (October 3, 2026) in local press and the businesses' own sites. Every state was searched at least
   once; the 21 without a listing turned up nothing that passes rule 2 (the near-misses are in `held`).

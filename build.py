@@ -7,7 +7,7 @@ the same id, or a US charity without a pulled record."""
 import json, pathlib, re, struct, sys, zlib
 from collections import Counter
 
-import culture, give, history, places, places_uk, stories
+import culture, give, history, places, places_uk, review, stories
 from i18n import both, dates, fill_markers, plural_uk
 
 ROOT = pathlib.Path(__file__).parent
@@ -102,6 +102,7 @@ if __name__ == '__main__':
     out.parent.mkdir(exist_ok=True)
     out.write_text(build(), encoding='utf-8')
     (out.parent / 'apple-touch-icon.png').write_bytes(flag_png(180, 180))
+    (out.parent / 'review.html').write_text(review.render(), encoding='utf-8')  # every text beside its Ukrainian, for review
     (out.parent / 'images').mkdir(exist_ok=True)
     # share.jpg is the link-preview picture, made once from the header photo and kept in images/.
     for photo in stories.photo_files() + culture.photo_files() + places.photo_files() + history.photo_files() + [ROOT / 'images' / 'share.jpg']:
