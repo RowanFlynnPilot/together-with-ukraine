@@ -91,7 +91,8 @@ body {
   font-size: 1.125rem;
   line-height: 1.55;
 }
-[hidden] { display: none !important; }
+/* A closed tab is hidden until found, so the browser's Find can search it; anything else hidden stays out of the page. */
+[hidden]:not([hidden="until-found"]) { display: none !important; }
 /* Both languages are in the page; only the active one is shown. */
 html[data-lang="en"] [data-l="uk"], html[data-lang="uk"] [data-l="en"] { display: none !important; }
 a { color: var(--link); }
@@ -852,13 +853,20 @@ const tabs = [...document.querySelectorAll('.tab')];
 const tabBar = document.querySelector('.wheat');
 const main = document.querySelector('main');
 const panelOf = tab => document.getElementById(tab.getAttribute('aria-controls'));
-function showTab(tab) {
+// Closed tabs are hidden until found where the browser supports it, so its Find (Ctrl+F) searches them too and opens
+// the one a match is in; elsewhere they are simply hidden.
+const CLOSED = 'onbeforematch' in document.body ? 'until-found' : true;
+function markTab(tab) {
   for (const t of tabs) {
     const active = t === tab;
     t.setAttribute('aria-selected', String(active));
     t.tabIndex = active ? 0 : -1;
-    panelOf(t).hidden = !active;
+    panelOf(t).hidden = active ? false : CLOSED;
   }
+}
+markTab(tabs.find(t => t.getAttribute('aria-selected') === 'true'));
+function showTab(tab) {
+  markTab(tab);
   // When the tab bar is stuck to the top of the screen, start the new section at its beginning.
   const offset = main.getBoundingClientRect().top - tabBar.offsetHeight;
   if (offset < 0) window.scrollBy(0, offset);
@@ -914,6 +922,15 @@ document.addEventListener('click', event => {
   if (!target) return;
   event.preventDefault();
   reveal(target);
+});
+// Find opened a closed tab to show a match: mark that tab as the open one and keep its address. The browser scrolls to the match.
+document.addEventListener('beforematch', event => {
+  const panel = event.target.closest('[role="tabpanel"]');
+  const tab = panel && tabs.find(t => panelOf(t) === panel);
+  if (!tab || tab.getAttribute('aria-selected') === 'true') return;
+  markTab(tab);
+  history.replaceState(null, '', '#' + panel.id);
+  requestAnimationFrame(fitStories);
 });
 window.addEventListener('hashchange', () => {
   const target = findTarget(location.hash);

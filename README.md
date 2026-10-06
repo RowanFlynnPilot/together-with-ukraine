@@ -9,7 +9,7 @@ A two-language (English and Ukrainian) page with six parts:
 - **Eat and shop**: Ukrainian restaurants, cafés, bakeries and markets in the United States, filtered by state and kind, on a map that zooms to each state, each with the evidence it was listed on.
 - **Give**: where to donate money, send supplies or volunteer, with what was verified about each group.
 
-The parts link to each other: a story about the Holodomor links to that timeline entry and back, a story about Veselka links to Veselka on the map. Every section and entry has its own address (`#give`, `#story-liubov-yarosh`), and `?lang=uk` opens the page in Ukrainian.
+The parts link to each other: a story about the Holodomor links to that timeline entry and back, a story about Veselka links to Veselka on the map. Every section and entry has its own address (`#give`, `#story-liubov-yarosh`), and `?lang=uk` opens the page in Ukrainian. The browser's own Find (Ctrl+F) searches every tab, not just the open one, and opens the tab a match is in.
 
 Live site: https://rowanflynnpilot.github.io/together-with-ukraine/
 

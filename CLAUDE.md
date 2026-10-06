@@ -18,7 +18,7 @@ counts, which `build.py` counts from the content. The footer says how each part 
 the review dates. Stories link to the timeline entry,
 place or organization they involve, and those link back. Every tab and entry has its own address
 (`#give`, `#event-the-holodomor`, `#story-…`, `#place-…`, `#org-…`), and `#places-<state>` opens the
-place list filtered to a state, which the In the US table links to; `?lang=uk` forces Ukrainian.
+place list filtered to a state, which the In the US table links to; `?lang=uk` forces Ukrainian. Closed tabs are `hidden="until-found"` where the browser supports it, so its Find (Ctrl+F) and links to a passage of text search them too; the browser opens the panel with the match and fires `beforematch`, and the script marks that tab as open. Elsewhere they are plainly hidden.
 
 ## Commands (Windows, PowerShell 5.1)
 
