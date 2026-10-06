@@ -56,7 +56,8 @@ def build():
     targets, back = cross_links()
     timeline = history.render(back['history'])
     people, themes = stories.render(targets)
-    culture_html, culture_nav = culture.render(targets)
+    story_targets = {('story', s['id']): (s['id'], *s['person']) for s in stories.STORIES}  # Culture entries can link to a story
+    culture_html, culture_nav = culture.render({**targets, **story_targets})
     give_html, give_nav = give.render(back['give'])
     records_en, records_uk = dates(read_json('checked.json')['records'])
     give_en, give_uk = dates(give.REVIEWED)

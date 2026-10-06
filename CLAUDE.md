@@ -9,7 +9,7 @@ Live: https://rowanflynnpilot.github.io/together-with-ukraine/ — the repo name
 ## What it is
 
 One static page, English and Ukrainian, with six tabs: Ukrainian culture (a photo gallery, food with
-recipes, traditions, holidays, US festivals and resources), a sourced history timeline, stories of
+recipes, traditions, holidays, US festivals, books, films and music, and resources), a sourced history timeline, stories of
 Ukrainian people summarized from published reports, Census figures on where people of Ukrainian
 ancestry live in the US, a map of Ukrainian places to eat and shop in the US, and a list of vetted
 ways to give money, supplies or time. The page opens on Culture. The header carries the flag,
@@ -39,7 +39,7 @@ python census.py; git diff data/census.json    # pull the newest Census figures 
 | `template.html` | The page: markup, CSS, and the script for tabs, links between sections, language, the state filter, Near me (the list sorted by distance from the reader, worked out in the browser), the maps, and the Culture tab's Coming up panel (this month's and next month's holidays and festivals, worked out in the browser from today's date and the `data-` attributes `culture.when_data` puts on each dated card; a holiday needs a day or a rule such as "Fourth Saturday of", or the build stops). `{{English||Українська}}` becomes a two-language pair; `__NAME__` placeholders are filled by `build.py`. |
 | `build.py` | Assembles the page and resolves the links between sections. No network. Stops on a missing translation, a link to an anchor that does not exist, or two elements with the same id. |
 | `history.py` / `history_uk.py` | Timeline entries with their sources / the Ukrainian text, keyed by English title. `AS_OF` dates the entries about the war today. `ERA_PHOTOS` (a banner per era) and `EVENT_PHOTOS` (a picture beside some entries) hold the timeline's pictures. |
-| `culture.py` | The Culture tab: the header photo, the gallery, and the food, traditions, "Ukrainian, not Russian", holidays, events and resources sections. `REVIEWED` dates the events and resources. `UNESCO_YEAR` (the badge), `RELABELS` (the label each museum dropped and the one it uses now) and `RESOURCE_KINDS` shape how entries look; the build checks each against the entry's own text. An entry without a photo shows its Ukrainian name on a cross-stitch pattern. |
+| `culture.py` | The Culture tab: the header photo, the gallery, and the food, traditions, "Ukrainian, not Russian", holidays, events, Read, watch, listen (`MEDIA`: books an American reader can get in English, films and music, each with a link to where to find it, marked Free when it is, and kinds in `MEDIA_KINDS`) and resources sections. `REVIEWED` dates the events and resources. `UNESCO_YEAR` (the badge), `RELABELS` (the label each museum dropped and the one it uses now) and `RESOURCE_KINDS` shape how entries look; the build checks each against the entry's own text. An entry without a photo shows its Ukrainian name on a cross-stitch pattern. |
 | `photos.py` | Photo rules shared by stories and culture: accepted licenses, image sizes, the credit line, the license claim `check.py` looks for. |
 | `stories.py` | The People tab. Each story: person, context, title, text (all English/Ukrainian pairs), sources as `(language, outlet, date, url, phrase)`, related entries elsewhere on the page, and optionally a `photo(...)`; without one, the card shows its theme's icon (`ICONS`). Long stories show their first lines and open with Read more. |
 | `places.py` | Loads and validates `data/places.json`: checks each place's coordinates fall inside the state it names (point-in-polygon on the TopoJSON), and renders the listings as cards. Also holds the groups of kinds of place behind the filter buttons and icons, and `PHOTOS`, the openly licensed photos taken at listed places that run above the list. |
@@ -116,7 +116,10 @@ before the page draws, so it never flashes the other theme.
    Institute, museums, major outlets). Leave out dishes and customs shared across the former USSR
    unless a source calls them Ukrainian. Recipes are linked, never copied, and come from Ukrainian
    sources first (ukraine.ua, Yevhen Klopotenko, the Ukrainian Institute). Events come from their
-   organizers' own pages; give the usual month rather than a date unless the page states one.
+   organizers' own pages; give the usual month rather than a date unless the page states one. Read, watch,
+   listen links each work to a legal place to find it, free first (Project Gutenberg, PBS Frontline, NPR, the
+   official Eurovision page), otherwise its publisher or distributor; never an unofficial upload. Photos there are
+   of the authors, directors and performers, never a cover, poster or still.
 9. **In the US.** Every figure is the Census Bureau's own estimate, shown with its margin of error, and a figure it
    did not publish says so; never fill one in from another year or source. Words about the figures follow the
    Bureau's definitions (ancestry is reported, up to two per person; "born in Ukraine" is its foreign-born count).

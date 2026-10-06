@@ -2,7 +2,7 @@
 
 A two-language (English and Ukrainian) page with six parts:
 
-- **Culture** (the page opens here): Ukraine's landscapes and landmarks in photos, its food with links to recipes, traditions, holidays, Ukrainian festivals in the US, and where to learn more.
+- **Culture** (the page opens here): Ukraine's landscapes and landmarks in photos, its food with links to recipes, traditions, holidays, Ukrainian festivals in the US, books, films and music with where to find them, and where to learn more. A Coming up panel shows the holidays and festivals of this month and next.
 - **History**: 30 entries from Kyivan Rus' to today, each linked to the source it was checked against.
 - **People**: stories of Ukrainians, in Ukraine and in the United States, each summarized from one published report and linked to it.
 - **In the US**: how many people of Ukrainian ancestry live in the United States and where, from the Census Bureau's American Community Survey: a map by state, every state's figures with their margins of error, the largest metro areas, and the rise in people born in Ukraine since 2021.
