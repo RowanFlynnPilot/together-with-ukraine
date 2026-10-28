@@ -58,7 +58,7 @@ python census.py; git diff data/census.json    # pull the newest Census figures 
 | `data/states-10m.json` | US state shapes (us-atlas). |
 | `images/` | Pictures for the stories, the header, the Culture and History tabs and the places, openly licensed or public domain (rule 7), saved at display size. Copied to `site/images/` by the build. `share.jpg` is the picture a shared link shows: the header photo with the title and the six sections, carrying the photographer's credit as its CC BY-SA license requires. |
 | `share.py` | Makes `images/share.jpg`. Run it when the tabs change, then update `og:image:alt` in `template.html`. Needs Pillow and the Segoe UI fonts that come with Windows; the build only copies the picture. |
-| `.github/workflows/` | `deploy.yml` builds and publishes on every push to main; `build.yml` builds every pull request (and compiles every script), so a broken change shows a red check before merging; `check.yml` runs `check.py` weekly; `scout.yml` runs the lead finder monthly. |
+| `.github/workflows/` | `deploy.yml` builds and publishes on every push to main; `build.yml` builds every pull request (and compiles every script), so a broken change shows a red check before merging; `check.yml` runs `check.py` weekly and, when it fails, opens an issue titled "The weekly check found problems" listing them (or comments on the open one), which the next passing run closes; `scout.yml` runs the lead finder monthly. |
 | `.github/ISSUE_TEMPLATE/` | Forms for suggesting a place, story or group, or reporting a mistake. The footer links to them. |
 
 Both languages are in the built page. CSS shows the one matching `<html data-lang>`; the script
@@ -189,7 +189,7 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко, Солощук, Сабазов, Хіндурангала, Орзіх). When that is done, delete the footer paragraph in `template.html` that says the
   Ukrainian is a machine translation, with its link to the review page.
-- The places list has 109 places in 31 states and DC, from three passes of state-by-state research
+- The places list has 108 places in 31 states and DC (The Golden Boar was held in October 2026 when its website, its only evidence, stopped resolving), from three passes of state-by-state research
   (October 3, 2026) in local press and the businesses' own sites, and a fourth (October 6) aimed at the
   states where the Census shows many people of Ukrainian ancestry and few listings: Oregon, Connecticut,
   Massachusetts, New Jersey, Michigan, Ohio and California. Every state was searched at least once; the
