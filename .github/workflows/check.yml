@@ -1,8 +1,9 @@
 name: Check sources
 
 # Every Monday, re-verify the charity records, every link on the page, the evidence phrases on
-# those pages, and the review dates. A failed run means something changed, broke or went stale:
-# read the log, then see README.md.
+# those pages, and the review dates. A failed run means something changed, broke or went stale.
+# It opens an issue listing the problems (or adds them to the one already open), so a failure is
+# seen next to the other open work rather than only in an email; the next passing run closes it.
 on:
   schedule:
     - cron: '0 13 * * 1'
@@ -10,6 +11,10 @@ on:
 
 permissions:
   contents: read
+  issues: write
+
+env:
+  TITLE: The weekly check found problems
 
 jobs:
   check:
@@ -21,4 +26,32 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - run: python check.py
+      - name: Check
+        run: |
+          set -o pipefail
+          python check.py | tee report.txt
+      - name: Report the problems in an issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "The check on $(date -u +'%B %-d, %Y') found:"
+            echo
+            echo '```'
+            sed -n '/PROBLEMS:/,$p' report.txt
+            echo '```'
+            echo
+            echo "Each line is something that changed on another site, or a date to review. CLAUDE.md (Known behavior) and README.md say how to fix each kind. Full log: $RUN"
+          } > body.md
+          number=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number')
+          if [ -n "$number" ]; then gh issue comment "$number" --body-file body.md
+          else gh issue create --title "$TITLE" --body-file body.md; fi
+      - name: Close the issue once the check passes
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          number=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number')
+          if [ -n "$number" ]; then gh issue close "$number" --comment "The check on $(date -u +'%B %-d, %Y') passed."; fi

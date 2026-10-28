@@ -40,7 +40,7 @@ python check.py
 - the entries about the war today, the places review and the Give review are not too old (4, 12 and 6 months)
 - the Census figures are the latest year the Census Bureau has published
 
-GitHub runs the same check every Monday (`.github/workflows/check.yml`) and emails you if it fails.
+GitHub runs the same check every Monday (`.github/workflows/check.yml`). When it fails, it opens an issue titled "The weekly check found problems" with the list, or adds to the one already open, and the next passing run closes it.
 
 When it fails:
 
