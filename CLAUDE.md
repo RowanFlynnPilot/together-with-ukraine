@@ -203,5 +203,9 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   1500 Q Street in Sacramento, once its rebrand is done; and Gold Cup Coffee (Vancouver, WA), whose
   owner was born in Ukraine (KOIN, 2022). Undecided: Multicook-style prepared and frozen-food shops (held).
   `python scout.py` gives OpenStreetMap leads. New places must pass rule 2.
-- Most pre-2022 history rests on one encyclopedia. A second independent source on the contested
-  entries (Pereiaslav, the Holodomor, Crimea) would strengthen it.
+- Most pre-2022 history rests on one encyclopedia. The contested entries now have a second, independent
+  source (October 2026): Britannica for Pereiaslav and the Holodomor, RFE/RL for the 1944 deportation and
+  the Wilson Center for the 1954 transfer. Where the sources disagree, the entry says so and whose view is
+  whose: the treaty's meaning, the deportation's death toll (20–25 percent on the way, or about 40 percent
+  within a year), and the official reasons for the transfer. Britannica sometimes turns scripts away, so its
+  two links may appear in the check's list for a look by hand.
