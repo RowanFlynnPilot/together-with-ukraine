@@ -14,7 +14,7 @@ import history_uk as UK
 ROOT = pathlib.Path(__file__).parent
 ISSUE = 'https://github.com/RowanFlynnPilot/together-with-ukraine/issues/new?'
 # Ukrainian spellings of names taken from English-only reports (CLAUDE.md, Open items), as stems.
-GUESSED_NAMES = ['Безпрозван', 'Поканевич', 'Сокор', 'Гапон', 'Бірчард', 'Фертш', 'Градинар', 'Ентін', 'Дзуенко']
+GUESSED_NAMES = ['Безпрозван', 'Поканевич', 'Сокор', 'Гапон', 'Бірчард', 'Фертш', 'Градинар', 'Ентін', 'Дзуенко', 'Солощук', 'Сабазов', 'Хіндурангал', 'Орзіх']
 
 def pairs():
     """(section, where, English, Ukrainian) for every text on the page, section by section, in page order."""

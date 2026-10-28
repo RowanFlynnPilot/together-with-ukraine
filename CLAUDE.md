@@ -187,7 +187,7 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
 - A native speaker has not reviewed the Ukrainian text (the review page, `review.html`, lists all of it with a button per text), including the story summaries and the
   Ukrainian spellings of names taken from English-only reports, which follow the official
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
-  Бірчард, Фертш, Градинар, Ентіна, Дзуенко). When that is done, delete the footer paragraph in `template.html` that says the
+  Бірчард, Фертш, Градинар, Ентіна, Дзуенко, Солощук, Сабазов, Хіндурангала, Орзіх). When that is done, delete the footer paragraph in `template.html` that says the
   Ukrainian is a machine translation, with its link to the review page.
 - The places list has 109 places in 31 states and DC, from three passes of state-by-state research
   (October 3, 2026) in local press and the businesses' own sites, and a fourth (October 6) aimed at the
