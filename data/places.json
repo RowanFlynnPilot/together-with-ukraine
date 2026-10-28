@@ -617,26 +617,6 @@
   ]
  },
  {
-  "name": "The Golden Boar",
-  "kind": "Restaurant",
-  "street": "2158 East County Line Road",
-  "city": "Huntingdon Valley",
-  "state": "Pennsylvania",
-  "web": "https://www.goldenboarrestaurant.com/",
-  "lat": 40.17029,
-  "lon": -75.0736,
-  "ukrainian": [
-   "food"
-  ],
-  "basis": [
-   {
-    "by": "own website",
-    "url": "https://www.goldenboarrestaurant.com/",
-    "says": "Authentic Ukrainian and Eastern European Food"
-   }
-  ]
- },
- {
   "name": "European Dumplings Cafe",
   "kind": "Restaurant",
   "street": "2211 Northwest Military Highway",
@@ -652,7 +632,7 @@
    {
     "by": "own website",
     "url": "https://www.europeandumplings.com/",
-    "says": "Welcome to our Ukrainian restaurant"
+    "says": "Ukrainian Food & Pierogi in San Antonio"
    }
   ]
  },
@@ -672,7 +652,7 @@
    {
     "by": "own website",
     "url": "https://www.europeandumplings.com/",
-    "says": "Welcome to our Ukrainian restaurant"
+    "says": "Ukrainian Food & Pierogi in San Antonio"
    }
   ]
  },
@@ -1791,7 +1771,7 @@
    {
     "by": "own website",
     "url": "https://pierogi.bar/",
-    "says": "Authentic Ukrainian cuisine"
+    "says": "Ukrainian restaurant and martini bar"
    }
   ]
  },
