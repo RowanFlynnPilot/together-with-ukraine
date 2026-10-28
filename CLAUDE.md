@@ -189,7 +189,7 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   transliteration backwards and are unconfirmed (for example Безпрозваний, Поканевич, Сокор, Гапон,
   Бірчард, Фертш, Градинар, Ентіна, Дзуенко, Солощук, Сабазов, Хіндурангала, Орзіх). When that is done, delete the footer paragraph in `template.html` that says the
   Ukrainian is a machine translation, with its link to the review page.
-- The places list has 109 places in 31 states and DC, from three passes of state-by-state research
+- The places list has 108 places in 31 states and DC (The Golden Boar was held in October 2026 when its website, its only evidence, stopped resolving), from three passes of state-by-state research
   (October 3, 2026) in local press and the businesses' own sites, and a fourth (October 6) aimed at the
   states where the Census shows many people of Ukrainian ancestry and few listings: Oregon, Connecticut,
   Massachusetts, New Jersey, Michigan, Ohio and California. Every state was searched at least once; the
