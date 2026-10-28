@@ -60,9 +60,13 @@ def stale():
     return [f'{what} is dated {date}, more than {days} days ago: review it, then update the date'
             for what, (date, days) in MAX_AGE.items() if (today - datetime.date.fromisoformat(date)).days > days]
 
+RETRY_WAITS = (10, 60)  # seconds before the second and third tries
+
 def fetch(url):
-    """(status, response). A failure other than a refusal gets one more try: slow sites time out now and then."""
-    for attempt in range(2):
+    """(status, response). A failure other than a refusal is tried twice more, 10 and then 60 seconds later: with
+    some 540 links, a server's passing timeout or error turned up most weeks and failed the run (October 2026),
+    while a page that is really gone still fails all three tries."""
+    for attempt in range(len(RETRY_WAITS) + 1):
         try:
             response = get(url)
             status = str(response.status_code)
@@ -70,9 +74,9 @@ def fetch(url):
             response = None
             status = INCOMPLETE_CHAIN if 'unable to get local issuer certificate' in str(error) else type(error).__name__
         if url.startswith(WALLED) and status == '200': status = '403'
-        if status in ('200', *REFUSED) or attempt:
+        if status in ('200', *REFUSED) or attempt == len(RETRY_WAITS):
             return status, response
-        time.sleep(5)
+        time.sleep(RETRY_WAITS[attempt])
 
 def normalize(text):
     return ' '.join(text.replace('’', "'").replace('‘', "'").split()).casefold()

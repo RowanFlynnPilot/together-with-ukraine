@@ -168,7 +168,8 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   expires; the file says how to replace it). So are 202 answers (a bot challenge), and the TEGNA stations (KING 5, ABC10,
   13News Now, `WALLED` in check.py), which answer GitHub's servers with a stand-in page that has no article. These links, with the phrase each should carry, are listed in every
   report for a manual look. Only other failures (404, 5xx, timeouts, other certificate errors) fail
-  the run.
+  the run, and only when they persist through three tries, 10 and 60 seconds apart: with some 540 links, a
+  server's passing hiccup turned up most weeks and failed the run (October 2026).
 - A page that loads but no longer carries its phrase fails the run: a business renamed or closed,
   a story taken down (news sites often redirect a removed article to their home page, which still
   answers 200), or a redesign that changed the wording. Look, then fix the entry or the phrase.
