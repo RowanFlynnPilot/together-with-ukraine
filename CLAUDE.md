@@ -58,7 +58,7 @@ python census.py; git diff data/census.json    # pull the newest Census figures 
 | `data/states-10m.json` | US state shapes (us-atlas). |
 | `images/` | Pictures for the stories, the header, the Culture and History tabs and the places, openly licensed or public domain (rule 7), saved at display size. Copied to `site/images/` by the build. `share.jpg` is the picture a shared link shows: the header photo with the title and the six sections, carrying the photographer's credit as its CC BY-SA license requires. |
 | `share.py` | Makes `images/share.jpg`. Run it when the tabs change, then update `og:image:alt` in `template.html`. Needs Pillow and the Segoe UI fonts that come with Windows; the build only copies the picture. |
-| `.github/workflows/` | `deploy.yml` builds and publishes on every push to main; `build.yml` builds every pull request (and compiles every script), so a broken change shows a red check before merging; `check.yml` runs `check.py` weekly; `scout.yml` runs the lead finder monthly. |
+| `.github/workflows/` | `deploy.yml` builds and publishes on every push to main; `build.yml` builds every pull request (and compiles every script), so a broken change shows a red check before merging; `check.yml` runs `check.py` weekly and, when it fails, opens an issue titled "The weekly check found problems" listing them (or comments on the open one), which the next passing run closes; `scout.yml` runs the lead finder monthly. |
 | `.github/ISSUE_TEMPLATE/` | Forms for suggesting a place, story or group, or reporting a mistake. The footer links to them. |
 
 Both languages are in the built page. CSS shows the one matching `<html data-lang>`; the script
