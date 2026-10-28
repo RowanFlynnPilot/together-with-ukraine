@@ -69,11 +69,39 @@ def meters(lat1, lon1, lat2, lon2):
 def simple(name):
     return re.sub(r'[^a-z0-9]', '', re.sub(r"['’]s\b", '', name.lower()))
 
-def known(name, lat, lon):
+STATE_CODES = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT',
+    'Delaware': 'DE', 'District of Columbia': 'DC', 'Florida': 'FL', 'Georgia': 'GA', 'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL',
+    'Indiana': 'IN', 'Iowa': 'IA', 'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+    'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO', 'Montana': 'MT', 'Nebraska': 'NE',
+    'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ', 'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC',
+    'North Dakota': 'ND', 'Ohio': 'OH', 'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI',
+    'South Carolina': 'SC', 'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT', 'Virginia': 'VA',
+    'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY',
+}
+if set(STATE_CODES) != set(places.STATE_IDS): raise ValueError('STATE_CODES needs exactly the states places.py knows')
+
+def same_business(a, b):
+    """Two names for one business: the same, or one the other with words added (Babushka Deli, Babushka Deli & Bakery)."""
+    a, b = simple(a), simple(b)
+    short, long = sorted((a, b), key=len)
+    return a == b or (len(short) >= 6 and long.startswith(short))
+
+def held(name, state):
+    """Whether a lead was already looked at and held back. A held entry is 'Name (City, ST)' and matches the same business
+    in that state only, so a held Ukrainian Cultural Center in Michigan does not hide a Ukrainian Kitchen in Colorado. An
+    entry that names no state (a chain such as Multicook, or an early entry) matches its name anywhere."""
+    for key in places.REVIEW['held']:
+        located = re.fullmatch(r'(.+?) \((?:.*, )?([A-Z]{2})\)', key)
+        held_name, held_state = (located[1], located[2]) if located else (re.sub(r' \(.*\)$', '', key), None)
+        if same_business(name, held_name) and held_state in (None, STATE_CODES[state]): return True
+    return False
+
+def known(name, lat, lon, state):
     for p in places.PLACES:
         same_name = simple(p['name'])[:6] in simple(name) or simple(name)[:6] in simple(p['name'])
         if (same_name or name == NO_NAME) and meters(lat, lon, p['lat'], p['lon']) < NEAR_METERS: return True
-    return any(simple(name)[:8] in simple(held) for held in places.REVIEW['held'])
+    return name != NO_NAME and held(name, state)
 
 def leads():
     rings = places._rings_by_state()
@@ -81,7 +109,7 @@ def leads():
     for name, lat, lon, kind, tags, osm in [*tagged(), *named()]:
         if 'brand' in tags or 'brand:wikidata' in tags: continue  # chains carry their name in many languages, Ukrainian among them
         state = next((s for s, r in rings.items() if places._contains(r, lon, lat)), None)
-        if osm in seen or state is None or known(name, lat, lon): continue
+        if osm in seen or state is None or known(name, lat, lon, state): continue
         seen.add(osm)
         out.append((state, name, kind + (f" ({tags['cuisine']})" if tags.get('cuisine') else ''),
                     tags.get('website') or tags.get('contact:website') or '', f'{lat:.5f}, {lon:.5f}', osm))
