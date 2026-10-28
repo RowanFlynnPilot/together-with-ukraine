@@ -32,6 +32,9 @@ REFUSED = ('403', '429', '202', INCOMPLETE_CHAIN)  # links the checker cannot ju
 # Sites that show automated readers a stand-in page: 403 from a home connection, and from GitHub's servers a page that
 # answers 200 without the article. Their links are refused whatever they answer, and listed for a look by hand.
 WALLED = ('https://www.13newsnow.com/', 'https://www.abc10.com/', 'https://www.king5.com/')
+# Sites that load at once from a home connection but let GitHub's servers time out on every try (Ardour Bakery,
+# October 2026). A timeout from them is listed for a look by hand like a refusal; anywhere else it fails the run.
+HANGS = ('https://ardourbakery.com/',)
 NOT_SOURCES = ('https://www.google.com/maps/search/',)  # searches the page builds for each place
 MAX_AGE = {  # what, (date, days)
     'the entries about the war today (AS_OF in history.py)': (history.AS_OF, 120),
@@ -74,6 +77,7 @@ def fetch(url):
             response = None
             status = INCOMPLETE_CHAIN if 'unable to get local issuer certificate' in str(error) else type(error).__name__
         if url.startswith(WALLED) and status == '200': status = '403'
+        if url.startswith(HANGS) and status == 'Timeout': status = '403'
         if status in ('200', *REFUSED) or attempt == len(RETRY_WAITS):
             return status, response
         time.sleep(RETRY_WAITS[attempt])
