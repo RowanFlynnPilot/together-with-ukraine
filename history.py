@@ -10,7 +10,7 @@ import history_uk as UK
 
 # The day the entries about the war as it stands were last brought up to date. check.py fails
 # once this is more than four months old, as a reminder to revise them.
-AS_OF = '2026-10-03'
+AS_OF = '2026-11-21'
 
 IEU = 'https://www.encyclopediaofukraine.com/display.asp?linkpath=pages%5C'
 def ieu(title, path): return (f'Encyclopedia of Ukraine, “{title}”', IEU + path)
@@ -113,11 +113,13 @@ ERAS = [
    'The European Union formally opens membership negotiations with Ukraine in June. In August Ukrainian forces cross into Russia’s Kursk region. In April 2025 Russia announces it has retaken the region.',
    [AA]),
   ('2025–26', 'Talks without a ceasefire',
-   'Russia and Ukraine meet in Istanbul in May 2025, their first talks in three years, and agree to exchange 1,000 prisoners each. Talks mediated by the United States continue into 2026 without producing a ceasefire.',
-   [AA, CFR]),
-  ('Oct 2026', 'The war continues',
-   'The invasion is in its fifth year. Russia occupies about a fifth of Ukraine and continues to bombard its cities. Ukraine fights on.',
-   [CFR, ('Ukrainska Pravda, DeepState figures, January 2026', 'https://www.pravda.com.ua/eng/news/2026/01/01/8014292/')]),
+   'Russia and Ukraine meet in Istanbul in May 2025, their first talks in three years, and agree to exchange 1,000 prisoners each. In May 2026 a three-day truce brokered by the United States expires and air attacks resume. In November 2026 Russia, Ukraine and the United States meet in Abu Dhabi and agree in principle on a large prisoner exchange, but the talks end without a breakthrough on the central issues.',
+   [AA, ('Al Jazeera, on the May 2026 truce', 'https://www.aljazeera.com/news/2026/5/12/zelenskyy-says-russia-fired-over-200-drones-at-ukraine-as-truce-expires'),
+    ('RFE/RL, on the Abu Dhabi talks', 'https://www.rferl.org/a/33895568.html'),
+    ('Euronews, on the Abu Dhabi talks', 'https://www.euronews.com/2026/11/11/abu-dhabi-peace-talks-end-with-prisoner-exchange-agreement-as-us-envoys-prepare-to-meet-pu')]),
+  ('Nov 2026', 'The war continues',
+   'The invasion is in its fifth year. A local truce in the Kherson region, the longest pause in the fighting since the full-scale invasion began, lets hundreds of stranded civilians leave before it ends on November 1. Russia occupies about a fifth of Ukraine and continues to bombard its cities. Ukraine fights on.',
+   [CFR, ('Euronews, on the Kherson truce', 'https://www.euronews.com/2026/11/02/russia-resumes-attacks-on-ukraines-kherson-region-after-truce-ends-kyiv-says')]),
  ]),
 ]
 
