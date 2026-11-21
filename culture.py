@@ -574,6 +574,73 @@ MEDIA = [
                    'Michael Doherty', 'CC BY-SA 4.0', W + 'Eurovision_2022_-_Semi-final_1_-_Ukraine_-_Kalush_Orchestra_(01).jpg')),
 ]
 
+
+# Say it in Ukrainian: everyday words and phrases. name is (the English meaning, the Ukrainian phrase); say is a rough
+# respelling for an English speaker, ours, not from a source (the sources give the Cyrillic, audio and transliteration);
+# url is a page where the phrase can be heard. A native speaker has not reviewed the respellings (CLAUDE.md, Open items).
+OU = 'https://www.open.edu/openlearn/mod/oucontent/view.php?id='
+OU_BY = 'The Open University, “Introduction to Ukrainian language and culture”'
+OU_GREET, OU_HOW, OU_ASK, OU_EAT, OU_SLAVA = OU + '135721&section=3', OU + '135721&section=6.1', OU + '136883&section=2.7', OU + '137234&section=7', OU + '135721&section=2'
+UL = ('en', 'Ukrainian Lessons', '2020-12-28', 'https://www.ukrainianlessons.com/14-basic-ukrainian-phrases/')
+KI_SLAVA = ('en', 'The Kyiv Independent', '2023-08-31', 'https://kyivindependent.com/the-origins-of-slava-ukraini')
+AP_KYIV = ('en', 'The Associated Press', '2019-08-14', 'https://www.ap.org/the-definitive-source/announcements/an-update-on-ap-style-on-kyiv/')
+PHRASES = [
+ entry('pryvit', ('Hi', 'Привіт'),
+       ('An informal hello, used between friends and people you know well.', 'Неформальне вітання — для друзів і добре знайомих людей.'),
+       [('en', OU_BY, None, OU_GREET, 'Привіт!'), ('en', OU_BY, None, OU_GREET, 'Hello! (informal)'), (*UL, 'between friends and people you know well')],
+       say='prih-VEET', url=OU_GREET),
+ entry('dobryi-den', ('Hello, good day', 'Добрий день'),
+       ('The universal greeting, and the most used.', 'Універсальне й найуживаніше вітання.'),
+       [('en', OU_BY, None, OU_GREET, 'Добрий день!'), (*UL, 'is universal and the most used')],
+       say='DOH-brih den', url=OU_GREET),
+ entry('diakuiu', ('Thank you', 'Дякую'),
+       ('Say it whenever you want to thank someone.', 'Кажіть щоразу, коли хочете комусь подякувати.'),
+       [('en', OU_BY, None, OU_HOW, 'Дякую'), (*UL, 'whenever you feel like you want to thank people')],
+       say='DYAH-koo-yoo', url=OU_HOW),
+ entry('bud-laska', ('Please, and you’re welcome', 'Будь ласка'),
+       ('It means both please and you’re welcome.', 'Означає і «please» (прохання), і «you’re welcome» (відповідь на подяку).'),
+       [('en', OU_BY, None, OU_ASK, 'будь ласка'), (*UL, "= you're welcome or please")],
+       say='bood LAHS-kah', url=OU_ASK),
+ entry('tak-ni', ('Yes and no', 'Так і ні'),
+       ('Tak is yes, and ni is no.', '«Так» — це yes, а «ні» — no.'),
+       [('en', OU_BY, None, OU_ASK, 'Так'), (*UL, '/tak/ = yes'), (*UL, '/ni/ =no')],
+       say='tahk, nee', url=OU_ASK),
+ entry('yak-spravy', ('How are you?', 'Як справи?'),
+       ('Literally, how are things going? Ukrainians tend to ask it only of friends, and only when they really want to know the answer.',
+        'Буквально — «how are things going?». Українці зазвичай питають про це лише друзів і лише тоді, коли справді хочуть почути відповідь.'),
+       [('en', OU_BY, None, OU_HOW, "which literally means 'how are things (going)?'"),
+        ('en', OU_BY, None, OU_HOW, 'only when they are friends and when they are really interested to know the answer')],
+       say='yahk SPRAH-vih', url=OU_HOW),
+ entry('vybachte', ('Sorry, excuse me', 'Вибачте'),
+       ('An apology for unpleasant situations.', 'Вибачення на випадок неприємних ситуацій.'),
+       [(*UL, 'is used for unpleasant situations')],
+       say='VIH-bahch-teh', url=UL[3]),
+ entry('smachnoho', ('Enjoy your meal', 'Смачного'),
+       ('The Ukrainian bon appétit.', 'Український відповідник «bon appétit».'),
+       [('en', OU_BY, None, OU_EAT, 'Смачного!'), ('en', OU_BY, None, OU_EAT, 'Bon appétit!')],
+       say='smahch-NOH-ho', url=OU_EAT),
+ entry('do-pobachennia', ('Goodbye', 'До побачення'),
+       ('Goodbye.', 'Прощання.'),
+       [('en', OU_BY, None, OU_GREET, 'До побачення!'), ('en', OU_BY, None, OU_GREET, 'Goodbye')],
+       say='doh poh-BAH-chen-nyah', url=OU_GREET),
+ entry('slava-ukraini', ('Glory to Ukraine! Glory to the heroes!', 'Слава Україні! Героям слава!'),
+       ('Glory to Ukraine, and the reply, glory to the heroes; these days Ukrainians often use it as a greeting. As a slogan it first surged during the Ukrainian War of Independence of 1917–1921, and in 2018 it became the official greeting of the Armed Forces and the National Police.',
+        '«Glory to Ukraine» і відповідь — «glory to the heroes»; сьогодні українці часто вживають це як вітання. Як гасло воно вперше поширилося під час Української революції 1917–1921 років, а 2018 року стало офіційним вітанням Збройних сил і Національної поліції.'),
+       [('en', OU_BY, None, OU_SLAVA, 'these days, Ukrainians often use the greeting'), ('en', OU_BY, None, OU_SLAVA, "which means 'Glory to Ukraine'"),
+        ('en', OU_BY, None, OU_SLAVA, 'Героям слава!'),
+        (*KI_SLAVA, 'initially surged during the Ukrainian War of Independence (1917-1921)'),
+        (*KI_SLAVA, 'became the official greeting of the Armed Forces of Ukraine and the National Police in 2018')],
+       say='SLAH-vah oo-krah-YEE-nee! heh-ROH-yahm SLAH-vah!', url=OU_SLAVA),
+ entry('kyiv-not-kiev', ('Kyiv, not Kiev', 'Київ'),
+       ('On October 2, 2018, Ukraine’s Foreign Ministry launched the #KyivNotKiev campaign, asking the world to write the capital’s name as Kyiv. In June 2019 the US Board on Geographic Names made Kyiv its official spelling, and that August the Associated Press switched too, in line with the Ukrainian government’s preferred name; it kept chicken Kiev for the dish.',
+        '2 жовтня 2018 року Міністерство закордонних справ України розпочало кампанію #KyivNotKiev, закликавши світ писати назву столиці як Kyiv. У червні 2019 року Рада США з географічних назв зробила Kyiv офіційним написанням, а в серпні так само вчинило агентство Associated Press — відповідно до назви, якій надає перевагу український уряд; для страви воно залишило «chicken Kiev».'),
+       [('uk', 'Міністерство закордонних справ України', '2018-10-02', 'https://mfa.gov.ua/news/67521-correctua-mzs-ukrajini-zvertajetysya-do-svitu-vzhivaj-kyivnotkiev', '2 жовтня 2018 року МЗС спільно з Центром стратегічних комунікацій'),
+        ('en', 'The World', '2019-06-13', 'https://theworld.org/stories/2019/06/14/spellcheck-beware-ukraine-s-capital-kyivnotkiev', 'will officially list the capital of Ukraine as Kyiv, not Kiev'),
+        (*AP_KYIV, 'It will henceforth be written in text, captions and datelines as Kyiv'),
+        (*AP_KYIV, "The change is in line with the Ukrainian government's preferred name and transliteration"),
+        (*AP_KYIV, 'chicken Kiev')]),
+]
+
 SECTIONS = [  # id, title, introduction, entries
  ('culture-food', ('Food and recipes', 'Кухня та рецепти'),
   ('Dishes that are Ukrainian by origin, each with a recipe from a Ukrainian source. The recipes stay on their authors’ sites.',
@@ -582,6 +649,9 @@ SECTIONS = [  # id, title, introduction, entries
   ('Several are on UNESCO’s lists of intangible cultural heritage.', 'Деякі з них внесено до списків нематеріальної культурної спадщини ЮНЕСКО.'), TRADITIONS),
  ('culture-corrections', ('Ukrainian, not Russian', 'Українське, а не російське'),
   ('Museums and institutions that have corrected how they label Ukrainian art and artists.', 'Музеї та установи, які виправили підписи до українського мистецтва й митців.'), CORRECTIONS),
+ ('culture-phrases', ('Say it in Ukrainian', 'Скажіть це українською'),
+  ('A few words to use with a Ukrainian friend. Each has a link to hear it spoken; the spelling under each is our rough guide for English speakers, with the stressed syllable in capitals.',
+   'Кілька слів для розмови з українськими друзями. До кожного є посилання, де можна почути вимову; запис латинкою — наш приблизний орієнтир для англомовних, наголошений склад виділено великими літерами.'), PHRASES),
  ('culture-holidays', ('Holidays and dates', 'Свята та пам’ятні дати'), None, HOLIDAYS),
  ('culture-events', ('Ukrainian festivals in the United States', 'Українські фестивалі у Сполучених Штатах'),
   ('Recurring events open to the public. Dates change from year to year, so check the organizer’s page.', 'Регулярні події, відкриті для всіх. Дати щороку змінюються, тож перевіряйте сторінку організатора.'), EVENTS),
@@ -822,11 +892,26 @@ def _work(x, section_id, targets):
           </div>
         </article>"""
 
+def _phrase(x, section_id, targets):
+    """A word or phrase: the Ukrainian, how to say it, what it means, a note, where to hear it, sources."""
+    e = html.escape
+    say = (f'<p class="ph-say" data-l="en"><span class="visually-hidden">Say it: </span>{e(x["say"])}</p>' if x.get('say') else '')
+    hear = (f'\n          <p class="c-actions"><a class="place-btn" href="{e(x["url"])}" target="_blank" rel="noopener">{both("Hear it", "Послухати")}'
+            f'<span class="visually-hidden">: <span lang="uk">{e(x["name"][1])}</span></span></a></p>' if x.get('url') else '')
+    return f"""        <article class="culture-item c-phrase" id="{section_id}-{x['key']}" tabindex="-1">
+          <h4 class="ph-uk" lang="uk">{e(x['name'][1])}</h4>
+          {say}
+          <p class="ph-mean"><span data-l="en">{e(x['name'][0])}</span><span data-l="uk" lang="uk">Англійською: <span lang="en">{e(x['name'][0])}</span></span></p>
+          <p class="c-about">{both(*x['about'])}</p>{hear}
+          {_sources(x)}
+        </article>"""
+
 # How each section lays out its entries: the renderer, the grid's class, and the order of the entries.
 LAYOUTS = {
     'culture-food': (_card, 'c-grid', None),
     'culture-traditions': (_card, 'c-grid', None),
     'culture-corrections': (_correction, 'fix-list', None),
+    'culture-phrases': (_phrase, 'c-grid phrase-grid', None),
     'culture-holidays': (lambda x, s, t: _dated(x, s, t, 'date'), 'c-grid dated-grid', lambda x: leaf(x['date'][0])[0]),
     'culture-events': (lambda x, s, t: _dated(x, s, t, 'when'), 'c-grid dated-grid', lambda x: leaf(x['when'][0])[0]),
     'culture-media': (_work, 'c-grid', None),

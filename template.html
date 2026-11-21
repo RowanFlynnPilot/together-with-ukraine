@@ -380,6 +380,15 @@ html.js .story-text:not(.open) { display: -webkit-box; -webkit-box-orient: verti
 .c-kind-icon .icon { width: 1.15rem; height: 1.15rem; }
 .c-actions { margin: auto 0 0; }
 .c-card .c-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin: 0; }
+/* Say it in Ukrainian: the phrase large, how to say it under it. */
+.phrase-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+.c-phrase { display: flex; flex-direction: column; gap: 0.45rem; padding: 1.1rem 1.2rem 1.1rem; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--wheat); box-shadow: var(--card-shadow); }
+.c-phrase p { margin: 0; }
+.ph-uk { margin: 0; font-size: 1.7rem; line-height: 1.15; }
+.ph-say { color: var(--link); font-weight: 700; letter-spacing: 0.02em; }
+.ph-mean { font-weight: 700; }
+.c-phrase .c-actions { margin-top: 0.35rem; }
+.c-phrase .why { margin-top: auto; }
 .c-free { font-size: 0.8125rem; font-weight: 700; line-height: 1.4; padding: 0.1rem 0.5rem; color: var(--ink); background: rgba(255, 215, 0, 0.2); border: 1px solid rgba(214, 170, 0, 0.6); }
 /* Portraits of authors and directors keep their faces in the frame. */
 #culture-media .c-media img { object-position: 50% 22%; }
