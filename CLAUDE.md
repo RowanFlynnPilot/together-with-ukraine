@@ -90,7 +90,10 @@ before the page draws, so it never flashes the other theme.
    Every entry gets a "Checked" line that says exactly what was verified, including what was not
    found (UAnimals has no outside audit, and the page says so).
 4. **US arms of Ukrainian groups.** List one only when the parent organization or its founder
-   confirms it. Prytula Foundation USA qualified because Serhiy Prytula announced it himself.
+   confirms it. Prytula Foundation USA qualified because Serhiy Prytula announced it himself. The three
+   children's groups (Voices of Children, Children of Heroes, Save Ukraine; November 2026) qualified because each
+   foundation's own site names its US charity with its EIN. UNICEF USA was left out: its Ukraine page does not
+   earmark gifts for Ukraine.
 5. **Commercial carriers** (Meest, Nova Post) are labeled as carriers, not charities.
 6. **Stories.** The source is a news organization, a UN agency, a museum or archive, or an
    established documentary project (Ukraїner), and is free to read (the Star Tribune's metered

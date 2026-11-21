@@ -54,5 +54,29 @@
   "ruling": "2022-09-01",
   "latest_year": 2023,
   "revenue": 1238335
+ },
+ "993294424": {
+  "name": "Voices Of Children Ukraine Inc",
+  "city": "Dover",
+  "state": "DE",
+  "ruling": "2024-09-01",
+  "latest_year": null,
+  "revenue": null
+ },
+ "882709953": {
+  "name": "Children Of Heroes Of Ukraine Foundation",
+  "city": "Denver",
+  "state": "CO",
+  "ruling": "2022-10-01",
+  "latest_year": 2023,
+  "revenue": 4382792
+ },
+ "881339016": {
+  "name": "Save Ukraine Inc",
+  "city": "New York",
+  "state": "NY",
+  "ruling": "2023-10-01",
+  "latest_year": 2023,
+  "revenue": 861816
  }
 }
