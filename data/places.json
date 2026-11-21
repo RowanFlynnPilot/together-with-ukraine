@@ -460,26 +460,6 @@
   ]
  },
  {
-  "name": "Euro Foods",
-  "kind": "Grocery and café",
-  "street": "Southgate Drive",
-  "city": "Charleston",
-  "state": "South Carolina",
-  "web": "https://eurofoodsbakeryandcafe.com/",
-  "lat": 32.81584,
-  "lon": -79.99325,
-  "ukrainian": [
-   "owner"
-  ],
-  "basis": [
-   {
-    "by": "own website",
-    "url": "https://eurofoodsbakeryandcafe.com/",
-    "says": "Pavlichenko is from Ukraine"
-   }
-  ]
- },
- {
   "name": "Emish Market",
   "kind": "Grocery",
   "street": "2040 70th Avenue East",
@@ -2184,7 +2164,7 @@
   "basis": [
    {
     "by": "Florida Weekly",
-    "url": "https://www.floridaweekly.com/articles/naples/best-french-flavor-with-ukrainian-hearts-3/",
+    "url": "https://www.floridaweekly.com/naples/best-french-flavor-with-ukrainian-hearts/article_a9debfc4-3c42-5569-95b6-6b56c4c1100b.html",
     "says": "The restaurant is French; they are Ukrainian."
    },
    {

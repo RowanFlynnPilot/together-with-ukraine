@@ -13,9 +13,15 @@ from curl_cffi.requests.exceptions import RequestException  # re-exported for ch
 # browsers find for themselves. data/ukrainer-chain.pem says why Ukraїner's needs one.
 CHAINS = {'www.ukrainer.net': str(pathlib.Path(__file__).parent / 'data' / 'ukrainer-chain.pem')}
 
+# The Holocaust Museum's encyclopedia sends compressed pages that curl cannot unpack (browsers can), so its pages
+# are asked for uncompressed.
+PLAIN = {'encyclopedia.ushmm.org'}
+
 def get(url):
     """Fetch like Chrome does. Several of these sites refuse clients that don't look like a browser."""
-    return requests.get(url, impersonate='chrome', timeout=30, verify=CHAINS.get(urlsplit(url).hostname, True))
+    host = urlsplit(url).hostname
+    headers = {'Accept-Encoding': 'identity'} if host in PLAIN else None
+    return requests.get(url, impersonate='chrome', timeout=30, verify=CHAINS.get(host, True), headers=headers)
 
 def irs_record(ein):
     response = get(f'https://projects.propublica.org/nonprofits/api/v2/organizations/{ein}.json')
@@ -32,7 +38,10 @@ def charity_navigator_record(ein):
     url = f'https://www.charitynavigator.org/ein/{ein}'
     response = get(url)
     response.raise_for_status()
-    stars = re.search(r'"ratingValue":(\d)', response.text)
+    # The page's data holds several ratings (a score out of 100, each beacon's percentage); the stars are the one
+    # named Stars, out of 4. Until November 2026 this read the first rating on the page, which had been the stars
+    # and became the score, so four stars read as 9.
+    stars = re.search(r'"name":"Stars","reviewRating":\{"@type":"Rating","bestRating":4,"worstRating":0,"ratingValue":([0-4])\}', response.text)
     if not stars:
         if '<span>Not Rated</span>' not in response.text:
             raise ValueError(f'{url} shows neither a star rating nor "Not Rated"; its layout changed, so update records.py')

@@ -21,7 +21,10 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - run: python scout.py | tee leads.txt
+      # pipefail, so a run in which scout.py dies fails here instead of opening an issue with no leads in it
+      - run: |
+          set -o pipefail
+          python scout.py | tee leads.txt
       - name: Open an issue with the leads
         env:
           GH_TOKEN: ${{ github.token }}
