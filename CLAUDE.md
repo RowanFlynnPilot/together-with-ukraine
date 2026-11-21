@@ -166,7 +166,7 @@ tabs do. Run axe-core on each tab in both languages after a layout change; it sh
   same way, except ukrainer.net: `records.get` checks it against `data/ukrainer-chain.pem`, the chain
   browsers find, so its pages are verified like any other (until October 2032, when that certificate
   expires; the file says how to replace it). So are 202 answers (a bot challenge), and the TEGNA stations (KING 5, ABC10,
-  13News Now, `WALLED` in check.py), which answer GitHub's servers with a stand-in page that has no article. These links, with the phrase each should carry, are listed in every
+  13News Now, `WALLED` in check.py), which answer GitHub's servers with a stand-in page that has no article. So is a timeout from a site in `HANGS` (Ardour Bakery), which loads at once from a home connection but lets GitHub's servers time out on every try. These links, with the phrase each should carry, are listed in every
   report for a manual look. Only other failures (404, 5xx, timeouts, other certificate errors) fail
   the run, and only when they persist through three tries, 10 and 60 seconds apart: with some 540 links, a
   server's passing hiccup turned up most weeks and failed the run (October 2026).
