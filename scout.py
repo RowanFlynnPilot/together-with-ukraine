@@ -11,7 +11,7 @@ the public Overpass servers (it timed out on all of them in October 2026). The r
 list was done by reading local press, which finds far more than OpenStreetMap does.
 
     python scout.py"""
-import json, math, re, sys, time, urllib.parse, urllib.request
+import json, math, re, sys, time, urllib.error, urllib.parse, urllib.request
 
 import places
 
@@ -31,9 +31,16 @@ NEAR_METERS = 300  # a lead this close to a listed place with a similar name is 
 NO_NAME = '(no name)'  # a lead with no name this close to a listed place is taken to be that place
 
 def fetch(url, data=None):
-    request = urllib.request.Request(url, data=data, headers={'User-Agent': USER_AGENT})
-    with urllib.request.urlopen(request, timeout=240) as response:
-        return json.load(response)
+    """The JSON a service answers with. The public servers drop connections now and then (the November 2026 run
+    died on one), so a failed request is tried twice more, a minute apart, before the run stops."""
+    for attempt in range(3):
+        try:
+            request = urllib.request.Request(url, data=data, headers={'User-Agent': USER_AGENT})
+            with urllib.request.urlopen(request, timeout=240) as response:
+                return json.load(response)
+        except (urllib.error.URLError, TimeoutError, ConnectionError):
+            if attempt == 2: raise
+            time.sleep(60)
 
 def tagged():
     """(name, lat, lon, kind, tags, osm url) for everything Overpass finds tagged as Ukrainian."""
