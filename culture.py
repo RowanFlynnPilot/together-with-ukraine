@@ -464,7 +464,7 @@ SUSPILNE_MAVKA = 'https://suspilne.media/culture/1255776-vid-pradavnogo-mifu-do-
 MACMILLAN_AMELINA = 'https://us.macmillan.com/books/9781250367686/lookingatwomenlookingatwar/'
 KI_ORWELL = 'https://kyivindependent.com/ukrainian-author-killed-by-russia-awarded-uks-prestigious-orwell-prize-in-political-writing/'
 FRONTLINE_MARIUPOL = 'https://www.pbs.org/wgbh/frontline/documentary/20-days-in-mariupol/'
-DOVZHENKO_SHADOWS = 'https://dovzhenkocentre.org/en/top-100/shadows-of-forgotten-ancestors-tini-zabutykh-predkiv-wild-horses-of-fire/'
+CRITERION_SHADOWS = 'https://www.criterion.com/films/28167-shadows-of-forgotten-ancestors'
 SUSPILNE_PAMFIR = 'https://suspilne.media/culture/230455-u-kannah-vidbudetsa-svitova-premera-filmu-pamfir-dmitra-suholitkogo-sobcuka/'
 NPR_DAKHABRAKHA = 'https://www.npr.org/2015/04/25/401767767/dakhabrakha-tiny-desk-concert'
 ESC_JAMALA = 'https://www.eurovision.com/eurovision-song-contest/stockholm-2016/participants/jamala-1/'
@@ -517,16 +517,16 @@ MEDIA = [
        kind='film', by=('Mstyslav Chernov, 2023', 'Мстислав Чернов, 2023'), url=FRONTLINE_MARIUPOL, free=True,
        photo=photo('media-chernov.jpg', ('Mstyslav Chernov, 2022', 'Мстислав Чернов, 2022 рік'), 'Claude Truong-Ngoc', 'CC BY-SA 4.0', W + 'Mstyslav_Chernov_par_Claude_Truong-Ngoc_septembre_2022.jpg')),
  entry('shadows-of-forgotten-ancestors', ('Shadows of Forgotten Ancestors', 'Тіні забутих предків'),
-       ('Two Hutsul families have feuded for years when Ivan and Marichka, one from each, fall in love. Sergei Parajanov filmed it at the Oleksandr Dovzhenko Film Studio from Mykhailo Kotsiubynsky’s novella; it won 16 prizes at international festivals, and the Dovzhenko Centre calls it a turning point in Ukrainian culture.',
-        'Два гуцульські роди багато років ворогують, коли Іван і Марічка, кожен зі свого роду, закохуються. Сергій Параджанов зняв фільм на Кіностудії імені Олександра Довженка за повістю Михайла Коцюбинського; він здобув 16 нагород на міжнародних кінофестивалях, а Довженко-Центр називає його поворотним моментом в українській культурі.'),
-       [('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'Two Hutsul families have been feuding for many years'),
-        ('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'born between Ivan and Marichka, members of the feuding families'),
-        ('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'Studio: Oleksandr Dovzhenko Film Studio'),
-        ('en', 'Dovzhenko Centre', None, DOVZHENKO_SHADOWS, 'turning point in the development of Ukrainian culture'),
-        ('en', 'Encyclopedia of Ukraine, “Paradzhanov, Serhii”', None, EOU + 'P%5CA%5CParadzhanovSerhii.htm', 'based on Mykhailo Kotsiubynsky'),
-        ('en', 'Encyclopedia of Ukraine, “Paradzhanov, Serhii”', None, EOU + 'P%5CA%5CParadzhanovSerhii.htm', 'awarded 16 prizes in all at international film festivals'),
-        ('uk', 'Довженко-Центр', None, 'https://dovzhenkocentre.org/top-100/tini-zabutyh-predkiv/', 'Два гуцульські роди багато років ворогують')],
-       kind='film', by=('Sergei Parajanov, 1964', 'Сергій Параджанов, 1964'), url='https://www.criterion.com/films/28167-shadows-of-forgotten-ancestors',
+       ('Ivanko, a young Hutsul peasant in the Carpathian Mountains, knows deep grief and glimmers of hope as he tries to move beyond his first love, Marichka. Sergei Parajanov adapted the film from a 1911 novella by the Ukrainian writer Mykhailo Kotsiubynsky, and it won 16 prizes at international film festivals.',
+        'Іванко, молодий гуцульський селянин у Карпатах, зазнає глибокого горя й проблисків надії, намагаючись жити далі після свого першого кохання — Марічки. Сергій Параджанов зняв фільм за повістю українського письменника Михайла Коцюбинського 1911 року; стрічка здобула 16 нагород на міжнародних кінофестивалях.'),
+       # The Dovzhenko Centre's own pages on the film, the entry's first sources, answered with errors through November 2026.
+       [('en', 'The Criterion Collection', None, CRITERION_SHADOWS, 'a young Hutsul peasant who experiences both the depths of grief and glimmers of hope'),
+        ('en', 'The Criterion Collection', None, CRITERION_SHADOWS, 'as he attempts to move beyond his first love, Marichka'),
+        ('en', 'The Criterion Collection', None, CRITERION_SHADOWS, 'Steeped in the earthy atmosphere of the Carpathian Mountains'),
+        ('en', 'The Criterion Collection', None, CRITERION_SHADOWS, 'Adapted from a 1911 novella by Ukrainian writer Mykhailo Kotsiubynskyi'),
+        ('en', 'Encyclopedia of Ukraine, “Paradzhanov, Serhii”', None, EOU + 'P%5CA%5CParadzhanovSerhii.htm', 'International acclaim came to Paradzhanov in 1964 after the screening of Tini zabutykh predkiv'),
+        ('en', 'Encyclopedia of Ukraine, “Paradzhanov, Serhii”', None, EOU + 'P%5CA%5CParadzhanovSerhii.htm', 'awarded 16 prizes in all at international film festivals')],
+       kind='film', by=('Sergei Parajanov, 1964', 'Сергій Параджанов, 1964'), url=CRITERION_SHADOWS,
        photo=photo('media-parajanov.jpg', ('Sergei Parajanov, 1978', 'Сергій Параджанов, 1978 рік'), 'Yuri Mechitov', 'CC BY-SA 4.0', W + 'Sergei_Parajanov._1._Yuri_Mechitov.jpg')),
  entry('pamfir', ('Pamfir', 'Памфір'),
        ('A smuggler comes home from work abroad to Bukovina, in the Carpathians on the border with Romania, on the eve of the Malanka festival. It is the first feature by Dmytro Sukholytkyy-Sobchuk, and it premiered at the Directors’ Fortnight in Cannes in 2022, in competition for the Caméra d’Or.',
