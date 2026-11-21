@@ -350,6 +350,17 @@ html.js .story-text:not(.open) { display: -webkit-box; -webkit-box-orient: verti
 .leaf-day.c-ornament { min-height: 2.2rem; background-size: 18px; }
 .c-when { margin: -0.3rem 0 0; color: var(--link); font-size: 0.9375rem; font-weight: 700; }
 /* Coming up: this month's and next month's holidays and festivals, worked out in the browser from today's date. */
+/* The remembrance band: night blue in both themes, with one small flame. */
+.remember { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.1rem; align-items: center; margin: 0 0 2.5rem; padding: 1.1rem 1.35rem 1.2rem; background: #0B1F3A; color: #FFFFFF; border-left: 4px solid var(--wheat); }
+.remember p { margin: 0; }
+.remember-candle { width: 1.6rem; height: 2.4rem; }
+.remember-candle .flame { fill: #FFD700; }
+.remember-candle .wax { fill: #F3F0E6; }
+.remember-candle .wick { stroke: #0B1F3A; stroke-width: 1.2; }
+.remember-title { font-size: 1.25rem; font-weight: 700; line-height: 1.25; }
+.remember .remember-text { margin-top: 0.3rem; max-width: 46rem; color: #DCE6F3; }
+.remember .remember-links { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; }
+.remember-links a { color: #FFD700; font-weight: 700; }
 .coming-up { margin: 0 0 2.5rem; padding: 1rem 1.25rem 1.15rem; background: var(--wash); border-left: 4px solid var(--wheat); }
 .coming-up h3 { margin: 0 0 0.8rem; font-size: 1.125rem; }
 .coming-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); gap: 0.9rem 1.25rem; }
@@ -693,6 +704,16 @@ __OVERVIEW__
 </nav>
 
 <main class="wrap" id="content" tabindex="-1">
+
+  <!-- Shown by the script in the week up to Holodomor Remembrance Day, the fourth Saturday of November, on every tab. -->
+  <aside class="remember" id="remember" aria-labelledby="remember-title" hidden>
+    <svg class="remember-candle" viewBox="0 0 24 36" aria-hidden="true" focusable="false"><path class="flame" d="M12 2c2.6 3.2 4 5.4 4 7.6a4 4 0 0 1-8 0C8 7.4 9.4 5.2 12 2Z"/><path class="wax" d="M8 16h8v18H8Z"/><path class="wick" d="M12 13v3"/></svg>
+    <div>
+      <p class="remember-title" id="remember-title"></p>
+      <p class="remember-text">{{Ukraine and the world honor the victims of the famine of 1932–33. At 4 p.m. people light candles in their windows or at memorials.||Україна та світ вшановують жертв голоду 1932–1933 років. О 16:00 люди запалюють свічки у вікнах або біля меморіалів.}}</p>
+      <p class="remember-links"><a href="#event-the-holodomor">{{What happened||Що сталося}}</a><a href="#story-liubov-yarosh">{{A survivor’s story||Історія тієї, хто вижила}}</a><a href="#culture-holidays-holodomor-remembrance">{{About the day||Про цей день}}</a></p>
+    </div>
+  </aside>
 
   <section id="culture" role="tabpanel" aria-labelledby="tab-culture">
     <h2>{{Ukrainian culture||Українська культура}}</h2>
@@ -1176,6 +1197,19 @@ function showComingUp(today) {
   document.getElementById('coming-up').hidden = !items.length;
 }
 showComingUp(new Date());
+// The remembrance band: from seven days before Holodomor Remembrance Day (the fourth Saturday of November) through the day.
+function showRemembrance(today) {
+  today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const day = nthWeekday(today.getFullYear(), 10, 4, 6), days = Math.round((day - today) / 864e5);
+  const band = document.getElementById('remember');
+  band.hidden = days < 0 || days > 7;
+  if (band.hidden) return;
+  const on = locale => day.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
+  document.getElementById('remember-title').replaceChildren(...inBoth(
+    days ? `Holodomor Remembrance Day is ${on('en-US')}` : 'Today is Holodomor Remembrance Day',
+    days ? `День пам’яті жертв Голодомору — ${on('uk-UA')}` : 'Сьогодні День пам’яті жертв Голодомору'));
+}
+showRemembrance(new Date());
 
 let savedLang = null;
 try { savedLang = localStorage.getItem('lang'); } catch (error) { /* storage unavailable */ }
