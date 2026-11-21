@@ -7,7 +7,7 @@ the same id, or a US charity without a pulled record."""
 import json, pathlib, re, struct, sys, zlib
 from collections import Counter
 
-import culture, diaspora, give, history, places, places_uk, review, stories
+import culture, diaspora, give, history, places, places_uk, review, statepages, stories
 from i18n import both, dates, fill_markers, plural_uk
 
 ROOT = pathlib.Path(__file__).parent
@@ -72,7 +72,7 @@ def build():
             .replace('__CULTURE_NAV__', nav(culture_nav)).replace('__CULTURE__', culture_html).replace('__HERO_CREDIT__', culture.hero_credit())
             .replace('__PLACES_SUMMARY__', both(summary_en, summary_uk)).replace('__PLACE_LIST__', places.render(back['place']))
             .replace('__PLACE_PHOTOS__', places.photo_strip()).replace('__KIND_FILTER__', places.kind_filter()).replace('__PLACE_ICONS__', places.icons())
-            .replace('__GIVE_NAV__', nav(give_nav)).replace('__GIVE__', give_html)
+            .replace('__STATE_PAGES__', statepages.nav()).replace('__GIVE_NAV__', nav(give_nav)).replace('__GIVE__', give_html)
             .replace('__CENSUS__', diaspora.render()).replace('__CENSUS_YEAR__', str(diaspora.YEAR))
             .replace('__RECORDS_EN__', records_en).replace('__RECORDS_UK__', records_uk)
             .replace('__GIVE_REVIEWED_EN__', give_en).replace('__GIVE_REVIEWED_UK__', give_uk)
@@ -108,6 +108,11 @@ if __name__ == '__main__':
     out.write_text(build(), encoding='utf-8')
     (out.parent / 'apple-touch-icon.png').write_bytes(flag_png(180, 180))
     (out.parent / 'review.html').write_text(review.render(), encoding='utf-8')  # every text beside its Ukrainian, for review
+    state_pages = statepages.pages()  # a page per state for the places, for search engines to land on
+    for name, page in state_pages.items():
+        (out.parent / name).parent.mkdir(parents=True, exist_ok=True)
+        (out.parent / name).write_text(page, encoding='utf-8')
+    (out.parent / 'sitemap.xml').write_text(statepages.sitemap(state_pages), encoding='utf-8')
     (out.parent / 'images').mkdir(exist_ok=True)
     # share.jpg is the link-preview picture, made once from the header photo and kept in images/.
     for photo in stories.photo_files() + culture.photo_files() + places.photo_files() + history.photo_files() + [ROOT / 'images' / 'share.jpg']:

@@ -8,7 +8,7 @@ engines not to index it."""
 import html, re, pathlib
 from urllib.parse import urlencode
 
-import culture, diaspora, give, history, places, places_uk, stories
+import culture, diaspora, give, history, places, places_uk, statepages, stories
 import history_uk as UK
 
 ROOT = pathlib.Path(__file__).parent
@@ -64,6 +64,7 @@ def pairs():
     for kind, uk in places_uk.KINDS.items(): add('Eat and shop', 'Kind of place', (kind, uk))
     for state, uk in places_uk.STATES.items(): add('Eat and shop', 'State', (state, uk))
     for _, p in places.PHOTOS: add('Eat and shop', 'Picture', p['alt'])
+    for pair in statepages.TEXT.values(): add('Eat and shop', 'State pages', pair)
     for title, intro, orgs in give.GROUPS:
         add('Give', 'Group', title)
         if intro: add('Give', 'Group', intro)

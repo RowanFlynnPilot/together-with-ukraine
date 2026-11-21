@@ -7,6 +7,8 @@ A two-language (English and Ukrainian) page with six parts:
 - **People**: stories of Ukrainians, in Ukraine and in the United States, each summarized from one published report and linked to it.
 - **In the US**: how many people of Ukrainian ancestry live in the United States and where, from the Census Bureau's American Community Survey: a map by state, every state's figures with their margins of error, the largest metro areas, and the rise in people born in Ukraine since 2021.
 - **Eat and shop**: Ukrainian restaurants, cafés, bakeries and markets in the United States, filtered by state and kind, on a map that zooms to each state, each with the evidence it was listed on.
+Each state with listings also has a plain page of its own (`places/ohio/`, and `places/ohio/uk/` in Ukrainian) that search engines can land on, with `sitemap.xml` listing them.
+
 - **Give**: where to donate money, send supplies or volunteer, with what was verified about each group.
 
 The parts link to each other: a story about the Holodomor links to that timeline entry and back, a story about Veselka links to Veselka on the map. Every section and entry has its own address (`#give`, `#story-liubov-yarosh`), and `?lang=uk` opens the page in Ukrainian. The browser's own Find (Ctrl+F) searches every tab, not just the open one, and opens the tab a match is in.

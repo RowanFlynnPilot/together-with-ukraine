@@ -537,6 +537,10 @@ select {
 .note { background: var(--wash); padding: 1.1rem 1.25rem; margin: 1.25rem 0 0; }
 .note p { margin: 0; }
 .note p + p { margin-top: 0.6rem; }
+/* Links to each state's own page, which search engines can land on. */
+.by-state { margin: 1.5rem 0 0; }
+.by-state h3 { font-size: 1.05rem; margin: 0 0 0.6rem; }
+.state-pages { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-size: 0.9375rem; }
 
 /* Listings */
 .group-name { display: flex; align-items: center; gap: 0.75rem; margin: 2rem 0 0.85rem; font-size: 1.3rem; }
@@ -769,6 +773,10 @@ __PLACE_PHOTOS__
           <p data-l="en">Nothing near you? <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> lists more than 200 Ukrainian companies that sell online.</p>
           <p data-l="uk" lang="uk">Поблизу нічого немає? На сайті <a href="https://spendwithukraine.com/" target="_blank" rel="noopener">Spend With Ukraine</a> зібрано понад 200 українських компаній, які продають онлайн.</p>
         </div>
+        <nav class="by-state" aria-labelledby="by-state-label">
+          <h3 id="by-state-label">{{A page for each state||Сторінка для кожного штату}}</h3>
+__STATE_PAGES__
+        </nav>
       </div>
       <div class="list-col" id="place-list">
 __PLACE_ICONS__
